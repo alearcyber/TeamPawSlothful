@@ -1,0 +1,17 @@
+
+[
+  {
+    "exercise": {
+      "name": "curls",
+      "calories": "20",
+      "type": "arms"
+    }
+  },
+  {
+    "exercise": {
+      "name": "pushups",
+      "calories": "35",
+      "type": "arms"
+    }
+  }
+]
