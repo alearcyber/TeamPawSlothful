@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,6 +17,15 @@ public class WorkoutModel {
 
     /** list of observers to notify when something changes */
     private List<Observer<WorkoutModel>> observers;
+
+    //private ArrayList<Exercise> listOfExercises;
+
+    //private DBmanager database;
+
+
+    //public WokroutModel(){
+        //databse.getall the exersicse
+    //}
 
 
 

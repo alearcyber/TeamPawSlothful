@@ -9,8 +9,20 @@ import org.json.simple.parser.ParseException;
 
 public class DBmanager {
 
-    public DBmanager(String filename){
+    /** the name of the json file */
+    private String filename;
 
+    private static Object jsonObject;
+
+    /** json array that the json object is cast to */
+    private static JSONArray jsonarray;
+
+
+    public DBmanager(String filename)throws IOException, ParseException{
+        FileReader reader = new FileReader("src\\database");
+        JSONParser parser = new JSONParser();
+        jsonObject = parser.parse(reader);
+        jsonarray = (JSONArray) jsonObject;
     }
 
     private static void printExercises(JSONObject json) {
@@ -19,7 +31,8 @@ public class DBmanager {
         System.out.println(name);
     }
 
-    public static void main(String[] args) throws ParseException, IOException {
+
+    private static void testDatabse() throws ParseException, IOException{
         FileReader reader = new FileReader("src\\database");
         JSONParser parser = new JSONParser();
         Object json = parser.parse(reader);
@@ -29,6 +42,10 @@ public class DBmanager {
 
 
         array.forEach( emp -> printExercises( (JSONObject) emp ) );
+    }
+
+    public static void main(String[] args) throws ParseException, IOException {
+        testDatabse();
 
     }
 }
