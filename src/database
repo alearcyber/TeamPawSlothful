@@ -13,5 +13,12 @@
       "calories": "35",
       "type": "arms"
     }
+  },
+  {
+    "exercise": {
+      "name": "running",
+      "calories": "40",
+      "type": "cardio"
+    }
   }
 ]
