@@ -19,6 +19,7 @@ public class DBmanager {
 
 
     public DBmanager(String filename)throws IOException, ParseException{
+        this.filename = filename;
         FileReader reader = new FileReader("src\\database");
         JSONParser parser = new JSONParser();
         jsonObject = parser.parse(reader);
@@ -31,8 +32,12 @@ public class DBmanager {
         System.out.println(name);
     }
 
+    private static void addExercise(){
 
-    private static void testDatabse() throws ParseException, IOException{
+    }
+
+
+    private static void testDatabase() throws ParseException, IOException{
         FileReader reader = new FileReader("src\\database");
         JSONParser parser = new JSONParser();
         Object json = parser.parse(reader);
@@ -45,7 +50,7 @@ public class DBmanager {
     }
 
     public static void main(String[] args) throws ParseException, IOException {
-        testDatabse();
+        testDatabase();
 
     }
 }
