@@ -27,7 +27,7 @@ public class DBmanager {
     }
 
     private static void printExercises(JSONObject json) {
-        JSONObject exercise = (JSONObject) json.get("exercise");
+        JSONObject exercise = (JSONObject) json.get("plan:exercise");
         String name = (String) exercise.get("name");
         System.out.println(name);
     }
