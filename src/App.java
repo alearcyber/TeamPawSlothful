@@ -20,6 +20,7 @@ public class App {
             //new JPanel
 
     public App() {
+        ExcercisesPanel.setLayout(new BoxLayout(ExcercisesPanel,BoxLayout.X_AXIS));
         comboBox1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -34,13 +35,15 @@ public class App {
                 }
                 for(Exercise exercise: exerciseList){
                     JPanel temp=new JPanel();
-                    temp.setSize(500,500);
+                    temp.setLayout(new BoxLayout(temp,BoxLayout.Y_AXIS));
                     temp.addMouseListener(new MouseAdapter() {
                         public void mouseClicked(MouseEvent me) {
                             System.out.println(exercise.getName());
                         }
                     });
                     temp.add(new JLabel(exercise.getName()));
+                    temp.add(new JLabel(exercise.getType()));
+                    temp.add(new JLabel(exercise.getCalories()));
                     exercisePanels.add(temp);
                     ExcercisesPanel.add(temp);
                 }
