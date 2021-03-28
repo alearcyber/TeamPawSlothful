@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,9 @@ public class WorkoutGUI extends JFrame implements Observer<WorkoutModel> {
 
 
 
+    public WorkoutGUI(){
+
+    }
 
 
     public void init(){
@@ -31,6 +35,16 @@ public class WorkoutGUI extends JFrame implements Observer<WorkoutModel> {
         model = new WorkoutModel();
         controller = new WorkoutController(model);
         model.addObserver(this);
+
+        JFrame stage = new JFrame();
+        JButton button = new JButton("Easy");
+        //JPanel panel = new JPanel();
+        stage.setLayout(new BoxLayout(stage, BoxLayout.PAGE_AXIS));
+        button.setBounds(140, 100, 100, 130);
+        stage.add(button);
+        stage.setSize(500,500);
+        stage.setLayout(null);
+        stage.setVisible(true);
 
         //todo finish initialization...
 
@@ -59,6 +73,8 @@ public class WorkoutGUI extends JFrame implements Observer<WorkoutModel> {
 
     public static void main(String[] args){
         System.out.println("Testing the GUI...");
+        WorkoutGUI gui = new WorkoutGUI();
+        gui.init();
     }
 
 }

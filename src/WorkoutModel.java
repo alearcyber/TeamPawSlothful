@@ -26,6 +26,9 @@ public class WorkoutModel {
     //public WokroutModel(){
         //databse.getall the exersicse
     //}
+    public WorkoutModel(){
+        observers = new ArrayList<>();
+    }
 
 
 
