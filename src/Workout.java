@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class Workout {
 
@@ -14,10 +12,9 @@ public class Workout {
      * @param name The name of this workout
      * @param exercises The exercises in this workout
      */
-    public Workout(String name, String ...exercises){
+    public Workout(String name, ArrayList<String> exercises){
         this.name = name;
-        List<String> temp = Arrays.asList(exercises);
-        this.exercises = new ArrayList<>(temp);
+        this.exercises.addAll(exercises);
     }
 
     /**Get name of this workout
