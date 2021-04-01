@@ -53,6 +53,9 @@ public class App {
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("App");
+        Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+        frame.setPreferredSize(new Dimension((int) size.getWidth() / 2, (int) size.getHeight() / 2));
+        frame.setLocation(new Point((int) size.getWidth() / 4, (int) size.getHeight() / 4));
         frame.setContentPane(new App().panel1);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
