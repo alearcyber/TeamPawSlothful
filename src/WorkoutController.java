@@ -11,4 +11,14 @@ public class WorkoutController {
         this.model = model;
     }
 
+
+    /**
+     * update workouts int he first panel thing
+     */
+    public void updateWorkouts(String type){
+        try {
+            model.updateWorkout(type);
+        }catch(Exception e){}
+    }
+
 }

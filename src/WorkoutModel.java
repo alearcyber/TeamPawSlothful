@@ -18,6 +18,8 @@ public class WorkoutModel {
     /** list of observers to notify when something changes */
     private List<Observer<WorkoutModel>> observers;
 
+    public ArrayList<Exercise> firstPaneList = new ArrayList<>(); //exercises to be displayed
+
     //private ArrayList<Exercise> listOfExercises;
 
     //private DBmanager database;
@@ -29,6 +31,7 @@ public class WorkoutModel {
     public WorkoutModel(){
         observers = new ArrayList<>();
     }
+
 
 
 
@@ -49,5 +52,23 @@ public class WorkoutModel {
         for(Observer<WorkoutModel> observer: observers){
             observer.update(this);
         }
+    }
+
+
+
+    public void updateWorkout(String type) throws Exception{
+        System.out.println("DO I GET HERE????");
+        firstPaneList.clear();
+        ArrayList<Exercise> whatis = DBmanager.getExercises();
+
+        for(Exercise e: whatis){
+
+            if(e.getType().toLowerCase().equals(type.toLowerCase())){
+                System.out.println("adding " + e.getName() + " to the list");
+                firstPaneList.add(e);
+            }
+        }
+
+        notifyObservers();
     }
 }
