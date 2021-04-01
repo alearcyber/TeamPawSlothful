@@ -1,19 +1,36 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Workout {
 
-    private String workouts;
     private String name;
+    private ArrayList<String> exercises = new ArrayList<>();
 
-    public Workout(String name, String workouts){
+    /**Default Constructor*/
+    public Workout(){}
+
+    /**Parameterized Constructor
+     * @param name The name of this workout
+     * @param exercises The exercises in this workout
+     */
+    public Workout(String name, String ...exercises){
         this.name = name;
-        this.workouts = workouts;
+        List<String> temp = Arrays.asList(exercises);
+        this.exercises = new ArrayList<>(temp);
     }
 
-
+    /**Get name of this workout
+     * @return The name of this workout
+     */
     public String getName(){
         return this.name;
     }
 
-    public String getWorkouts() {
-        return workouts;
+    /**Get exercises in workout
+     * @return The exercises in this workout
+     */
+    public String getExercisesInWorkout() {
+        return exercises.toString();
     }
 }

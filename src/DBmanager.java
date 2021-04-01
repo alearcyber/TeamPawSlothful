@@ -1,7 +1,6 @@
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -10,60 +9,47 @@ import java.util.ArrayList;
 
 public class DBmanager {
 
+    private static final String fileName = "src//database";
     private static FileReader reader;
     private static JSONParser parser = new JSONParser();
     private static Object data;
-    private static JSONArray exerciseArray;
+    private static JSONArray dataArray;
     private static ArrayList<Exercise> exercises = new ArrayList<>();
     private static ArrayList<Workout> workouts = new ArrayList<>();
-    private static final String fileName = "src//database";
 
-    //given a exercise name, return an object with correct data
-    //given name of a workout, return an arraylist, with all the exercise objects
+    /**Main method, constructs model from database*/
+    public static void main(String[] args) {
+        getData();
+        /*Un-suppress to test adding exercises to database
+        System.out.println(getExercises());
+        addExercise("Back-flips", "legs", "1");
+        System.out.println(getExercises());
 
-    public static void main(String[] args) throws Exception{
-        addExercise("Back-flips", "1", "legs");
-        addWorkout("workout1", "Jumping Jacks", "Curls");
 
-        for(Workout e : getWorkouts()){
-            System.out.println(e.getName() + " " + e.getWorkouts());
-        }
+        /*Un-suppress to test adding workouts to database
+        System.out.println(getWorkouts());
+        addWorkout("workout2", "Back-flips", "Curls");
+        System.out.println(getWorkouts());
+        */
+    }
+
+    /**Gets data from JSON database file
+     * @throws Exception: IOException, ParseException, FileNotFoundException
+     */
+    public static void getData() {
+        try {
+            reader = new FileReader(fileName);
+            data = parser.parse(reader);
+            dataArray = (JSONArray) data;
+            dataArray.forEach( exe -> parseExercise((JSONObject) exe));
+            dataArray.forEach( exe -> parseWorkout((JSONObject) exe));
+        }catch (Exception e) {e.printStackTrace();}
 
     }
 
-    public static ArrayList<Exercise> getExercises() throws Exception{
-        reader = new FileReader(fileName);
-        data = parser.parse(reader);
-        exerciseArray = (JSONArray) data;
-        exerciseArray.forEach( exe -> parseExercise((JSONObject) exe));
-        return exercises;
-    }
-
-    public static ArrayList<Workout> getWorkouts() throws Exception{
-        reader = new FileReader(fileName);
-        data = parser.parse(reader);
-        exerciseArray = (JSONArray) data;
-        exerciseArray.forEach( exe -> parseWorkout((JSONObject) exe));
-        return workouts;
-    }
-
-
-    public static void readExercises(String filename) throws Exception{
-        reader = new FileReader(filename);
-        data = parser.parse(reader);
-        exerciseArray = (JSONArray) data;
-
-        exerciseArray.forEach( exe -> parseExercise((JSONObject) exe));
-    }
-
-    public static void readWorkouts() throws Exception{
-        reader = new FileReader(fileName);
-        data = parser.parse(reader);
-        exerciseArray = (JSONArray) data;
-
-        exerciseArray.forEach( exe -> parseWorkout((JSONObject) exe));
-    }
-
+    /**Parse database for exercises
+     * @param exerciseData: Exercise data from database
+     */
     public static void parseExercise(JSONObject exerciseData){
         try {
             JSONObject exerciseObjects = (JSONObject) exerciseData.get("exercise");
@@ -76,6 +62,9 @@ public class DBmanager {
         catch(Exception e){}
     }
 
+    /**Parse database for workouts
+     * @param workoutData: Workout data from database
+     */
     public static void parseWorkout(JSONObject workoutData){
         try {
             JSONObject exerciseObjects = (JSONObject) workoutData.get("workout");
@@ -87,58 +76,75 @@ public class DBmanager {
         catch(Exception e){}
     }
 
-    public static void addExercise(String name, String calories, String type) throws Exception{
-        reader = new FileReader(fileName);
-        data = parser.parse(reader);
-        exerciseArray = (JSONArray) data;
+    /**Add new exercise to database
+     * @param name: Name of the exercise to add
+     * @param calories: Calories burned per minute of the exercise to add
+     * @param type: Type of the exercise to add
+     */
+    public static void addExercise(String name, String type, String calories) {
         JSONObject ex = new JSONObject();
-        ex.put("name", name);
-        ex.put("calories", calories);
-        ex.put("type", type);
         JSONObject exRapper = new JSONObject();
-        exRapper.put("exercise", ex);
-        exerciseArray.add(exRapper);
 
-        //Write JSON file
+        ex.put("name", name);
+        ex.put("type", type);
+        ex.put("calories", calories);
+
+        exRapper.put("exercise", ex);
+        dataArray.add(exRapper);
+
         try (FileWriter file = new FileWriter(fileName)) {
-            //We can write any JSONArray or JSONObject instance to the file
-            file.write(exerciseArray.toJSONString());
+            file.write(dataArray.toJSONString());
             file.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        Exercise exerciseToAdd = new Exercise(name, type, calories);
+        exercises.add(exerciseToAdd);
     }
 
-    private static void addWorkout(String name, String ...exercises) throws ParseException, IOException{
-        reader = new FileReader(fileName);
-        data = parser.parse(reader);
-        exerciseArray = (JSONArray) data;
-
+    /**Add new workout to database
+     * @param name: Name of the workout to add
+     * @param exercises: Exercises in the workout to add
+     * @throws Exception: Exception
+     */
+    private static void addWorkout(String name, String ...exercises) {
         JSONObject workout = new JSONObject();
-        workout.put("name", name);
         String exString = "";
+        JSONObject workoutRapper = new JSONObject();
+
+        workout.put("name", name);
         for(String exercise: exercises){
             exString += " " + exercise;
         }
         workout.put("exercises", exString);
-        //the workout is constructed at this point
-        //create the wrapper
-        JSONObject workoutRapper = new JSONObject();
-        workoutRapper.put("workout", workout);
-        JSONArray rapperList = new JSONArray();
-        //rapperList.add(workoutRapper);
-        exerciseArray.add(workoutRapper);
 
-        //Write JSON file
+        workoutRapper.put("workout", workout);
+        dataArray.add(workoutRapper);
+
         try (FileWriter file = new FileWriter(fileName)) {
-            //We can write any JSONArray or JSONObject instance to the file
-            file.write(exerciseArray.toJSONString());
+            file.write(dataArray.toJSONString());
             file.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        Workout workoutToAdd = new Workout(name, exercises);
+        workouts.add(workoutToAdd);
     }
 
+    /**Gets workouts stored in the database
+     * @return Workouts stored in database
+     */
+    public static ArrayList<Workout> getWorkouts(){
+        return workouts;
+    }
+
+    /**Gets exercises stored in the database
+     * @return Exercises stored in database
+     */
+    public static ArrayList<Exercise> getExercises(){
+        return exercises;
+    }
 }
 
