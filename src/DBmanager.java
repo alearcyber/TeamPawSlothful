@@ -22,14 +22,13 @@ public class DBmanager {
     //given name of a workout, return an arraylist, with all the exercise objects
 
     public static void main(String[] args) throws Exception{
-        //readDatabase(fileName);
-        //addExercise("Back-flips", "1", "legs");
-        //addWorkout("workout1", "Jumping Jacks", "Curls");
-        //readExercises(fileName);
+        addExercise("Back-flips", "1", "legs");
+        addWorkout("workout1", "Jumping Jacks", "Curls");
 
-        //for(Workout e : getWorkouts()){
-        //    System.out.println(e.getName() + " " + e.getWorkouts());
-        //}
+        for(Workout e : getWorkouts()){
+            System.out.println(e.getName() + " " + e.getWorkouts());
+        }
+
     }
 
     public static ArrayList<Exercise> getExercises() throws Exception{
@@ -142,3 +141,4 @@ public class DBmanager {
     }
 
 }
+
