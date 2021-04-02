@@ -29,6 +29,7 @@ public class WorkoutModel {
         //databse.getall the exersicse
     //}
     public WorkoutModel(){
+        DBmanager.getData();
         observers = new ArrayList<>();
     }
 
@@ -57,14 +58,12 @@ public class WorkoutModel {
 
 
     public void updateWorkout(String type) throws Exception{
-        System.out.println("DO I GET HERE????");
         firstPaneList.clear();
-        ArrayList<Exercise> whatis = DBmanager.getExercises();
+        ArrayList<Exercise> exercises = DBmanager.getExercises();
 
-        for(Exercise e: whatis){
+        for(Exercise e: exercises){
 
             if(e.getType().toLowerCase().equals(type.toLowerCase())){
-                System.out.println("adding " + e.getName() + " to the list");
                 firstPaneList.add(e);
             }
         }

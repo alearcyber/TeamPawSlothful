@@ -1,18 +1,14 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import javax.swing.Box;
+import java.awt.event.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 public class App implements Observer<WorkoutModel>{
     private JPanel panel1;
     private JTabbedPane tabbedPane1;
     private JComboBox comboBox1;
-    private JPanel ExcercisesPanel;
-    //private ArrayList<JPanel> exercisePanels = new ArrayList<>();
+    private JPanel ExercisesPanel;
 
     private WorkoutController controller;
     private WorkoutModel model;
@@ -20,9 +16,6 @@ public class App implements Observer<WorkoutModel>{
 
 
 
-    //get exercises
-            //for each exercise
-            //new JPanel
 
     public App(){
         model = new WorkoutModel();
@@ -30,11 +23,12 @@ public class App implements Observer<WorkoutModel>{
         controller = new WorkoutController(model);
 
 
-        ExcercisesPanel.setLayout(new BoxLayout(ExcercisesPanel, BoxLayout.X_AXIS));
+        ExercisesPanel.setLayout(new BoxLayout(ExercisesPanel, BoxLayout.X_AXIS));
         comboBox1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.updateWorkouts(comboBox1.getSelectedItem().toString());
+                ExercisesPanel.revalidate();
             }
         });
     }
@@ -42,9 +36,8 @@ public class App implements Observer<WorkoutModel>{
 
     @Override
     public void update(WorkoutModel model) {
-        System.out.println("UPDATING");
+        ExercisesPanel.removeAll();
         for(Exercise exercise: model.firstPaneList){
-            System.out.println("creating view for an excersize");
             JPanel temp=new JPanel();
             temp.setLayout(new BoxLayout(temp,BoxLayout.Y_AXIS));
             temp.addMouseListener(new MouseAdapter() {
@@ -55,8 +48,8 @@ public class App implements Observer<WorkoutModel>{
             temp.add(new JLabel(exercise.getName()));
             temp.add(new JLabel(exercise.getType()));
             temp.add(new JLabel(exercise.getCalories()));
-            //exercisePanels.add(temp);
-            ExcercisesPanel.add(temp);
+            temp.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
+            ExercisesPanel.add(temp);
         }
     }
 

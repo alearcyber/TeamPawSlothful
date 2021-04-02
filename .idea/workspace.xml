@@ -2,29 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="93c9d068-fb06-4dac-bbda-e50b8db393f8" name="Default Changelist" comment="Consolidated methods in DBmanager; Fleshed out Exercise class, and Workout class; added JavaDoc for DBmanager, Exercise class, and Workout class">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/App$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/App$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/App.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/DBmanager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/DBmanager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/Exercise.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/Exercise.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/Workout.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/Workout.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/WorkoutController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/WorkoutController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/WorkoutGUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/WorkoutGUI.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/WorkoutModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/WorkoutModel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/AbstractLayout.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/AbstractLayout.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/DimensionInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/DimensionInfo.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/GridConstraints.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/GridConstraints.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/GridLayoutManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/GridLayoutManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/HorizontalInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/HorizontalInfo.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/LayoutState.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/LayoutState.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/Spacer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/Spacer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/SupportCode$TextWithMnemonic.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/SupportCode$TextWithMnemonic.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/SupportCode.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/SupportCode.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/Util.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/Util.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/VerticalInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/VerticalInfo.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DBmanager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DBmanager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Workout.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Workout.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/database" beforeDir="false" afterPath="$PROJECT_DIR$/src/database" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/WorkoutModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/WorkoutModel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,6 +34,7 @@
     <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="ProjectId" id="1pSBje8GcHaAV4ORmVnfy38tIdA" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -59,7 +46,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
-  <component name="RunManager" selected="Application.DBmanager">
+  <component name="RunManager" selected="Application.App">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="App" />
       <module name="WorkoutManager" />
@@ -76,8 +63,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.DBmanager" />
         <item itemvalue="Application.App" />
+        <item itemvalue="Application.DBmanager" />
       </list>
     </recent_temporary>
   </component>
