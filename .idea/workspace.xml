@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="93c9d068-fb06-4dac-bbda-e50b8db393f8" name="Default Changelist" comment="Removed old debug prints; added DBManager.getData() to WorkoutModel; fixed comboBox GUI update bug">
-      <change afterPath="$PROJECT_DIR$/src/BoxFillerRatio.java" afterDir="false" />
+    <list default="true" id="93c9d068-fb06-4dac-bbda-e50b8db393f8" name="Default Changelist" comment="Added a Box.Filler child class that maintains a specified size ratio; fixed various issues with dynamic creation of exercise panels.">
+      <change afterPath="$PROJECT_DIR$/src/ExerciseCard.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ExerciseCard.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/App.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BoxFillerRatio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BoxFillerRatio.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/WorkoutModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/WorkoutModel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +96,14 @@
       <option name="project" value="LOCAL" />
       <updated>1617347847866</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Added a Box.Filler child class that maintains a specified size ratio; fixed various issues with dynamic creation of exercise panels.">
+      <created>1617430159548</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1617430159548</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -113,6 +122,7 @@
     <MESSAGE value="Added basic GUI design" />
     <MESSAGE value="Consolidated methods in DBmanager; Fleshed out Exercise class, and Workout class; added JavaDoc for DBmanager, Exercise class, and Workout class" />
     <MESSAGE value="Removed old debug prints; added DBManager.getData() to WorkoutModel; fixed comboBox GUI update bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removed old debug prints; added DBManager.getData() to WorkoutModel; fixed comboBox GUI update bug" />
+    <MESSAGE value="Added a Box.Filler child class that maintains a specified size ratio; fixed various issues with dynamic creation of exercise panels." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added a Box.Filler child class that maintains a specified size ratio; fixed various issues with dynamic creation of exercise panels." />
   </component>
 </project>

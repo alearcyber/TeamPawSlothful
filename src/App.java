@@ -37,18 +37,16 @@ public class App implements Observer<WorkoutModel>{
     @Override
     public void update(WorkoutModel model) {
         ExercisesPanel.removeAll();
-        for(Exercise exercise: model.firstPaneList){
-            JPanel temp2 = new JPanel();
-            BoxFillerRatio temp=new BoxFillerRatio(3,4,temp2,BoxLayout.Y_AXIS);
-            temp2.setLayout(new BoxLayout(temp2,BoxLayout.Y_AXIS));
+        Integer index=1;
+        for(Exercise exercise: model.getFirstPaneList()){
+            BoxFillerRatio temp=new BoxFillerRatio(3,4,
+                    new ExerciseCard(exercise.getName(),exercise.getType(), index++).getPanel(),
+                    BoxLayout.Y_AXIS);
             temp.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent me) {
                     System.out.println(exercise.getName());
                 }
             });
-            temp2.add(new JLabel(exercise.getName()));
-            temp2.add(new JLabel(exercise.getType()));
-            temp2.add(new JLabel(exercise.getCalories()));
             ExercisesPanel.add(temp);
         }
         panel1.revalidate();

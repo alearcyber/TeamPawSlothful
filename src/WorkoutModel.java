@@ -18,7 +18,7 @@ public class WorkoutModel {
     /** list of observers to notify when something changes */
     private List<Observer<WorkoutModel>> observers;
 
-    public ArrayList<Exercise> firstPaneList = new ArrayList<>(); //exercises to be displayed
+    private ArrayList<Exercise> firstPaneList = new ArrayList<>(); //exercises to be displayed
 
     //private ArrayList<Exercise> listOfExercises;
 
@@ -67,7 +67,10 @@ public class WorkoutModel {
                 firstPaneList.add(e);
             }
         }
-
         notifyObservers();
+    }
+
+    public ArrayList<Exercise> getFirstPaneList(){
+        return firstPaneList;
     }
 }

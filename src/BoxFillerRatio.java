@@ -6,7 +6,7 @@ import java.awt.event.ComponentEvent;
 public class BoxFillerRatio extends Box.Filler{
     private int xRatio,yRatio;
 
-    public BoxFillerRatio(int xRatio, int yRatio,JPanel content, int axis){
+    public BoxFillerRatio(int xRatio, int yRatio,Container content, int axis){
         super(new Dimension(100,0),new Dimension(100,0),new Dimension(100,1000000));
         this.xRatio=xRatio;
         this.yRatio=yRatio;
