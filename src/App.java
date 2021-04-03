@@ -38,19 +38,20 @@ public class App implements Observer<WorkoutModel>{
     public void update(WorkoutModel model) {
         ExercisesPanel.removeAll();
         for(Exercise exercise: model.firstPaneList){
-            JPanel temp=new JPanel();
-            temp.setLayout(new BoxLayout(temp,BoxLayout.Y_AXIS));
+            JPanel temp2 = new JPanel();
+            BoxFillerRatio temp=new BoxFillerRatio(3,4,temp2,BoxLayout.Y_AXIS);
+            temp2.setLayout(new BoxLayout(temp2,BoxLayout.Y_AXIS));
             temp.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent me) {
                     System.out.println(exercise.getName());
                 }
             });
-            temp.add(new JLabel(exercise.getName()));
-            temp.add(new JLabel(exercise.getType()));
-            temp.add(new JLabel(exercise.getCalories()));
-            temp.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
+            temp2.add(new JLabel(exercise.getName()));
+            temp2.add(new JLabel(exercise.getType()));
+            temp2.add(new JLabel(exercise.getCalories()));
             ExercisesPanel.add(temp);
         }
+        panel1.revalidate();
     }
 
     public static void main(String[] args) {
