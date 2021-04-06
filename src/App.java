@@ -1,14 +1,16 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class App implements Observer<WorkoutModel>{
     private JPanel panel1;
     private JTabbedPane tabbedPane1;
     private JComboBox comboBox1;
     private JPanel ExercisesPanel;
+    private JPanel DetailPanel;
 
     private WorkoutController controller;
     private WorkoutModel model;
@@ -21,9 +23,12 @@ public class App implements Observer<WorkoutModel>{
         model = new WorkoutModel();
         model.addObserver(this);
         controller = new WorkoutController(model);
+        controller.updateWorkouts(comboBox1.getSelectedItem().toString());
 
 
         ExercisesPanel.setLayout(new BoxLayout(ExercisesPanel, BoxLayout.X_AXIS));
+        DetailPanel.setLayout(new BoxLayout(DetailPanel, BoxLayout.X_AXIS));
+
         comboBox1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -37,23 +42,29 @@ public class App implements Observer<WorkoutModel>{
     @Override
     public void update(WorkoutModel model) {
         ExercisesPanel.removeAll();
-        Integer index=1;
+        //Integer index=1;
         for(Exercise exercise: model.getFirstPaneList()){
-            BoxFillerRatio temp=new BoxFillerRatio(3,4,
-                    new ExerciseCard(exercise.getName(),exercise.getType(), index++).getPanel(),
+            String calString = "Cal / Min: " + exercise.getCalories();
+            BoxFillerRatio filler = new BoxFillerRatio(3,4,
+                    new ExerciseCard(exercise.getName(),exercise.getType(), exercise.getCalories(), calString).getPanel(),
                     BoxLayout.Y_AXIS);
-            temp.addMouseListener(new MouseAdapter() {
+            filler.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent me) {
-                    System.out.println(exercise.getName());
+                    BoxFillerRatio temp = new BoxFillerRatio(3,4,
+                            new ExerciseCard(exercise.getName(),exercise.getType(), exercise.getCalories(), calString).getPanel(),
+                            BoxLayout.Y_AXIS);
+                    DetailPanel.removeAll();
+                    DetailPanel.add(temp);
+                    panel1.revalidate();
                 }
             });
-            ExercisesPanel.add(temp);
+            ExercisesPanel.add(filler);
         }
         panel1.revalidate();
     }
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("App");
+        JFrame frame = new JFrame("My Exercise Planner");
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setPreferredSize(new Dimension((int) size.getWidth() / 2, (int) size.getHeight() / 2));
         frame.setLocation(new Point((int) size.getWidth() / 4, (int) size.getHeight() / 4));

@@ -63,7 +63,7 @@ public class WorkoutModel {
 
         for(Exercise e: exercises){
 
-            if(e.getType().toLowerCase().equals(type.toLowerCase())){
+            if(e.getType().toLowerCase().equals(type.toLowerCase()) || type == "Exercise Type"){
                 firstPaneList.add(e);
             }
         }

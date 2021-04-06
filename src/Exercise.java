@@ -28,8 +28,8 @@ public class Exercise{
     /**Gets number of calories burned per minute of this exercise
      * @return Number of calories burned per minute of this exercise
      */
-    public String getCalories() {
-        return calories;
+    public int getCalories() {
+        return Integer.parseInt(calories);
     }
 
     /**Gets exercise type
