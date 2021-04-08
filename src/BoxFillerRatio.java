@@ -7,7 +7,7 @@ public class BoxFillerRatio extends Box.Filler {
     private int xRatio,yRatio;
 
     public BoxFillerRatio(int xRatio, int yRatio,Container content, int axis){
-        super(new Dimension(100,0),new Dimension(100,0),new Dimension(100,1000000));
+        super(new Dimension(100,0),new Dimension(10000,0),new Dimension(100000,1000000));
         this.xRatio=xRatio;
         this.yRatio=yRatio;
         setLayout(new BoxLayout(this,axis));
@@ -32,8 +32,9 @@ public class BoxFillerRatio extends Box.Filler {
     }
 
     public void fixRatio(){
-        Dimension newSize= new Dimension(getHeight()*xRatio/yRatio,100000);
-        setMaximumSize(newSize);
+        Dimension newSize= new Dimension(getHeight() * xRatio/yRatio,0);
+        setMaximumSize(new Dimension(getHeight() * xRatio/yRatio,100000));
+        setPreferredSize(newSize);
         revalidate();
     }
 }

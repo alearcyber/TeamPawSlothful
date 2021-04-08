@@ -20,6 +20,10 @@ public class WorkoutModel {
 
     private ArrayList<Exercise> firstPaneList = new ArrayList<>(); //exercises to be displayed
 
+    private ArrayList<Exercise> currentPlan = new ArrayList<>();
+
+    private Exercise selectedEx;
+
     //private ArrayList<Exercise> listOfExercises;
 
     //private DBmanager database;
@@ -72,5 +76,28 @@ public class WorkoutModel {
 
     public ArrayList<Exercise> getFirstPaneList(){
         return firstPaneList;
+    }
+
+
+    public void setSelectedEx(Exercise selectedEx) {
+        this.selectedEx = selectedEx;
+        notifyObservers();
+    }
+
+    public Exercise getSelectedEx(){
+        return selectedEx;
+    }
+
+    public ArrayList<Exercise> getCurrentPlan(){
+        return this.currentPlan;
+    }
+
+    /***
+     * add an exercise to the plan
+     * @param ex exercise to be added
+     */
+    public void addToPlan(Exercise ex){
+        currentPlan.add(ex);
+        notifyObservers();
     }
 }

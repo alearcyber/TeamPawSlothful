@@ -12,6 +12,16 @@ public class WorkoutController {
     }
 
 
+    public void setSelected(Exercise ex){
+        model.setSelectedEx(ex);
+    }
+
+
+    public void addToPlan(Exercise ex){
+        model.addToPlan(ex);
+    }
+
+
     /**
      * update workouts int he first panel thing
      */

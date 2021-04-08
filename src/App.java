@@ -11,6 +11,8 @@ public class App implements Observer<WorkoutModel>{
     private JComboBox comboBox1;
     private JPanel ExercisesPanel;
     private JPanel DetailPanel;
+    private JButton addExerciseButton;
+    private JPanel currentPlanA;
 
     private WorkoutController controller;
     private WorkoutModel model;
@@ -28,12 +30,25 @@ public class App implements Observer<WorkoutModel>{
 
         ExercisesPanel.setLayout(new BoxLayout(ExercisesPanel, BoxLayout.X_AXIS));
         DetailPanel.setLayout(new BoxLayout(DetailPanel, BoxLayout.X_AXIS));
+        currentPlanA.setLayout(new BoxLayout(currentPlanA, BoxLayout.X_AXIS));
 
         comboBox1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.updateWorkouts(comboBox1.getSelectedItem().toString());
                 ExercisesPanel.revalidate();
+            }
+        });
+
+
+        addExerciseButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    controller.addToPlan(model.getSelectedEx());
+                }catch(NullPointerException ex){
+                    System.out.println("No exercise selected");
+                }
             }
         });
     }
@@ -56,9 +71,24 @@ public class App implements Observer<WorkoutModel>{
                     DetailPanel.removeAll();
                     DetailPanel.add(temp);
                     panel1.revalidate();
+
+                    //tracking selected exercise
+                    controller.setSelected(exercise);
                 }
             });
             ExercisesPanel.add(filler);
+        }
+        panel1.revalidate();
+
+
+        //setting the selected exercise
+        currentPlanA.removeAll();
+        for(Exercise exercise: model.getCurrentPlan()){
+            BoxFillerRatio newbox = new BoxFillerRatio(3,4,
+                    new ExerciseCard(exercise.getName(),exercise.getType(), exercise.getCalories(), "Cal / Min: " + exercise.getCalories()).getPanel(),
+                    BoxLayout.Y_AXIS);
+
+            currentPlanA.add(newbox);
         }
         panel1.revalidate();
     }
