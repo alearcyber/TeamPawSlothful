@@ -3,7 +3,7 @@ public class WorkoutController {
     private WorkoutModel model;
 
     /**Default Constructor*/
-    public WorkoutController(){};
+    public WorkoutController(){}
 
     /**Parameterized Constructor
      * @param model this classes instance of the model
@@ -19,19 +19,19 @@ public class WorkoutController {
         model.setSelectedEx(ex);
     }
 
-
+    /**Add selected exercise from Add Exercise panel to Current Plan panel
+     * @param ex Exercise from Add Exercise panel to Current Plan panel
+     */
     public void addToPlan(Exercise ex){
         model.addToPlan(ex);
     }
 
-
-    /**
-     * update workouts int he first panel thing
+    /**Update exercises in the Add Exercises panel
+     * @param type Type of exercises to show
      */
     public void updateWorkouts(String type){
         try {
             model.updateWorkout(type);
-        }catch(Exception e){}
+        }catch(Exception e){e.printStackTrace();}
     }
-
 }

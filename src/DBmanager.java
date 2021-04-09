@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**Default Constructor*/
 public class DBmanager {
 
     private static final String FILENAME = "src//database";
@@ -23,8 +24,8 @@ public class DBmanager {
             JSONParser parser = new JSONParser();
             Object data = parser.parse(reader);
             dataArray = (JSONArray) data;
-            dataArray.forEach( exe -> parseExercise((JSONObject) exe));
-            dataArray.forEach( exe -> parseWorkout((JSONObject) exe));
+            dataArray.forEach(exe -> parseExercise((JSONObject) exe));
+            dataArray.forEach(exe -> parseWorkout((JSONObject) exe));
         }catch (IOException| ParseException e) {e.printStackTrace();}
     }
 
@@ -50,19 +51,18 @@ public class DBmanager {
                 JSONObject workoutObjects = (JSONObject) workoutData.get("workout");
                 String name = (String) workoutObjects.get("name");
 
-                Object temp = workoutObjects.get("exercises");
-                ArrayList<String> tempArray = (ArrayList<String>) temp;
+                ArrayList<String> tempArray = (ArrayList<String>) workoutObjects.get("exercises");
 
                 Workout workout = new Workout(name, tempArray);
                 workouts.add(workout);
         }
     }
 
+    /*
     /**Add new exercise to database
      * @param name: Name of the exercise to add
      * @param calories: Calories burned per minute of the exercise to add
      * @param type: Type of the exercise to add
-     */
     public static void addExercise(String name, String type, String calories) {
         JSONObject ex = new JSONObject();
         JSONObject exRapper = new JSONObject();
@@ -83,7 +83,7 @@ public class DBmanager {
 
         Exercise exerciseToAdd = new Exercise(name, type, calories);
         exercises.add(exerciseToAdd);
-    }
+    }*/
 
     /**Add new workout to database
      * @param name: Name of the workout to add

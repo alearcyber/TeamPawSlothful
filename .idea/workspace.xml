@@ -3,7 +3,22 @@
   <component name="ChangeListManager">
     <list default="true" id="93c9d068-fb06-4dac-bbda-e50b8db393f8" name="Default Changelist" comment="Added some JavaDoc">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/App$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/App$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/App$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/App$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/App.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/BoxFillerRatio$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/BoxFillerRatio$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/BoxFillerRatio.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/BoxFillerRatio.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/DBmanager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/DBmanager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/HelloWorld.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/WorkoutController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/WorkoutController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/WorkoutGUI.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BoxFillerRatio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BoxFillerRatio.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DBmanager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DBmanager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HelloWorld.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/WorkoutController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/WorkoutController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/WorkoutGUI.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -187,7 +202,14 @@
       <option name="project" value="LOCAL" />
       <updated>1617942573229</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Added some JavaDoc">
+      <created>1617942654650</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1617942654650</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="ToolWindowManager">
