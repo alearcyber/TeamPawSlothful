@@ -13,6 +13,8 @@ public class App implements Observer<WorkoutModel>{
     private JPanel DetailPanel;
     private JButton addExerciseButton;
     private JPanel currentPlanA;
+    private JComboBox comboBox2;
+    private JPanel currentPlanB;
 
     private WorkoutController controller;
     private WorkoutModel model;
@@ -31,6 +33,8 @@ public class App implements Observer<WorkoutModel>{
         ExercisesPanel.setLayout(new BoxLayout(ExercisesPanel, BoxLayout.X_AXIS));
         DetailPanel.setLayout(new BoxLayout(DetailPanel, BoxLayout.X_AXIS));
         currentPlanA.setLayout(new BoxLayout(currentPlanA, BoxLayout.X_AXIS));
+        currentPlanB.setLayout(new BoxLayout(currentPlanB, BoxLayout.X_AXIS));
+
 
         comboBox1.addActionListener(new ActionListener() {
             @Override
@@ -89,6 +93,18 @@ public class App implements Observer<WorkoutModel>{
                     BoxLayout.Y_AXIS);
 
             currentPlanA.add(newbox);
+        }
+        panel1.revalidate();
+
+
+        //setting the first panel on the second page here
+        currentPlanB.removeAll();
+        for(Exercise exercise: model.getCurrentPlan()){
+            BoxFillerRatio newbox = new BoxFillerRatio(3,4,
+                    new ExerciseCard(exercise.getName(),exercise.getType(), exercise.getCalories(), "Cal / Min: " + exercise.getCalories()).getPanel(),
+                    BoxLayout.Y_AXIS);
+
+            currentPlanB.add(newbox);
         }
         panel1.revalidate();
     }
