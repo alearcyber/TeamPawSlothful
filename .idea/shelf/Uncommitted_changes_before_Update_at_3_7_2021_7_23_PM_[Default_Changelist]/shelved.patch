@@ -1,0 +1,78 @@
+Index: src/DBmanager.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import javax.json.*;\r\nimport java.io.FileInputStream;\r\nimport java.io.FileNotFoundException;\r\nimport java.io.FileReader;\r\nimport java.io.IOException;\r\n\r\nimport org.json.simple.*;\r\nimport org.json.simple.parser.JSONParser;\r\nimport org.json.simple.parser.ParseException;\r\n\r\npublic class DBmanager {\r\n\r\n    private static void printExercises(JSONObject json) {\r\n        JSONObject exercise = (JSONObject) json.get(\"exercise\");\r\n        String name = (String) exercise.get(\"name\");\r\n        System.out.println(name);\r\n    }\r\n\r\n    public static void main(String[] args) throws ParseException, IOException {\r\n        FileReader reader = new FileReader(\"C:\\\\Users\\\\Aidan\\\\IdeaProjects\\\\WorkoutManager\\\\src\\\\database\");\r\n        JSONParser parser = new JSONParser();\r\n        //JsonArray array = (JsonArray) parser;\r\n        Object json = parser.parse(reader);\r\n        JSONArray array = (JSONArray) json;\r\n\r\n        reader.close();\r\n\r\n\r\n        array.forEach( emp -> printExercises( (JSONObject) emp ) );\r\n\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/DBmanager.java b/src/DBmanager.java
+--- a/src/DBmanager.java	
++++ b/src/DBmanager.java	
+@@ -1,4 +1,3 @@
+-import javax.json.*;
+ import java.io.FileInputStream;
+ import java.io.FileNotFoundException;
+ import java.io.FileReader;
+@@ -17,7 +16,7 @@
+     }
+ 
+     public static void main(String[] args) throws ParseException, IOException {
+-        FileReader reader = new FileReader("C:\\Users\\Aidan\\IdeaProjects\\WorkoutManager\\src\\database");
++        FileReader reader = new FileReader("src/database");
+         JSONParser parser = new JSONParser();
+         //JsonArray array = (JsonArray) parser;
+         Object json = parser.parse(reader);
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_12\" default=\"true\" project-jdk-name=\"12\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/out\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	
++++ b/.idea/misc.xml	
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_12" default="true" project-jdk-name="12" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_15" default="true" project-jdk-name="15" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/out" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: .idea/libraries/javax_json_api_1_1.xml
+===================================================================
+diff --git a/.idea/libraries/javax_json_api_1_1.xml b/.idea/libraries/json_simple_1_1_1.xml
+rename from .idea/libraries/javax_json_api_1_1.xml
+rename to .idea/libraries/json_simple_1_1_1.xml
+--- a/.idea/libraries/javax_json_api_1_1.xml	
++++ b/.idea/libraries/json_simple_1_1_1.xml	
+@@ -1,7 +1,6 @@
+ <component name="libraryTable">
+-  <library name="javax.json-api-1.1">
++  <library name="json-simple-1.1.1">
+     <CLASSES>
+-      <root url="jar://$PROJECT_DIR$/javax.json-api-1.1.jar!/" />
+       <root url="jar://$PROJECT_DIR$/json-simple-1.1.1.jar!/" />
+     </CLASSES>
+     <JAVADOC />
+Index: WorkoutManager.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<module type=\"JAVA_MODULE\" version=\"4\">\r\n  <component name=\"NewModuleRootManager\" inherit-compiler-output=\"true\">\r\n    <exclude-output />\r\n    <content url=\"file://$MODULE_DIR$\">\r\n      <sourceFolder url=\"file://$MODULE_DIR$/src\" isTestSource=\"false\" />\r\n    </content>\r\n    <orderEntry type=\"inheritedJdk\" />\r\n    <orderEntry type=\"sourceFolder\" forTests=\"false\" />\r\n    <orderEntry type=\"library\" name=\"javax.json-api-1.1\" level=\"project\" />\r\n  </component>\r\n</module>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/WorkoutManager.iml b/WorkoutManager.iml
+--- a/WorkoutManager.iml	
++++ b/WorkoutManager.iml	
+@@ -7,6 +7,6 @@
+     </content>
+     <orderEntry type="inheritedJdk" />
+     <orderEntry type="sourceFolder" forTests="false" />
+-    <orderEntry type="library" name="javax.json-api-1.1" level="project" />
++    <orderEntry type="library" name="json-simple-1.1.1" level="project" />
+   </component>
+ </module>
+\ No newline at end of file

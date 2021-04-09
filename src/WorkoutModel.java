@@ -1,44 +1,19 @@
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * this class will serve as the model in the mvc to hold the data that belongs in the
- * application.
- *
- * @Author - add your name when you make changes and whatnot
- * Aidan Lear
- *
- * Date - 2/15/2021
- *
- * Notes:
- *  currently this will be my strating point with regards to coding. Also testing git a little
- */
 public class WorkoutModel {
 
-    /** list of observers to notify when something changes */
     private List<Observer<WorkoutModel>> observers;
-
-    private ArrayList<Exercise> firstPaneList = new ArrayList<>(); //exercises to be displayed
-
+    private ArrayList<Exercise> firstPaneList = new ArrayList<>();
     private ArrayList<Exercise> currentPlan = new ArrayList<>();
-
+    private ArrayList<Exercise> exercises = new ArrayList<>();
     private Exercise selectedEx;
 
-    //private ArrayList<Exercise> listOfExercises;
-
-    //private DBmanager database;
-
-
-    //public WokroutModel(){
-        //databse.getall the exersicse
-    //}
+    /**Default Constructor*/
     public WorkoutModel(){
         DBmanager.getData();
         observers = new ArrayList<>();
     }
-
-
-
 
     /**
      * add an observer to the list of observers to be observed
@@ -59,45 +34,56 @@ public class WorkoutModel {
         }
     }
 
-
-
-    public void updateWorkout(String type) throws Exception{
+    /**Updates exercises shown in the Add Exercise panel
+     * @param type Type of exercises to show in Add Exercise panel
+     */
+    public void updateWorkout(String type) {
         firstPaneList.clear();
-        ArrayList<Exercise> exercises = DBmanager.getExercises();
+        exercises = DBmanager.getExercises();
 
         for(Exercise e: exercises){
 
-            if(e.getType().toLowerCase().equals(type.toLowerCase()) || type == "Exercise Type"){
+            if(e.getType().equalsIgnoreCase(type) || type == "Exercise Type"){
                 firstPaneList.add(e);
             }
         }
         notifyObservers();
     }
 
-    public ArrayList<Exercise> getFirstPaneList(){
-        return firstPaneList;
+    /**Add an exercise to current plan
+     * @param ex Exercise to be added to current plan
+     */
+    public void addToPlan(Exercise ex){
+        currentPlan.add(ex);
+        notifyObservers();
     }
 
-
+    /**Set selected exercise from Add Exercise panel
+     * @param selectedEx Exercise selected from Add Exercise panel
+     */
     public void setSelectedEx(Exercise selectedEx) {
         this.selectedEx = selectedEx;
         notifyObservers();
     }
 
+    /**Get list of exercises contained in Add Exercise panel
+     * @return List of exercises contained in Add Exercise panel
+     */
+    public ArrayList<Exercise> getFirstPaneList(){
+        return firstPaneList;
+    }
+
+    /**Get selected exercise from Add Exercise panel
+     * @return Selected exercise from Add Exercise panel
+     */
     public Exercise getSelectedEx(){
         return selectedEx;
     }
 
+    /**Get current plan
+     * @return Current plan
+     */
     public ArrayList<Exercise> getCurrentPlan(){
         return this.currentPlan;
-    }
-
-    /***
-     * add an exercise to the plan
-     * @param ex exercise to be added
-     */
-    public void addToPlan(Exercise ex){
-        currentPlan.add(ex);
-        notifyObservers();
     }
 }

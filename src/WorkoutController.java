@@ -1,17 +1,20 @@
 public class WorkoutController {
 
-    /** local instance of the model */
     private WorkoutModel model;
 
-    /**
-     * construct and set the model
+    /**Default Constructor*/
+    public WorkoutController(){};
+
+    /**Parameterized Constructor
      * @param model this classes instance of the model
      */
     public WorkoutController(WorkoutModel model){
         this.model = model;
     }
 
-
+    /**Set selected exercise from Add Exercise panel
+     * @param ex Exercise selected from Add Exercise panel
+     */
     public void setSelected(Exercise ex){
         model.setSelectedEx(ex);
     }

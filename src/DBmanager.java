@@ -16,24 +16,7 @@ public class DBmanager {
     private static final ArrayList<Exercise> exercises = new ArrayList<>();
     private static final ArrayList<Workout> workouts = new ArrayList<>();
 
-    /**Main method, constructs model from database*/
-    public static void main(String[] args) {
-        getData();
-        /*Un-suppress to test adding exercises to database
-        System.out.println(getExercises());
-        addExercise("Back-flips", "legs", "1");
-        System.out.println(getExercises());
-        */
-
-        /*Un-suppress to test adding workouts to database
-        System.out.println(getWorkouts());
-        addWorkout("workout2", "Back-flips", "Curls");
-        System.out.println(getWorkouts());
-        */
-    }
-
-    /**Gets data from JSON database file
-     */
+    /**Gets data from JSON database file*/
     public static void getData() {
         try {
             FileReader reader = new FileReader(FILENAME);

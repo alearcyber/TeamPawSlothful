@@ -6,9 +6,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class App implements Observer<WorkoutModel>{
-    private JPanel panel1;
+
+    private static final JFrame frame = new JFrame("My Exercise Planner");
+    private JPanel mainPanel;
     private JTabbedPane tabbedPane1;
-    private JComboBox comboBox1;
     private JPanel ExercisesPanel;
     private JPanel DetailPanel;
     private JButton addExerciseButton;
@@ -16,12 +17,10 @@ public class App implements Observer<WorkoutModel>{
     private JComboBox comboBox2;
     private JPanel currentPlanB;
 
+    private JComboBox comboBox1;
+
     private WorkoutController controller;
     private WorkoutModel model;
-
-
-
-
 
     public App(){
         model = new WorkoutModel();
@@ -65,16 +64,16 @@ public class App implements Observer<WorkoutModel>{
         for(Exercise exercise: model.getFirstPaneList()){
             String calString = "Cal / Min: " + exercise.getCalories();
             BoxFillerRatio filler = new BoxFillerRatio(3,4,
-                    new ExerciseCard(exercise.getName(),exercise.getType(), exercise.getCalories(), calString).getPanel(),
+                    new ExerciseCard(exercise.getName(),exercise.getType(), calString).getPanel(),
                     BoxLayout.Y_AXIS);
             filler.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent me) {
                     BoxFillerRatio temp = new BoxFillerRatio(3,4,
-                            new ExerciseCard(exercise.getName(),exercise.getType(), exercise.getCalories(), calString).getPanel(),
+                            new ExerciseCard(exercise.getName(),exercise.getType(), calString).getPanel(),
                             BoxLayout.Y_AXIS);
                     DetailPanel.removeAll();
                     DetailPanel.add(temp);
-                    panel1.revalidate();
+                    mainPanel.revalidate();
 
                     //tracking selected exercise
                     controller.setSelected(exercise);
@@ -82,39 +81,39 @@ public class App implements Observer<WorkoutModel>{
             });
             ExercisesPanel.add(filler);
         }
-        panel1.revalidate();
+        mainPanel.revalidate();
 
 
         //setting the selected exercise
         currentPlanA.removeAll();
         for(Exercise exercise: model.getCurrentPlan()){
             BoxFillerRatio newbox = new BoxFillerRatio(3,4,
-                    new ExerciseCard(exercise.getName(),exercise.getType(), exercise.getCalories(), "Cal / Min: " + exercise.getCalories()).getPanel(),
+                    new ExerciseCard(exercise.getName(),exercise.getType(), "Cal / Min: " + exercise.getCalories()).getPanel(),
                     BoxLayout.Y_AXIS);
 
             currentPlanA.add(newbox);
         }
-        panel1.revalidate();
+        mainPanel.revalidate();
 
 
         //setting the first panel on the second page here
         currentPlanB.removeAll();
         for(Exercise exercise: model.getCurrentPlan()){
             BoxFillerRatio newbox = new BoxFillerRatio(3,4,
-                    new ExerciseCard(exercise.getName(),exercise.getType(), exercise.getCalories(), "Cal / Min: " + exercise.getCalories()).getPanel(),
+                    new ExerciseCard(exercise.getName(),exercise.getType(), "Cal / Min: " + exercise.getCalories()).getPanel(),
                     BoxLayout.Y_AXIS);
 
             currentPlanB.add(newbox);
         }
-        panel1.revalidate();
+        mainPanel.revalidate();
     }
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("My Exercise Planner");
+
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setPreferredSize(new Dimension((int) size.getWidth() / 2, (int) size.getHeight() / 2));
         frame.setLocation(new Point((int) size.getWidth() / 4, (int) size.getHeight() / 4));
-        frame.setContentPane(new App().panel1);
+        frame.setContentPane(new App().mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);

@@ -1,0 +1,75 @@
+Index: src/DBmanager.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import java.io.FileInputStream;\r\nimport java.io.FileNotFoundException;\r\nimport java.io.FileReader;\r\nimport java.io.IOException;\r\n\r\nimport org.json.simple.*;\r\nimport org.json.simple.parser.JSONParser;\r\nimport org.json.simple.parser.ParseException;\r\n\r\npublic class DBmanager {\r\n\r\n    /** the name of the json file */\r\n    private String filename;\r\n\r\n    private static Object jsonObject;\r\n\r\n    /** json array that the json object is cast to */\r\n    private static JSONArray jsonarray;\r\n\r\n\r\n    public DBmanager(String filename)throws IOException, ParseException{\r\n        this.filename = filename;\r\n        FileReader reader = new FileReader(\"src\\\\database\");\r\n        JSONParser parser = new JSONParser();\r\n        jsonObject = parser.parse(reader);\r\n        jsonarray = (JSONArray) jsonObject;\r\n    }\r\n\r\n    private static void printExercises(JSONObject json) {\r\n        JSONObject exercise = (JSONObject) json.get(\"plan:exercise\");\r\n        String name = (String) exercise.get(\"name\");\r\n        System.out.println(name);\r\n    }\r\n\r\n    private static void addExercise(){\r\n\r\n    }\r\n\r\n\r\n    private static void testDatabase() throws ParseException, IOException{\r\n        FileReader reader = new FileReader(\"src\\\\database\");\r\n        JSONParser parser = new JSONParser();\r\n        Object json = parser.parse(reader);\r\n        JSONArray array = (JSONArray) json;\r\n\r\n        reader.close();\r\n\r\n\r\n        array.forEach( emp -> printExercises( (JSONObject) emp ) );\r\n    }\r\n\r\n    public static void main(String[] args) throws ParseException, IOException {\r\n        testDatabase();\r\n\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/DBmanager.java b/src/DBmanager.java
+--- a/src/DBmanager.java	(revision 8e3760e40988bb0f931b4547d61800ab33fefa1f)
++++ b/src/DBmanager.java	(date 1616641083961)
+@@ -1,56 +1,26 @@
+-import java.io.FileInputStream;
+-import java.io.FileNotFoundException;
+-import java.io.FileReader;
+-import java.io.IOException;
+-
+-import org.json.simple.*;
++import org.json.simple.JSONArray;
+ import org.json.simple.parser.JSONParser;
+ import org.json.simple.parser.ParseException;
+ 
++import java.io.FileReader;
++import java.io.IOException;
++
+ public class DBmanager {
+ 
+-    /** the name of the json file */
+-    private String filename;
+-
+-    private static Object jsonObject;
+-
+-    /** json array that the json object is cast to */
+-    private static JSONArray jsonarray;
+-
+-
+     public DBmanager(String filename)throws IOException, ParseException{
+         this.filename = filename;
+         FileReader reader = new FileReader("src\\database");
+         JSONParser parser = new JSONParser();
+         jsonObject = parser.parse(reader);
+         jsonarray = (JSONArray) jsonObject;
+-    }
+-
+-    private static void printExercises(JSONObject json) {
+-        JSONObject exercise = (JSONObject) json.get("plan:exercise");
+-        String name = (String) exercise.get("name");
+-        System.out.println(name);
+-    }
+-
+-    private static void addExercise(){
+-
+-    }
+-
+-
+-    private static void testDatabase() throws ParseException, IOException{
+-        FileReader reader = new FileReader("src\\database");
+-        JSONParser parser = new JSONParser();
+-        Object json = parser.parse(reader);
+-        JSONArray array = (JSONArray) json;
+-
+         reader.close();
+-
+-
+-        array.forEach( emp -> printExercises( (JSONObject) emp ) );
+     }
+ 
+     public static void main(String[] args) throws ParseException, IOException {
+-        testDatabase();
+ 
+     }
++
++    private String filename;
++    private static Object jsonObject;
++    private static JSONArray jsonarray;
+ }

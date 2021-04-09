@@ -1,18 +1,29 @@
 import javax.swing.*;
 
 public class ExerciseCard {
-    private JPanel panel1;
+    private JPanel mainPanel;
     private JLabel nameLabel;
     private JLabel typeLabel;
-    private JLabel indexLabel;
+    private JLabel calorieLabel;
 
-    public ExerciseCard(String name,String type,Integer index, String calories){
+    /**Default Constructor*/
+    public ExerciseCard(){};
+
+    /**Parameterized Constructor
+     * @param name Name of exercise
+     * @param type Type of exercise
+     * @param calories Calories burned per minute of exercise
+     */
+    public ExerciseCard(String name,String type, String calories){
         nameLabel.setText(name);
         typeLabel.setText(type);
-        //indexLabel.setText(index.toString());
-        indexLabel.setText(calories);
+        calorieLabel.setText(calories);
     }
+
+    /**Get Main Panel of Exercise Card
+     * @return Main Panel of Exercise Card
+     */
     public JPanel getPanel(){
-        return panel1;
+        return mainPanel;
     }
 }

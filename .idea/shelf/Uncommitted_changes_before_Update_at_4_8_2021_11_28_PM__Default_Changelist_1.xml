@@ -1,0 +1,24 @@
+<changelist name="Uncommitted_changes_before_Update_at_4_8_2021_11_28_PM_[Default_Changelist]1" date="1617942536995" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_8_2021_11_28_PM_[Default_Changelist]1/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 4/8/2021 11:28 PM [Default Changelist]" />
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/WorkoutManager/WorkoutModel.class" />
+    <option name="AFTER_PATH" value="out/production/WorkoutManager/WorkoutModel.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_8_2021_11_28_PM_[Default_Changelist]1/WorkoutModel.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/WorkoutManager/App.class" />
+    <option name="AFTER_PATH" value="out/production/WorkoutManager/App.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_8_2021_11_28_PM_[Default_Changelist]1/App.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/WorkoutManager/App$1.class" />
+    <option name="AFTER_PATH" value="out/production/WorkoutManager/App$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_8_2021_11_28_PM_[Default_Changelist]1/App$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/WorkoutManager/com/intellij/uiDesigner/core/Util.class" />
+    <option name="AFTER_PATH" value="out/production/WorkoutManager/com/intellij/uiDesigner/core/Util.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_8_2021_11_28_PM_[Default_Changelist]1/Util.class" />
+  </binary>
+</changelist>

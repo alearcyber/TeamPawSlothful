@@ -1,0 +1,355 @@
+Index: src/BoxFillerRatio.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import javax.swing.*;\r\nimport java.awt.*;\r\nimport java.awt.event.ComponentAdapter;\r\nimport java.awt.event.ComponentEvent;\r\n\r\npublic class BoxFillerRatio extends Box.Filler {\r\n    private int xRatio,yRatio;\r\n\r\n    public BoxFillerRatio(int xRatio, int yRatio,Container content, int axis){\r\n        super(new Dimension(100,0),new Dimension(100,0),new Dimension(100,1000000));\r\n        this.xRatio=xRatio;\r\n        this.yRatio=yRatio;\r\n        setLayout(new BoxLayout(this,axis));\r\n        if(axis==0){\r\n            add(Box.createHorizontalGlue());\r\n            add(content);\r\n            add(Box.createHorizontalGlue());\r\n        }\r\n        else{\r\n            add(Box.createVerticalGlue());\r\n            add(content);\r\n            add(Box.createVerticalGlue());\r\n        }\r\n        setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));\r\n        addComponentListener(new ComponentAdapter() {\r\n            @Override\r\n            public void componentResized(ComponentEvent e) {\r\n                super.componentResized(e);\r\n                fixRatio();\r\n            }\r\n        });\r\n    }\r\n\r\n    public void fixRatio(){\r\n        Dimension newSize= new Dimension(getHeight()*xRatio/yRatio,100000);\r\n        setMaximumSize(newSize);\r\n        revalidate();\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/BoxFillerRatio.java b/src/BoxFillerRatio.java
+--- a/src/BoxFillerRatio.java	(revision 1559122b91b712fac37a19a318e8aa72ab19a171)
++++ b/src/BoxFillerRatio.java	(date 1617895259289)
+@@ -32,7 +32,7 @@
+     }
+ 
+     public void fixRatio(){
+-        Dimension newSize= new Dimension(getHeight()*xRatio/yRatio,100000);
++        Dimension newSize= new Dimension(getHeight()*xRatio/yRatio,10000);
+         setMaximumSize(newSize);
+         revalidate();
+     }
+Index: src/WorkoutController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>public class WorkoutController {\r\n\r\n    /** local instance of the model */\r\n    private WorkoutModel model;\r\n\r\n    /**\r\n     * construct and set the model\r\n     * @param model this classes instance of the model\r\n     */\r\n    public WorkoutController(WorkoutModel model){\r\n        this.model = model;\r\n    }\r\n\r\n\r\n    /**\r\n     * update workouts int he first panel thing\r\n     */\r\n    public void updateWorkouts(String type){\r\n        try {\r\n            model.updateWorkout(type);\r\n        }catch(Exception e){}\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/WorkoutController.java b/src/WorkoutController.java
+--- a/src/WorkoutController.java	(revision 1559122b91b712fac37a19a318e8aa72ab19a171)
++++ b/src/WorkoutController.java	(date 1617897470880)
+@@ -1,19 +1,16 @@
+ public class WorkoutController {
+-
+-    /** local instance of the model */
+     private WorkoutModel model;
+ 
+     /**
+-     * construct and set the model
+-     * @param model this classes instance of the model
++     * Construct and set the model
++     * @param model This classes instance of the model
+      */
+     public WorkoutController(WorkoutModel model){
+         this.model = model;
+     }
+ 
+-
+     /**
+-     * update workouts int he first panel thing
++     * Update workouts in Add Exercise panel
+      */
+     public void updateWorkouts(String type){
+         try {
+@@ -21,4 +18,7 @@
+         }catch(Exception e){}
+     }
+ 
++
++
++
+ }
+Index: src/WorkoutModel.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import java.util.ArrayList;\r\nimport java.util.List;\r\n\r\n/**\r\n * this class will serve as the model in the mvc to hold the data that belongs in the\r\n * application.\r\n *\r\n * @Author - add your name when you make changes and whatnot\r\n * Aidan Lear\r\n *\r\n * Date - 2/15/2021\r\n *\r\n * Notes:\r\n *  currently this will be my strating point with regards to coding. Also testing git a little\r\n */\r\npublic class WorkoutModel {\r\n\r\n    /** list of observers to notify when something changes */\r\n    private List<Observer<WorkoutModel>> observers;\r\n\r\n    private ArrayList<Exercise> firstPaneList = new ArrayList<>(); //exercises to be displayed\r\n\r\n    //private ArrayList<Exercise> listOfExercises;\r\n\r\n    //private DBmanager database;\r\n\r\n\r\n    //public WokroutModel(){\r\n        //databse.getall the exersicse\r\n    //}\r\n    public WorkoutModel(){\r\n        DBmanager.getData();\r\n        observers = new ArrayList<>();\r\n    }\r\n\r\n\r\n\r\n\r\n    /**\r\n     * add an observer to the list of observers to be observed\r\n     * @param observer the observer to be registered\r\n     */\r\n    public void addObserver(Observer<WorkoutModel> observer){\r\n        observers.add(observer);\r\n    }\r\n\r\n\r\n    /**\r\n     * helper function to use when changes occur to notify the observers\r\n     * that a change has occured\r\n     */\r\n    private void notifyObservers(){\r\n        for(Observer<WorkoutModel> observer: observers){\r\n            observer.update(this);\r\n        }\r\n    }\r\n\r\n\r\n\r\n    public void updateWorkout(String type) throws Exception{\r\n        firstPaneList.clear();\r\n        ArrayList<Exercise> exercises = DBmanager.getExercises();\r\n\r\n        for(Exercise e: exercises){\r\n\r\n            if(e.getType().toLowerCase().equals(type.toLowerCase()) || type == \"Exercise Type\"){\r\n                firstPaneList.add(e);\r\n            }\r\n        }\r\n        notifyObservers();\r\n    }\r\n\r\n    public ArrayList<Exercise> getFirstPaneList(){\r\n        return firstPaneList;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/WorkoutModel.java b/src/WorkoutModel.java
+--- a/src/WorkoutModel.java	(revision 1559122b91b712fac37a19a318e8aa72ab19a171)
++++ b/src/WorkoutModel.java	(date 1617897668827)
+@@ -1,54 +1,26 @@
+ import java.util.ArrayList;
+ import java.util.List;
+ 
+-/**
+- * this class will serve as the model in the mvc to hold the data that belongs in the
+- * application.
+- *
+- * @Author - add your name when you make changes and whatnot
+- * Aidan Lear
+- *
+- * Date - 2/15/2021
+- *
+- * Notes:
+- *  currently this will be my strating point with regards to coding. Also testing git a little
+- */
++/**This class is the model in MVC. It holds the data that the application uses.*/
+ public class WorkoutModel {
+-
+-    /** list of observers to notify when something changes */
+     private List<Observer<WorkoutModel>> observers;
+-
+-    private ArrayList<Exercise> firstPaneList = new ArrayList<>(); //exercises to be displayed
+-
+-    //private ArrayList<Exercise> listOfExercises;
+-
+-    //private DBmanager database;
++    private ArrayList<Exercise> firstPaneList = new ArrayList<>();
+ 
+-
+-    //public WokroutModel(){
+-        //databse.getall the exersicse
+-    //}
++    /**Default Constructor*/
+     public WorkoutModel(){
+         DBmanager.getData();
+         observers = new ArrayList<>();
+     }
+ 
+-
+-
+-
+     /**
+-     * add an observer to the list of observers to be observed
++     * Add an observer to the list of observers to be observed
+      * @param observer the observer to be registered
+      */
+     public void addObserver(Observer<WorkoutModel> observer){
+         observers.add(observer);
+     }
+ 
+-
+-    /**
+-     * helper function to use when changes occur to notify the observers
+-     * that a change has occured
+-     */
++    /**Helper function that notifies the observers when a change occurs*/
+     private void notifyObservers(){
+         for(Observer<WorkoutModel> observer: observers){
+             observer.update(this);
+@@ -56,13 +28,11 @@
+     }
+ 
+ 
+-
+     public void updateWorkout(String type) throws Exception{
+         firstPaneList.clear();
+         ArrayList<Exercise> exercises = DBmanager.getExercises();
+ 
+         for(Exercise e: exercises){
+-
+             if(e.getType().toLowerCase().equals(type.toLowerCase()) || type == "Exercise Type"){
+                 firstPaneList.add(e);
+             }
+Index: src/App.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import javax.swing.*;\r\nimport java.awt.*;\r\nimport java.awt.event.ActionEvent;\r\nimport java.awt.event.ActionListener;\r\nimport java.awt.event.MouseAdapter;\r\nimport java.awt.event.MouseEvent;\r\n\r\npublic class App implements Observer<WorkoutModel>{\r\n    private JPanel panel1;\r\n    private JTabbedPane tabbedPane1;\r\n    private JComboBox comboBox1;\r\n    private JPanel ExercisesPanel;\r\n    private JPanel DetailPanel;\r\n\r\n    private WorkoutController controller;\r\n    private WorkoutModel model;\r\n\r\n\r\n\r\n\r\n\r\n    public App(){\r\n        model = new WorkoutModel();\r\n        model.addObserver(this);\r\n        controller = new WorkoutController(model);\r\n        controller.updateWorkouts(comboBox1.getSelectedItem().toString());\r\n\r\n\r\n        ExercisesPanel.setLayout(new BoxLayout(ExercisesPanel, BoxLayout.X_AXIS));\r\n        DetailPanel.setLayout(new BoxLayout(DetailPanel, BoxLayout.X_AXIS));\r\n\r\n        comboBox1.addActionListener(new ActionListener() {\r\n            @Override\r\n            public void actionPerformed(ActionEvent e) {\r\n                controller.updateWorkouts(comboBox1.getSelectedItem().toString());\r\n                ExercisesPanel.revalidate();\r\n            }\r\n        });\r\n    }\r\n\r\n\r\n    @Override\r\n    public void update(WorkoutModel model) {\r\n        ExercisesPanel.removeAll();\r\n        //Integer index=1;\r\n        for(Exercise exercise: model.getFirstPaneList()){\r\n            String calString = \"Cal / Min: \" + exercise.getCalories();\r\n            BoxFillerRatio filler = new BoxFillerRatio(3,4,\r\n                    new ExerciseCard(exercise.getName(),exercise.getType(), exercise.getCalories(), calString).getPanel(),\r\n                    BoxLayout.Y_AXIS);\r\n            filler.addMouseListener(new MouseAdapter() {\r\n                public void mouseClicked(MouseEvent me) {\r\n                    BoxFillerRatio temp = new BoxFillerRatio(3,4,\r\n                            new ExerciseCard(exercise.getName(),exercise.getType(), exercise.getCalories(), calString).getPanel(),\r\n                            BoxLayout.Y_AXIS);\r\n                    DetailPanel.removeAll();\r\n                    DetailPanel.add(temp);\r\n                    panel1.revalidate();\r\n                }\r\n            });\r\n            ExercisesPanel.add(filler);\r\n        }\r\n        panel1.revalidate();\r\n    }\r\n\r\n    public static void main(String[] args) {\r\n        JFrame frame = new JFrame(\"My Exercise Planner\");\r\n        Dimension size = Toolkit.getDefaultToolkit().getScreenSize();\r\n        frame.setPreferredSize(new Dimension((int) size.getWidth() / 2, (int) size.getHeight() / 2));\r\n        frame.setLocation(new Point((int) size.getWidth() / 4, (int) size.getHeight() / 4));\r\n        frame.setContentPane(new App().panel1);\r\n        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);\r\n        frame.pack();\r\n        frame.setVisible(true);\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/App.java b/src/App.java
+--- a/src/App.java	(revision 1559122b91b712fac37a19a318e8aa72ab19a171)
++++ b/src/App.java	(date 1617897388608)
+@@ -11,13 +11,9 @@
+     private JComboBox comboBox1;
+     private JPanel ExercisesPanel;
+     private JPanel DetailPanel;
+-
+     private WorkoutController controller;
+     private WorkoutModel model;
+-
+-
+-
+-
++    private BoxFillerRatio temp;
+ 
+     public App(){
+         model = new WorkoutModel();
+@@ -25,7 +21,6 @@
+         controller = new WorkoutController(model);
+         controller.updateWorkouts(comboBox1.getSelectedItem().toString());
+ 
+-
+         ExercisesPanel.setLayout(new BoxLayout(ExercisesPanel, BoxLayout.X_AXIS));
+         DetailPanel.setLayout(new BoxLayout(DetailPanel, BoxLayout.X_AXIS));
+ 
+@@ -38,20 +33,18 @@
+         });
+     }
+ 
+-
+     @Override
+     public void update(WorkoutModel model) {
+         ExercisesPanel.removeAll();
+-        //Integer index=1;
+         for(Exercise exercise: model.getFirstPaneList()){
+             String calString = "Cal / Min: " + exercise.getCalories();
+             BoxFillerRatio filler = new BoxFillerRatio(3,4,
+-                    new ExerciseCard(exercise.getName(),exercise.getType(), exercise.getCalories(), calString).getPanel(),
++                    new ExerciseCard(exercise.getName(),exercise.getType(), calString).getPanel(),
+                     BoxLayout.Y_AXIS);
+             filler.addMouseListener(new MouseAdapter() {
+                 public void mouseClicked(MouseEvent me) {
+-                    BoxFillerRatio temp = new BoxFillerRatio(3,4,
+-                            new ExerciseCard(exercise.getName(),exercise.getType(), exercise.getCalories(), calString).getPanel(),
++                    temp = new BoxFillerRatio(3,4,
++                            new ExerciseCard(exercise.getName(),exercise.getType(), calString).getPanel(),
+                             BoxLayout.Y_AXIS);
+                     DetailPanel.removeAll();
+                     DetailPanel.add(temp);
+Index: src/ExerciseCard.form
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<form xmlns=\"http://www.intellij.com/uidesigner/form/\" version=\"1\" bind-to-class=\"ExerciseCard\">\r\n  <grid id=\"27dc6\" binding=\"panel1\" default-binding=\"true\" layout-manager=\"GridLayoutManager\" row-count=\"5\" column-count=\"1\" same-size-horizontally=\"false\" same-size-vertically=\"true\" hgap=\"-1\" vgap=\"-1\">\r\n    <margin top=\"0\" left=\"0\" bottom=\"0\" right=\"0\"/>\r\n    <constraints>\r\n      <xy x=\"20\" y=\"20\" width=\"500\" height=\"400\"/>\r\n    </constraints>\r\n    <properties/>\r\n    <border type=\"none\"/>\r\n    <children>\r\n      <component id=\"d4e86\" class=\"javax.swing.JLabel\" binding=\"nameLabel\">\r\n        <constraints>\r\n          <grid row=\"1\" column=\"0\" row-span=\"1\" col-span=\"1\" vsize-policy=\"0\" hsize-policy=\"0\" anchor=\"0\" fill=\"0\" indent=\"0\" use-parent-layout=\"false\"/>\r\n        </constraints>\r\n        <properties>\r\n          <text value=\"Name\"/>\r\n        </properties>\r\n      </component>\r\n      <component id=\"aba54\" class=\"javax.swing.JLabel\" binding=\"typeLabel\">\r\n        <constraints>\r\n          <grid row=\"2\" column=\"0\" row-span=\"1\" col-span=\"1\" vsize-policy=\"0\" hsize-policy=\"0\" anchor=\"0\" fill=\"0\" indent=\"0\" use-parent-layout=\"false\"/>\r\n        </constraints>\r\n        <properties>\r\n          <text value=\"Type\"/>\r\n        </properties>\r\n      </component>\r\n      <component id=\"891a1\" class=\"javax.swing.JLabel\" binding=\"indexLabel\">\r\n        <constraints>\r\n          <grid row=\"3\" column=\"0\" row-span=\"1\" col-span=\"1\" vsize-policy=\"0\" hsize-policy=\"0\" anchor=\"0\" fill=\"0\" indent=\"0\" use-parent-layout=\"false\"/>\r\n        </constraints>\r\n        <properties>\r\n          <text value=\"Index\"/>\r\n        </properties>\r\n      </component>\r\n      <vspacer id=\"381ea\">\r\n        <constraints>\r\n          <grid row=\"0\" column=\"0\" row-span=\"1\" col-span=\"1\" vsize-policy=\"6\" hsize-policy=\"1\" anchor=\"0\" fill=\"2\" indent=\"0\" use-parent-layout=\"false\"/>\r\n        </constraints>\r\n      </vspacer>\r\n      <vspacer id=\"38c79\">\r\n        <constraints>\r\n          <grid row=\"4\" column=\"0\" row-span=\"1\" col-span=\"1\" vsize-policy=\"6\" hsize-policy=\"1\" anchor=\"0\" fill=\"2\" indent=\"0\" use-parent-layout=\"false\"/>\r\n        </constraints>\r\n      </vspacer>\r\n    </children>\r\n  </grid>\r\n</form>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/ExerciseCard.form b/src/ExerciseCard.form
+--- a/src/ExerciseCard.form	(revision 1559122b91b712fac37a19a318e8aa72ab19a171)
++++ b/src/ExerciseCard.form	(date 1617897124111)
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="ExerciseCard">
+-  <grid id="27dc6" binding="panel1" default-binding="true" layout-manager="GridLayoutManager" row-count="5" column-count="1" same-size-horizontally="false" same-size-vertically="true" hgap="-1" vgap="-1">
++  <grid id="27dc6" binding="exercisePanel" layout-manager="GridLayoutManager" row-count="5" column-count="1" same-size-horizontally="false" same-size-vertically="true" hgap="-1" vgap="-1">
+     <margin top="0" left="0" bottom="0" right="0"/>
+     <constraints>
+       <xy x="20" y="20" width="500" height="400"/>
+@@ -24,12 +24,12 @@
+           <text value="Type"/>
+         </properties>
+       </component>
+-      <component id="891a1" class="javax.swing.JLabel" binding="indexLabel">
++      <component id="891a1" class="javax.swing.JLabel" binding="calorieLabel">
+         <constraints>
+           <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+         </constraints>
+         <properties>
+-          <text value="Index"/>
++          <text value="Calorie"/>
+         </properties>
+       </component>
+       <vspacer id="381ea">
+Index: src/ExerciseCard.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import javax.swing.*;\r\n\r\npublic class ExerciseCard {\r\n    private JPanel panel1;\r\n    private JLabel nameLabel;\r\n    private JLabel typeLabel;\r\n    private JLabel indexLabel;\r\n\r\n    public ExerciseCard(String name,String type,Integer index, String calories){\r\n        nameLabel.setText(name);\r\n        typeLabel.setText(type);\r\n        //indexLabel.setText(index.toString());\r\n        indexLabel.setText(calories);\r\n    }\r\n    public JPanel getPanel(){\r\n        return panel1;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/ExerciseCard.java b/src/ExerciseCard.java
+--- a/src/ExerciseCard.java	(revision 1559122b91b712fac37a19a318e8aa72ab19a171)
++++ b/src/ExerciseCard.java	(date 1617896621889)
+@@ -1,18 +1,29 @@
+ import javax.swing.*;
+ 
+ public class ExerciseCard {
+-    private JPanel panel1;
++    private JPanel exercisePanel;
+     private JLabel nameLabel;
+     private JLabel typeLabel;
+-    private JLabel indexLabel;
++    private JLabel calorieLabel;
+ 
+-    public ExerciseCard(String name,String type,Integer index, String calories){
++    /**Default Constructor*/
++    public ExerciseCard(){};
++
++    /**Parameterized Constructor
++     * @param name Name of exercise to create a panel for
++     * @param type Type of exercise to create a panel for
++     * @param calories Calories burned per minute of exercise to create a panel for
++     */
++    public ExerciseCard(String name,String type, String calories){
+         nameLabel.setText(name);
+         typeLabel.setText(type);
+-        //indexLabel.setText(index.toString());
+-        indexLabel.setText(calories);
++        calorieLabel.setText(calories);
+     }
++
++    /**Return panel
++     * @return The panel that was created for an exercise
++     */
+     public JPanel getPanel(){
+-        return panel1;
++        return exercisePanel;
+     }
+ }
+Index: src/DBmanager.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import org.json.simple.JSONArray;\r\nimport org.json.simple.JSONObject;\r\nimport org.json.simple.parser.JSONParser;\r\nimport org.json.simple.parser.ParseException;\r\n\r\nimport java.io.FileReader;\r\nimport java.io.FileWriter;\r\nimport java.io.IOException;\r\nimport java.util.ArrayList;\r\nimport java.util.Collections;\r\n\r\npublic class DBmanager {\r\n\r\n    private static final String FILENAME = \"src//database\";\r\n    private static JSONArray dataArray;\r\n    private static final ArrayList<Exercise> exercises = new ArrayList<>();\r\n    private static final ArrayList<Workout> workouts = new ArrayList<>();\r\n\r\n    /**Main method, constructs model from database*/\r\n    public static void main(String[] args) {\r\n        getData();\r\n        /*Un-suppress to test adding exercises to database\r\n        System.out.println(getExercises());\r\n        addExercise(\"Back-flips\", \"legs\", \"1\");\r\n        System.out.println(getExercises());\r\n        */\r\n\r\n        /*Un-suppress to test adding workouts to database\r\n        System.out.println(getWorkouts());\r\n        addWorkout(\"workout2\", \"Back-flips\", \"Curls\");\r\n        System.out.println(getWorkouts());\r\n        */\r\n    }\r\n\r\n    /**Gets data from JSON database file\r\n     */\r\n    public static void getData() {\r\n        try {\r\n            FileReader reader = new FileReader(FILENAME);\r\n            JSONParser parser = new JSONParser();\r\n            Object data = parser.parse(reader);\r\n            dataArray = (JSONArray) data;\r\n            dataArray.forEach( exe -> parseExercise((JSONObject) exe));\r\n            dataArray.forEach( exe -> parseWorkout((JSONObject) exe));\r\n        }catch (IOException| ParseException e) {e.printStackTrace();}\r\n    }\r\n\r\n    /**Parse database for exercises\r\n     * @param exerciseData: Exercise data from database\r\n     */\r\n    public static void parseExercise(JSONObject exerciseData){\r\n        if(exerciseData.containsKey(\"exercise\")) {\r\n            JSONObject exerciseObjects = (JSONObject) exerciseData.get(\"exercise\");\r\n            String name = (String) exerciseObjects.get(\"name\");\r\n            String type = (String) exerciseObjects.get(\"type\");\r\n            String calories = (String) exerciseObjects.get(\"calories\");\r\n            Exercise exercise = new Exercise(name, calories, type);\r\n            exercises.add(exercise);\r\n        }\r\n    }\r\n\r\n    /**Parse database for workouts\r\n     * @param workoutData: Workout data from database\r\n     */\r\n    public static void parseWorkout(JSONObject workoutData){\r\n        if(workoutData.containsKey(\"workout\")) {\r\n                JSONObject workoutObjects = (JSONObject) workoutData.get(\"workout\");\r\n                String name = (String) workoutObjects.get(\"name\");\r\n\r\n                Object temp = workoutObjects.get(\"exercises\");\r\n                ArrayList<String> tempArray = (ArrayList<String>) temp;\r\n\r\n                Workout workout = new Workout(name, tempArray);\r\n                workouts.add(workout);\r\n        }\r\n    }\r\n\r\n    /**Add new exercise to database\r\n     * @param name: Name of the exercise to add\r\n     * @param calories: Calories burned per minute of the exercise to add\r\n     * @param type: Type of the exercise to add\r\n     */\r\n    public static void addExercise(String name, String type, String calories) {\r\n        JSONObject ex = new JSONObject();\r\n        JSONObject exRapper = new JSONObject();\r\n\r\n        ex.put(\"name\", name);\r\n        ex.put(\"type\", type);\r\n        ex.put(\"calories\", calories);\r\n\r\n        exRapper.put(\"exercise\", ex);\r\n        dataArray.add(exRapper);\r\n\r\n        try (FileWriter file = new FileWriter(FILENAME)) {\r\n            file.write(dataArray.toJSONString());\r\n            file.flush();\r\n        } catch (IOException e) {\r\n            e.printStackTrace();\r\n        }\r\n\r\n        Exercise exerciseToAdd = new Exercise(name, type, calories);\r\n        exercises.add(exerciseToAdd);\r\n    }\r\n\r\n    /**Add new workout to database\r\n     * @param name: Name of the workout to add\r\n     * @param exercises: Exercises in the workout to add\r\n     */\r\n    private static void addWorkout(String name, String ...exercises) {\r\n        JSONObject workout = new JSONObject();\r\n        JSONObject workoutRapper = new JSONObject();\r\n        ArrayList<String> workoutExercises = new ArrayList<>();\r\n\r\n        Collections.addAll(workoutExercises, exercises);\r\n\r\n        workout.put(\"name\", name);\r\n        workout.put(\"exercises\", workoutExercises);\r\n\r\n        workoutRapper.put(\"workout\", workout);\r\n        dataArray.add(workoutRapper);\r\n\r\n        try (FileWriter file = new FileWriter(FILENAME)) {\r\n            file.write(dataArray.toJSONString());\r\n            file.flush();\r\n        } catch (IOException e) {\r\n            e.printStackTrace();\r\n        }\r\n\r\n        Workout workoutToAdd = new Workout(name, workoutExercises);\r\n        workouts.add(workoutToAdd);\r\n    }\r\n\r\n    /**Gets workouts stored in the database\r\n     * @return Workouts stored in database\r\n     */\r\n    public static ArrayList<Workout> getWorkouts(){\r\n        return workouts;\r\n    }\r\n\r\n    /**Gets exercises stored in the database\r\n     * @return Exercises stored in database\r\n     */\r\n    public static ArrayList<Exercise> getExercises(){\r\n        return exercises;\r\n    }\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/DBmanager.java b/src/DBmanager.java
+--- a/src/DBmanager.java	(revision 1559122b91b712fac37a19a318e8aa72ab19a171)
++++ b/src/DBmanager.java	(date 1617897251435)
+@@ -16,22 +16,6 @@
+     private static final ArrayList<Exercise> exercises = new ArrayList<>();
+     private static final ArrayList<Workout> workouts = new ArrayList<>();
+ 
+-    /**Main method, constructs model from database*/
+-    public static void main(String[] args) {
+-        getData();
+-        /*Un-suppress to test adding exercises to database
+-        System.out.println(getExercises());
+-        addExercise("Back-flips", "legs", "1");
+-        System.out.println(getExercises());
+-        */
+-
+-        /*Un-suppress to test adding workouts to database
+-        System.out.println(getWorkouts());
+-        addWorkout("workout2", "Back-flips", "Curls");
+-        System.out.println(getWorkouts());
+-        */
+-    }
+-
+     /**Gets data from JSON database file
+      */
+     public static void getData() {
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"93c9d068-fb06-4dac-bbda-e50b8db393f8\" name=\"Default Changelist\" comment=\"Added a Box.Filler child class that maintains a specified size ratio; fixed various issues with dynamic creation of exercise panels.\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/WorkoutManager/App$1.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/WorkoutManager/App$1.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/WorkoutManager/App.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/WorkoutManager/App.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/WorkoutManager/Exercise.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/WorkoutManager/Exercise.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/WorkoutManager/WorkoutModel.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/WorkoutManager/WorkoutModel.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/WorkoutManager/database\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/WorkoutManager/database\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/App.form\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/App.form\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/App.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/App.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/BoxFillerRatio.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/BoxFillerRatio.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/Exercise.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/Exercise.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/ExerciseCard.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/ExerciseCard.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/WorkoutModel.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/WorkoutModel.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/database\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/database\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"master\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n    <option name=\"UPDATE_TYPE\" value=\"REBASE\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"1pSBje8GcHaAV4ORmVnfy38tIdA\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">\r\n    <property name=\"RunOnceActivity.OpenProjectViewOnStart\" value=\"true\" />\r\n    <property name=\"RunOnceActivity.ShowReadmeOnStart\" value=\"true\" />\r\n    <property name=\"SHARE_PROJECT_CONFIGURATION_FILES\" value=\"true\" />\r\n    <property name=\"last_opened_file_path\" value=\"$PROJECT_DIR$\" />\r\n    <property name=\"settings.editor.selected.configurable\" value=\"preferences.pluginManager\" />\r\n  </component>\r\n  <component name=\"RunManager\" selected=\"Application.App\">\r\n    <configuration name=\"App\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"App\" />\r\n      <module name=\"WorkoutManager\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"DBmanager\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"DBmanager\" />\r\n      <module name=\"WorkoutManager\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Application.App\" />\r\n        <item itemvalue=\"Application.DBmanager\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"93c9d068-fb06-4dac-bbda-e50b8db393f8\" name=\"Default Changelist\" comment=\"\" />\r\n      <created>1615166747495</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1615166747495</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Added basic GUI design\">\r\n      <created>1616970136878</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1616970136878</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"Consolidated methods in DBmanager; Fleshed out Exercise class, and Workout class; added JavaDoc for DBmanager, Exercise class, and Workout class\">\r\n      <created>1617305275361</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1617305275361</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"Removed old debug prints; added DBManager.getData() to WorkoutModel; fixed comboBox GUI update bug\">\r\n      <created>1617347847866</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1617347847866</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"Added a Box.Filler child class that maintains a specified size ratio; fixed various issues with dynamic creation of exercise panels.\">\r\n      <created>1617430159548</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1617430159548</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"5\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n    <option name=\"oldMeFiltersMigrated\" value=\"true\" />\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"Added basic GUI design\" />\r\n    <MESSAGE value=\"Consolidated methods in DBmanager; Fleshed out Exercise class, and Workout class; added JavaDoc for DBmanager, Exercise class, and Workout class\" />\r\n    <MESSAGE value=\"Removed old debug prints; added DBManager.getData() to WorkoutModel; fixed comboBox GUI update bug\" />\r\n    <MESSAGE value=\"Added a Box.Filler child class that maintains a specified size ratio; fixed various issues with dynamic creation of exercise panels.\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Added a Box.Filler child class that maintains a specified size ratio; fixed various issues with dynamic creation of exercise panels.\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 1559122b91b712fac37a19a318e8aa72ab19a171)
++++ b/.idea/workspace.xml	(date 1617897251464)
+@@ -1,20 +1,25 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="ChangeListManager">
+-    <list default="true" id="93c9d068-fb06-4dac-bbda-e50b8db393f8" name="Default Changelist" comment="Added a Box.Filler child class that maintains a specified size ratio; fixed various issues with dynamic creation of exercise panels.">
++    <list default="true" id="93c9d068-fb06-4dac-bbda-e50b8db393f8" name="Default Changelist" comment="Exercise panel now added to detail pane when clicked; exercise calories now displayed on exercise panel; when exercise type is selected in pull-down all exercises are displayed; database file updated">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/App$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/App$1.class" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/App.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/Exercise.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/Exercise.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/DBmanager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/DBmanager.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/HelloWorld.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/HelloWorld.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/Observer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/Observer.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/Workout.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/Workout.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/WorkoutController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/WorkoutController.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/WorkoutGUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/WorkoutGUI.class" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/WorkoutModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/WorkoutModel.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/database" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/database" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/App.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.form" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/Util.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/Util.class" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/BoxFillerRatio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BoxFillerRatio.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/Exercise.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Exercise.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/DBmanager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DBmanager.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/ExerciseCard.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/ExerciseCard.form" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/ExerciseCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ExerciseCard.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/WorkoutController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/WorkoutController.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/WorkoutModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/WorkoutModel.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/database" beforeDir="false" afterPath="$PROJECT_DIR$/src/database" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
