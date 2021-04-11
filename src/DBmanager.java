@@ -3,6 +3,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -16,6 +18,18 @@ public class DBmanager {
     private static JSONArray dataArray;
     private static final ArrayList<Exercise> exercises = new ArrayList<>();
     private static final ArrayList<Workout> workouts = new ArrayList<>();
+
+    /**Main method to set up application window*/
+    public static void main(String[] args) {
+        getData();
+        for(Workout w : workouts) {
+            System.out.println(w.getReps());
+        }
+        addWorkout("workout2", new String[] { "2", "3" }, "Back-flips", "Running");
+        for(Workout w : workouts) {
+            System.out.println(w.getReps());
+        }
+    }
 
     /**Gets data from JSON database file*/
     public static void getData() {
@@ -51,9 +65,10 @@ public class DBmanager {
                 JSONObject workoutObjects = (JSONObject) workoutData.get("workout");
                 String name = (String) workoutObjects.get("name");
 
-                ArrayList<String> tempArray = (ArrayList<String>) workoutObjects.get("exercises");
+                ArrayList<String> exeArray = (ArrayList<String>) workoutObjects.get("exercises");
+                ArrayList<String> repArray = (ArrayList<String>) workoutObjects.get("reps");
 
-                Workout workout = new Workout(name, tempArray);
+                Workout workout = new Workout(name, repArray, exeArray);
                 workouts.add(workout);
         }
     }
@@ -89,15 +104,18 @@ public class DBmanager {
      * @param name: Name of the workout to add
      * @param exercises: Exercises in the workout to add
      */
-    private static void addWorkout(String name, String ...exercises) {
+    private static void addWorkout(String name, String[] reps, String ...exercises) {
         JSONObject workout = new JSONObject();
         JSONObject workoutRapper = new JSONObject();
         ArrayList<String> workoutExercises = new ArrayList<>();
+        ArrayList<String> workoutReps = new ArrayList<>();
 
         Collections.addAll(workoutExercises, exercises);
+        Collections.addAll(workoutReps, reps);
 
         workout.put("name", name);
         workout.put("exercises", workoutExercises);
+        workout.put("reps", workoutReps);
 
         workoutRapper.put("workout", workout);
         dataArray.add(workoutRapper);
@@ -109,7 +127,7 @@ public class DBmanager {
             e.printStackTrace();
         }
 
-        Workout workoutToAdd = new Workout(name, workoutExercises);
+        Workout workoutToAdd = new Workout(name, workoutReps, workoutExercises);
         workouts.add(workoutToAdd);
     }
 

@@ -4,6 +4,7 @@ public class Workout {
 
     private String name;
     private ArrayList<String> exercises = new ArrayList<>();
+    private ArrayList<String> reps = new ArrayList<>();
 
     /**Default Constructor*/
     public Workout(){}
@@ -12,8 +13,9 @@ public class Workout {
      * @param name The name of this workout
      * @param exercises The exercises in this workout
      */
-    public Workout(String name, ArrayList<String> exercises){
+    public Workout(String name, ArrayList<String> reps,ArrayList<String> exercises){
         this.name = name;
+        this.reps.addAll(reps);
         this.exercises.addAll(exercises);
     }
 
@@ -30,4 +32,6 @@ public class Workout {
     public String getExercisesInWorkout() {
         return exercises.toString();
     }
+
+    public String getReps(){ return reps.toString();}
 }
