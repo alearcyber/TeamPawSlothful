@@ -5,7 +5,8 @@ public class WorkoutModel {
 
     private List<Observer<WorkoutModel>> observers;
     private ArrayList<Exercise> firstPaneList = new ArrayList<>();
-    private ArrayList<Exercise> currentPlan = new ArrayList<>();
+    private ArrayList<Exercise> currentPlanA = new ArrayList<>();
+    private ArrayList<Exercise> currentPlanB = new ArrayList<>();
     private ArrayList<Exercise> exercises = new ArrayList<>();
     private Exercise selectedEx;
 
@@ -36,17 +37,25 @@ public class WorkoutModel {
 
     /**Updates exercises shown in the Add Exercise panel
      * @param type Type of exercises to show in Add Exercise panel
+     * @param type2 Type of exercises to show in Tab Two, Current Plan panel
      */
-    public void updateWorkout(String type) {
+    public void updateWorkout(String type, String type2) {
         firstPaneList.clear();
+        currentPlanB.clear();
+
         exercises = DBmanager.getExercises();
-
-        for(Exercise e: exercises){
-
-            if(e.getType().equalsIgnoreCase(type) || type == "Exercise Type"){
+        for (Exercise e : exercises) {
+            if (e.getType().equalsIgnoreCase(type) || type == "Exercise Type") {
                 firstPaneList.add(e);
             }
         }
+        exercises = getCurrentPlanA();
+        for(Exercise e : exercises){
+            if (e.getType().equalsIgnoreCase(type2) || type2 == "Exercise Type") {
+                currentPlanB.add(e);
+            }
+        }
+
         notifyObservers();
     }
 
@@ -54,7 +63,7 @@ public class WorkoutModel {
      * @param ex Exercise to be added to current plan
      */
     public void addToPlan(Exercise ex){
-        currentPlan.add(ex);
+        currentPlanA.add(ex);
         notifyObservers();
     }
 
@@ -83,7 +92,17 @@ public class WorkoutModel {
     /**Get current plan
      * @return Current plan
      */
-    public ArrayList<Exercise> getCurrentPlan(){
-        return this.currentPlan;
+    public ArrayList<Exercise> getCurrentPlanA(){
+        return this.currentPlanA;
     }
+
+    public ArrayList<Exercise> getCurrentPlanB(){
+        return this.currentPlanB;
+    }
+
+    public void removeExercise(Exercise exercise){
+        currentPlanA.remove(exercise);
+        notifyObservers();
+    }
+
 }

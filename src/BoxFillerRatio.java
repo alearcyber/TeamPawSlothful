@@ -7,6 +7,7 @@ public class BoxFillerRatio extends Box.Filler {
 
     private int xRatio;
     private int yRatio;
+    private Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
 
     /**Parameterized Constructor
      * @param xRatio Width of the panel to add
@@ -29,21 +30,26 @@ public class BoxFillerRatio extends Box.Filler {
             add(content);
             add(Box.createVerticalGlue());
         }
-        setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
+        setBorder(BorderFactory.createMatteBorder(1, 1, 2, 4, Color.DARK_GRAY));
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
                 super.componentResized(e);
-                fixRatio();
+                fixRatio(content);
             }
         });
     }
 
     /**Fix panel size when window is resized*/
-    public void fixRatio(){
+    public void fixRatio(Container content){
         Dimension newSize= new Dimension(getHeight() * xRatio/yRatio,0);
         setMaximumSize(new Dimension(getHeight() * xRatio/yRatio,100000));
         setPreferredSize(newSize);
+
+        for(Component c : content.getComponents()){
+            c.setFont(new Font("Dialog", Font.PLAIN, (int) (content.getSize().getWidth()) / 8));
+        }
+
         revalidate();
     }
 }

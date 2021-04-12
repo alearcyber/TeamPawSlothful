@@ -29,9 +29,13 @@ public class WorkoutController {
     /**Update exercises in the Add Exercises panel
      * @param type Type of exercises to show
      */
-    public void updateWorkouts(String type){
+    public void updateWorkouts(String type, String type2){
         try {
-            model.updateWorkout(type);
+            model.updateWorkout(type, type2);
         }catch(Exception e){e.printStackTrace();}
+    }
+
+    public void removeExercises(Exercise exercise){
+        model.removeExercise(exercise);
     }
 }
