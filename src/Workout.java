@@ -29,8 +29,8 @@ public class Workout {
     /**Get exercises in workout
      * @return The exercises in this workout
      */
-    public String getExercisesInWorkout() {
-        return exercises.toString();
+    public ArrayList<String> getExercisesInWorkout() {
+        return exercises;
     }
 
     public String getReps(){ return reps.toString();}

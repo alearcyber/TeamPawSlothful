@@ -9,6 +9,9 @@ public class WorkoutModel {
     private ArrayList<Exercise> currentPlanB = new ArrayList<>();
     private ArrayList<Exercise> exercises = new ArrayList<>();
     private Exercise selectedEx;
+    private ArrayList<String> reps = new ArrayList<>();
+    private String workoutName;
+    private Workout selectedFromDB; //workout being selected in the import dropdown
 
     /**Default Constructor*/
     public WorkoutModel(){
@@ -64,6 +67,9 @@ public class WorkoutModel {
      */
     public void addToPlan(Exercise ex){
         currentPlanA.add(ex);
+        currentPlanB.add(ex);
+        firstPaneList.add(ex);
+        reps.add("0");
         notifyObservers();
     }
 
@@ -103,6 +109,60 @@ public class WorkoutModel {
     public void removeExercise(Exercise exercise){
         currentPlanA.remove(exercise);
         notifyObservers();
+    }
+
+    /**
+     * function sets the number of reps based on the index.
+     * You should give it the index of the corresponding exercise contained
+     * within the currentPlanA
+     */
+    public void setReps(int index, String numberOfReps){
+        reps.add(index, numberOfReps);
+        notifyObservers();
+    }
+
+    /**
+     * save the current plan to the database
+     */
+    public void savePlanToDB(){
+        ArrayList<String> exerciseNames = new ArrayList<>();
+        for(Exercise exercise: currentPlanA){
+            exerciseNames.add(exercise.getName());
+        }
+        DBmanager.addWorkout(workoutName, reps, exerciseNames);
+    }
+
+    /**
+     * set the name of the workouts
+     */
+    public void setWorkoutName(String name){
+        this.workoutName = name;
+        notifyObservers();
+    }
+
+    /**
+     * sets the workout that is being selected in the import dropdown
+     * @param workout
+     */
+    public void setSelectedFromDB(Workout workout){
+        this.selectedFromDB = workout;
+    }
+
+    /**
+     * removes everything from the plan
+     */
+    public void clearPlan(){
+        firstPaneList.clear();
+        currentPlanA.clear();
+        currentPlanB.clear();
+        notifyObservers();
+    }
+
+    /**
+     * returns the currently selected workout
+     */
+    public Workout getSelectedFromDB(){
+        return this.selectedFromDB;
     }
 
 }

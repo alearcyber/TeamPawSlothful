@@ -1,7 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ItemEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class App implements Observer<WorkoutModel>{
@@ -30,6 +32,8 @@ public class App implements Observer<WorkoutModel>{
     private JButton importPlanButton;
     private JButton exportPlanButton;
     private JLabel bottomLabel;
+    private JTextField name;
+    private JComboBox<String> importDropdown;
 
     private final WorkoutModel model;
     private final WorkoutController controller;
@@ -72,6 +76,14 @@ public class App implements Observer<WorkoutModel>{
                 ex.printStackTrace();
             }
         });
+
+        //*************************************
+        // methods that construct various things
+        //*************************************
+        constructNameField();
+        constructExportButton();
+        constructImportButton();
+        constructImportDropdown();
     }
 
     /**Update panels contained within application window
@@ -162,8 +174,83 @@ public class App implements Observer<WorkoutModel>{
             currentPlanB.add(newbox);
             i++;
         }
+
+
+        //*****************************************
+        //additional updates to be performed here
+        //*****************************************
+        updateImportDropdown();
+
         mainPanel.revalidate();
     }
+
+    /**
+     * CONSTRUCT
+     * creates the functionality for the import dropdown
+     * so that when it is used the value is set properly
+     */
+    public void constructImportDropdown(){
+
+        importDropdown.addItemListener( e->{
+            if (e.getStateChange() == ItemEvent.SELECTED && importDropdown.hasFocus()) {
+                String item = (String) e.getItem();
+                System.out.println("THIS ACTION LISTEN HAS BEEN CALLED");
+                String selectedImport = (String) importDropdown.getSelectedItem();
+                System.out.println("SELECTED IMPORT " + selectedImport);
+                for(Workout workout: DBmanager.getWorkouts()){
+                    if(workout.getName().equalsIgnoreCase(item)){
+                        System.out.println("SETTING THE SELECTED WORKOUT TO " + workout.getName());
+                        controller.setSelectedWorkout(workout);
+                    }
+                }
+            }
+        });
+    }
+
+    /**
+     * adds functionality for the export button.
+     * Should be called when the constructor
+     */
+    public void constructExportButton(){
+        exportPlanButton.addActionListener( e -> {
+            controller.exportPlan();
+        });
+    }
+
+    /**
+     * adds functionality for the import button.
+     * Should be called when the constructor
+     */
+    public void constructImportButton(){
+        importPlanButton.addActionListener(e -> {
+            controller.importPlan();
+        });
+    }
+
+    /**
+     * constructs the functionality for
+     * naming the Workout
+     */
+    public void constructNameField(){
+        name.addActionListener(e -> {
+            controller.setName(e.getActionCommand());
+        });
+    }
+
+    /**
+     * UPDATE
+     * adds the names of the workouts in the database to the
+     * dropdown
+     */
+    public void updateImportDropdown(){
+        importDropdown.removeAllItems();
+        ArrayList<Workout> workouts = DBmanager.getWorkouts();
+        for(Workout workout: workouts){
+            importDropdown.addItem(workout.getName());
+        }
+    }
+
+
 
     /**Main method to set up application window*/
     public static void main(String[] args) {

@@ -38,4 +38,24 @@ public class WorkoutController {
     public void removeExercises(Exercise exercise){
         model.removeExercise(exercise);
     }
+
+    public void setName(String name){ model.setWorkoutName(name);}
+
+    public void exportPlan(){model.savePlanToDB();}
+    public void setSelectedWorkout(Workout workout){model.setSelectedFromDB(workout);}
+
+    public void importPlan(){
+        System.out.println("importing plan...");
+        model.clearPlan();
+        Workout selectedFromDB = model.getSelectedFromDB();
+        System.out.println("importing " + selectedFromDB.getName());
+        for(String exercisenames: selectedFromDB.getExercisesInWorkout()){
+            System.out.println(exercisenames);
+            for(Exercise exercise: DBmanager.getExercises()){
+                if(exercise.getName().equalsIgnoreCase(exercisenames)){
+                    model.addToPlan(exercise);
+                }
+            }
+        }
+    }
 }

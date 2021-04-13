@@ -25,7 +25,6 @@ public class DBmanager {
         for(Workout w : workouts) {
             System.out.println(w.getReps());
         }
-        addWorkout("workout2", new String[] { "2", "3" }, "Back-flips", "Running");
         for(Workout w : workouts) {
             System.out.println(w.getReps());
         }
@@ -104,31 +103,32 @@ public class DBmanager {
      * @param name: Name of the workout to add
      * @param exercises: Exercises in the workout to add
      */
-    private static void addWorkout(String name, String[] reps, String ...exercises) {
-        JSONObject workout = new JSONObject();
-        JSONObject workoutRapper = new JSONObject();
-        ArrayList<String> workoutExercises = new ArrayList<>();
-        ArrayList<String> workoutReps = new ArrayList<>();
+    public static void addWorkout(String name, ArrayList<String> reps, ArrayList<String> exercises) {
+        if(alreadyInDB(name)){
+            //do nothing;
+        }else{
+            getData();
+            JSONObject workout = new JSONObject();
+            JSONObject workoutRapper = new JSONObject();
 
-        Collections.addAll(workoutExercises, exercises);
-        Collections.addAll(workoutReps, reps);
 
-        workout.put("name", name);
-        workout.put("exercises", workoutExercises);
-        workout.put("reps", workoutReps);
+            workout.put("name", name);
+            workout.put("exercises", exercises);
+            workout.put("reps", reps);
 
-        workoutRapper.put("workout", workout);
-        dataArray.add(workoutRapper);
+            workoutRapper.put("workout", workout);
+            dataArray.add(workoutRapper);
 
-        try (FileWriter file = new FileWriter(FILENAME)) {
-            file.write(dataArray.toJSONString());
-            file.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
+            try (FileWriter file = new FileWriter(FILENAME)) {
+                file.write(dataArray.toJSONString());
+                file.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Workout workoutToAdd = new Workout(name, reps, exercises);
+            workouts.add(workoutToAdd);
         }
-
-        Workout workoutToAdd = new Workout(name, workoutReps, workoutExercises);
-        workouts.add(workoutToAdd);
     }
 
     /**Gets workouts stored in the database
@@ -143,6 +143,18 @@ public class DBmanager {
      */
     public static ArrayList<Exercise> getExercises(){
         return exercises;
+    }
+
+    /**
+     * returns true if the name given is already in the database.
+     */
+    public static boolean alreadyInDB(String workoutName){
+        for(Workout workout: workouts){
+            if(workout.getName().equalsIgnoreCase(workoutName)){
+                return true;
+            }
+        }
+        return false;
     }
 }
 
