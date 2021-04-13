@@ -24,6 +24,13 @@ public class App implements Observer<WorkoutModel>{
     private JScrollPane CurrentPlanAScroll;
     private JScrollPane CurrentPlanBScroll;
 
+    private JPanel settingsPanel;
+    private JPanel metricsPanel;
+    private JButton updateExerciseButton;
+    private JButton importPlanButton;
+    private JButton exportPlanButton;
+    private JLabel bottomLabel;
+
     private final WorkoutModel model;
     private final WorkoutController controller;
 
@@ -38,6 +45,7 @@ public class App implements Observer<WorkoutModel>{
         DetailPanel.setLayout(new BoxLayout(DetailPanel, BoxLayout.X_AXIS));
         currentPlanA.setLayout(new BoxLayout(currentPlanA, BoxLayout.X_AXIS));
         currentPlanB.setLayout(new BoxLayout(currentPlanB, BoxLayout.X_AXIS));
+        settingsPanel.setLayout(new BoxLayout(settingsPanel, BoxLayout.X_AXIS));
 
         ExercisePanelScroll.getHorizontalScrollBar().setUnitIncrement(16);
         CurrentPlanAScroll.getHorizontalScrollBar().setUnitIncrement(16);
@@ -137,6 +145,20 @@ public class App implements Observer<WorkoutModel>{
                     BoxLayout.Y_AXIS);
 
             if(i > 0) currentPlanB.add(Box.createRigidArea(new Dimension(3, 0)));                                     //can be removed
+            String calString = "Cal / Min: " + exercise.getCalories();
+            newbox.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent me) {
+                    BoxFillerRatio temp = new BoxFillerRatio(3,4,
+                            new ExerciseCard(exercise.getName(),exercise.getType(), calString).getPanel(),
+                            BoxLayout.Y_AXIS);
+                    settingsPanel.removeAll();
+                    settingsPanel.add(temp);
+
+                    settingsPanel.add(new ExerciseSettings().getMainPanel());
+                    mainPanel.revalidate();
+                    controller.setSelected(exercise);
+                }
+            });
             currentPlanB.add(newbox);
             i++;
         }
