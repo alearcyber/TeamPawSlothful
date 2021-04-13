@@ -1,0 +1,364 @@
+Index: src/BoxFillerRatio.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import javax.swing.*;\r\nimport java.awt.*;\r\nimport java.awt.event.ComponentAdapter;\r\nimport java.awt.event.ComponentEvent;\r\n\r\npublic class BoxFillerRatio extends Box.Filler {\r\n\r\n    private int xRatio;\r\n    private int yRatio;\r\n    private Dimension size = Toolkit.getDefaultToolkit().getScreenSize();\r\n\r\n    /**Parameterized Constructor\r\n     * @param xRatio Width of the panel to add\r\n     * @param yRatio Height of the the panel to add\r\n     * @param content Content contained in the panel\r\n     * @param axis NOT USED\r\n     */\r\n    public BoxFillerRatio(int xRatio, int yRatio,Container content, int axis){\r\n        super(new Dimension(100,0),new Dimension(10000,0),new Dimension(100000,1000000));\r\n        this.xRatio=xRatio;\r\n        this.yRatio=yRatio;\r\n        setLayout(new BoxLayout(this,axis));\r\n        if(axis==0){\r\n            add(Box.createHorizontalGlue());\r\n            add(content);\r\n            add(Box.createHorizontalGlue());\r\n        }\r\n        else{\r\n            add(Box.createVerticalGlue());\r\n            add(content);\r\n            add(Box.createVerticalGlue());\r\n        }\r\n        setBorder(BorderFactory.createMatteBorder(1, 1, 2, 4, Color.DARK_GRAY));\r\n        addComponentListener(new ComponentAdapter() {\r\n            @Override\r\n            public void componentResized(ComponentEvent e) {\r\n                super.componentResized(e);\r\n                fixRatio(content);\r\n            }\r\n        });\r\n    }\r\n\r\n    /**Fix panel size when window is resized*/\r\n    public void fixRatio(Container content){\r\n        Dimension newSize= new Dimension(getHeight() * xRatio/yRatio,0);\r\n        setMaximumSize(new Dimension(getHeight() * xRatio/yRatio,100000));\r\n        setPreferredSize(newSize);\r\n\r\n        for(Component c : content.getComponents()){\r\n            c.setFont(new Font(\"Dialog\", Font.PLAIN, (int) (content.getSize().getWidth()) / 8));\r\n        }\r\n\r\n        revalidate();\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/BoxFillerRatio.java b/src/BoxFillerRatio.java
+--- a/src/BoxFillerRatio.java	(revision d48b9c6aba1165f2a81dd1f4ab68643b9ea73777)
++++ b/src/BoxFillerRatio.java	(date 1618280934427)
+@@ -5,9 +5,8 @@
+ 
+ public class BoxFillerRatio extends Box.Filler {
+ 
+-    private int xRatio;
+-    private int yRatio;
+-    private Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
++    private final int xRatio;
++    private final int yRatio;
+ 
+     /**Parameterized Constructor
+      * @param xRatio Width of the panel to add
+Index: src/WorkoutModel.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import java.util.ArrayList;\r\nimport java.util.List;\r\n\r\npublic class WorkoutModel {\r\n\r\n    private List<Observer<WorkoutModel>> observers;\r\n    private ArrayList<Exercise> firstPaneList = new ArrayList<>();\r\n    private ArrayList<Exercise> currentPlanA = new ArrayList<>();\r\n    private ArrayList<Exercise> currentPlanB = new ArrayList<>();\r\n    private ArrayList<Exercise> exercises = new ArrayList<>();\r\n    private Exercise selectedEx;\r\n\r\n    /**Default Constructor*/\r\n    public WorkoutModel(){\r\n        DBmanager.getData();\r\n        observers = new ArrayList<>();\r\n    }\r\n\r\n    /**\r\n     * add an observer to the list of observers to be observed\r\n     * @param observer the observer to be registered\r\n     */\r\n    public void addObserver(Observer<WorkoutModel> observer){\r\n        observers.add(observer);\r\n    }\r\n\r\n\r\n    /**\r\n     * helper function to use when changes occur to notify the observers\r\n     * that a change has occured\r\n     */\r\n    private void notifyObservers(){\r\n        for(Observer<WorkoutModel> observer: observers){\r\n            observer.update(this);\r\n        }\r\n    }\r\n\r\n    /**Updates exercises shown in the Add Exercise panel\r\n     * @param type Type of exercises to show in Add Exercise panel\r\n     * @param type2 Type of exercises to show in Tab Two, Current Plan panel\r\n     */\r\n    public void updateWorkout(String type, String type2) {\r\n        firstPaneList.clear();\r\n        currentPlanB.clear();\r\n\r\n        exercises = DBmanager.getExercises();\r\n        for (Exercise e : exercises) {\r\n            if (e.getType().equalsIgnoreCase(type) || type == \"Exercise Type\") {\r\n                firstPaneList.add(e);\r\n            }\r\n        }\r\n        exercises = getCurrentPlanA();\r\n        for(Exercise e : exercises){\r\n            if (e.getType().equalsIgnoreCase(type2) || type2 == \"Exercise Type\") {\r\n                currentPlanB.add(e);\r\n            }\r\n        }\r\n\r\n        notifyObservers();\r\n    }\r\n\r\n    /**Add an exercise to current plan\r\n     * @param ex Exercise to be added to current plan\r\n     */\r\n    public void addToPlan(Exercise ex){\r\n        currentPlanA.add(ex);\r\n        notifyObservers();\r\n    }\r\n\r\n    /**Set selected exercise from Add Exercise panel\r\n     * @param selectedEx Exercise selected from Add Exercise panel\r\n     */\r\n    public void setSelectedEx(Exercise selectedEx) {\r\n        this.selectedEx = selectedEx;\r\n        notifyObservers();\r\n    }\r\n\r\n    /**Get list of exercises contained in Add Exercise panel\r\n     * @return List of exercises contained in Add Exercise panel\r\n     */\r\n    public ArrayList<Exercise> getFirstPaneList(){\r\n        return firstPaneList;\r\n    }\r\n\r\n    /**Get selected exercise from Add Exercise panel\r\n     * @return Selected exercise from Add Exercise panel\r\n     */\r\n    public Exercise getSelectedEx(){\r\n        return selectedEx;\r\n    }\r\n\r\n    /**Get current plan\r\n     * @return Current plan\r\n     */\r\n    public ArrayList<Exercise> getCurrentPlanA(){\r\n        return this.currentPlanA;\r\n    }\r\n\r\n    public ArrayList<Exercise> getCurrentPlanB(){\r\n        return this.currentPlanB;\r\n    }\r\n\r\n    public void removeExercise(Exercise exercise){\r\n        currentPlanA.remove(exercise);\r\n        notifyObservers();\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/WorkoutModel.java b/src/WorkoutModel.java
+--- a/src/WorkoutModel.java	(revision d48b9c6aba1165f2a81dd1f4ab68643b9ea73777)
++++ b/src/WorkoutModel.java	(date 1618280934436)
+@@ -3,11 +3,10 @@
+ 
+ public class WorkoutModel {
+ 
+-    private List<Observer<WorkoutModel>> observers;
+-    private ArrayList<Exercise> firstPaneList = new ArrayList<>();
+-    private ArrayList<Exercise> currentPlanA = new ArrayList<>();
+-    private ArrayList<Exercise> currentPlanB = new ArrayList<>();
+-    private ArrayList<Exercise> exercises = new ArrayList<>();
++    private final List<Observer<WorkoutModel>> observers;
++    private final ArrayList<Exercise> firstPaneList = new ArrayList<>();
++    private final ArrayList<Exercise> currentPlanA = new ArrayList<>();
++    private final ArrayList<Exercise> currentPlanB = new ArrayList<>();
+     private Exercise selectedEx;
+ 
+     /**Default Constructor*/
+@@ -16,8 +15,7 @@
+         observers = new ArrayList<>();
+     }
+ 
+-    /**
+-     * add an observer to the list of observers to be observed
++    /**Add an observer to the list of observers to be observed
+      * @param observer the observer to be registered
+      */
+     public void addObserver(Observer<WorkoutModel> observer){
+@@ -25,10 +23,7 @@
+     }
+ 
+ 
+-    /**
+-     * helper function to use when changes occur to notify the observers
+-     * that a change has occured
+-     */
++    /**Notifies Observer when a change has occurred*/
+     private void notifyObservers(){
+         for(Observer<WorkoutModel> observer: observers){
+             observer.update(this);
+@@ -43,15 +38,14 @@
+         firstPaneList.clear();
+         currentPlanB.clear();
+ 
+-        exercises = DBmanager.getExercises();
++        ArrayList<Exercise> exercises = DBmanager.getExercises();
+         for (Exercise e : exercises) {
+-            if (e.getType().equalsIgnoreCase(type) || type == "Exercise Type") {
++            if (e.getType().equalsIgnoreCase(type) || type.equals("Exercise Type")) {
+                 firstPaneList.add(e);
+             }
+         }
+-        exercises = getCurrentPlanA();
+-        for(Exercise e : exercises){
+-            if (e.getType().equalsIgnoreCase(type2) || type2 == "Exercise Type") {
++        for(Exercise e : currentPlanA){
++            if (e.getType().equalsIgnoreCase(type2) || type.equals("Exercise Type")) {
+                 currentPlanB.add(e);
+             }
+         }
+@@ -60,10 +54,10 @@
+     }
+ 
+     /**Add an exercise to current plan
+-     * @param ex Exercise to be added to current plan
++     * @param exercise Exercise to be added to current plan
+      */
+-    public void addToPlan(Exercise ex){
+-        currentPlanA.add(ex);
++    public void addToPlan(Exercise exercise){
++        currentPlanA.add(exercise);
+         notifyObservers();
+     }
+ 
+@@ -96,10 +90,16 @@
+         return this.currentPlanA;
+     }
+ 
++    /**Get Tab Two current plan
++     * @return The current plan shown on Tab two
++     */
+     public ArrayList<Exercise> getCurrentPlanB(){
+         return this.currentPlanB;
+     }
+ 
++    /**Remove exercise from current plan
++     * @param exercise Exercise to remove
++     */
+     public void removeExercise(Exercise exercise){
+         currentPlanA.remove(exercise);
+         notifyObservers();
+Index: src/DBmanager.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import org.json.simple.JSONArray;\r\nimport org.json.simple.JSONObject;\r\nimport org.json.simple.parser.JSONParser;\r\nimport org.json.simple.parser.ParseException;\r\n\r\nimport javax.swing.*;\r\nimport java.awt.*;\r\nimport java.io.FileReader;\r\nimport java.io.FileWriter;\r\nimport java.io.IOException;\r\nimport java.util.ArrayList;\r\nimport java.util.Collections;\r\n\r\n/**Default Constructor*/\r\npublic class DBmanager {\r\n\r\n    private static final String FILENAME = \"src//database\";\r\n    private static JSONArray dataArray;\r\n    private static final ArrayList<Exercise> exercises = new ArrayList<>();\r\n    private static final ArrayList<Workout> workouts = new ArrayList<>();\r\n\r\n    /**Main method to set up application window*/\r\n    public static void main(String[] args) {\r\n        getData();\r\n        for(Workout w : workouts) {\r\n            System.out.println(w.getReps());\r\n        }\r\n        addWorkout(\"workout2\", new String[] { \"2\", \"3\" }, \"Back-flips\", \"Running\");\r\n        for(Workout w : workouts) {\r\n            System.out.println(w.getReps());\r\n        }\r\n    }\r\n\r\n    /**Gets data from JSON database file*/\r\n    public static void getData() {\r\n        try {\r\n            FileReader reader = new FileReader(FILENAME);\r\n            JSONParser parser = new JSONParser();\r\n            Object data = parser.parse(reader);\r\n            dataArray = (JSONArray) data;\r\n            dataArray.forEach(exe -> parseExercise((JSONObject) exe));\r\n            dataArray.forEach(exe -> parseWorkout((JSONObject) exe));\r\n        }catch (IOException| ParseException e) {e.printStackTrace();}\r\n    }\r\n\r\n    /**Parse database for exercises\r\n     * @param exerciseData: Exercise data from database\r\n     */\r\n    public static void parseExercise(JSONObject exerciseData){\r\n        if(exerciseData.containsKey(\"exercise\")) {\r\n            JSONObject exerciseObjects = (JSONObject) exerciseData.get(\"exercise\");\r\n            String name = (String) exerciseObjects.get(\"name\");\r\n            String type = (String) exerciseObjects.get(\"type\");\r\n            String calories = (String) exerciseObjects.get(\"calories\");\r\n            Exercise exercise = new Exercise(name, calories, type);\r\n            exercises.add(exercise);\r\n        }\r\n    }\r\n\r\n    /**Parse database for workouts\r\n     * @param workoutData: Workout data from database\r\n     */\r\n    public static void parseWorkout(JSONObject workoutData){\r\n        if(workoutData.containsKey(\"workout\")) {\r\n                JSONObject workoutObjects = (JSONObject) workoutData.get(\"workout\");\r\n                String name = (String) workoutObjects.get(\"name\");\r\n\r\n                ArrayList<String> exeArray = (ArrayList<String>) workoutObjects.get(\"exercises\");\r\n                ArrayList<String> repArray = (ArrayList<String>) workoutObjects.get(\"reps\");\r\n\r\n                Workout workout = new Workout(name, repArray, exeArray);\r\n                workouts.add(workout);\r\n        }\r\n    }\r\n\r\n    /*\r\n    /**Add new exercise to database\r\n     * @param name: Name of the exercise to add\r\n     * @param calories: Calories burned per minute of the exercise to add\r\n     * @param type: Type of the exercise to add\r\n    public static void addExercise(String name, String type, String calories) {\r\n        JSONObject ex = new JSONObject();\r\n        JSONObject exRapper = new JSONObject();\r\n\r\n        ex.put(\"name\", name);\r\n        ex.put(\"type\", type);\r\n        ex.put(\"calories\", calories);\r\n\r\n        exRapper.put(\"exercise\", ex);\r\n        dataArray.add(exRapper);\r\n\r\n        try (FileWriter file = new FileWriter(FILENAME)) {\r\n            file.write(dataArray.toJSONString());\r\n            file.flush();\r\n        } catch (IOException e) {\r\n            e.printStackTrace();\r\n        }\r\n\r\n        Exercise exerciseToAdd = new Exercise(name, type, calories);\r\n        exercises.add(exerciseToAdd);\r\n    }*/\r\n\r\n    /**Add new workout to database\r\n     * @param name: Name of the workout to add\r\n     * @param exercises: Exercises in the workout to add\r\n     */\r\n    private static void addWorkout(String name, String[] reps, String ...exercises) {\r\n        JSONObject workout = new JSONObject();\r\n        JSONObject workoutRapper = new JSONObject();\r\n        ArrayList<String> workoutExercises = new ArrayList<>();\r\n        ArrayList<String> workoutReps = new ArrayList<>();\r\n\r\n        Collections.addAll(workoutExercises, exercises);\r\n        Collections.addAll(workoutReps, reps);\r\n\r\n        workout.put(\"name\", name);\r\n        workout.put(\"exercises\", workoutExercises);\r\n        workout.put(\"reps\", workoutReps);\r\n\r\n        workoutRapper.put(\"workout\", workout);\r\n        dataArray.add(workoutRapper);\r\n\r\n        try (FileWriter file = new FileWriter(FILENAME)) {\r\n            file.write(dataArray.toJSONString());\r\n            file.flush();\r\n        } catch (IOException e) {\r\n            e.printStackTrace();\r\n        }\r\n\r\n        Workout workoutToAdd = new Workout(name, workoutReps, workoutExercises);\r\n        workouts.add(workoutToAdd);\r\n    }\r\n\r\n    /**Gets workouts stored in the database\r\n     * @return Workouts stored in database\r\n     */\r\n    public static ArrayList<Workout> getWorkouts(){\r\n        return workouts;\r\n    }\r\n\r\n    /**Gets exercises stored in the database\r\n     * @return Exercises stored in database\r\n     */\r\n    public static ArrayList<Exercise> getExercises(){\r\n        return exercises;\r\n    }\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/DBmanager.java b/src/DBmanager.java
+--- a/src/DBmanager.java	(revision d48b9c6aba1165f2a81dd1f4ab68643b9ea73777)
++++ b/src/DBmanager.java	(date 1618280934458)
+@@ -3,8 +3,6 @@
+ import org.json.simple.parser.JSONParser;
+ import org.json.simple.parser.ParseException;
+ 
+-import javax.swing.*;
+-import java.awt.*;
+ import java.io.FileReader;
+ import java.io.FileWriter;
+ import java.io.IOException;
+Index: src/Observer.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>/**\r\n * This interface is follows the simple observer design.\r\n * it allows us to know when something changes in a different class.\r\n *\r\n * @Author\r\n * Aidan Lear\r\n *\r\n *\r\n * Date 2/15/2021\r\n *\r\n * Notes:\r\n * This class shouldn't be messed with, just a simple observer interface for\r\n * the observer design pattern.\r\n *\r\n * @param <Observered> what is being observered\r\n */\r\n\r\npublic interface Observer<Observered> {\r\n\r\n    /**\r\n     * update whatever it is that is being observed\r\n     *\r\n     * @param observered the object that is being observed\r\n     */\r\n    void update(Observered observered);\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Observer.java b/src/Observer.java
+--- a/src/Observer.java	(revision d48b9c6aba1165f2a81dd1f4ab68643b9ea73777)
++++ b/src/Observer.java	(date 1618280934464)
+@@ -1,26 +1,3 @@
+-/**
+- * This interface is follows the simple observer design.
+- * it allows us to know when something changes in a different class.
+- *
+- * @Author
+- * Aidan Lear
+- *
+- *
+- * Date 2/15/2021
+- *
+- * Notes:
+- * This class shouldn't be messed with, just a simple observer interface for
+- * the observer design pattern.
+- *
+- * @param <Observered> what is being observered
+- */
+-
+-public interface Observer<Observered> {
+-
+-    /**
+-     * update whatever it is that is being observed
+-     *
+-     * @param observered the object that is being observed
+-     */
+-    void update(Observered observered);
++public interface Observer<Observed> {
++    void update(Observed observed);
+ }
+\ No newline at end of file
+Index: src/ExerciseCard.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import javax.swing.*;\r\nimport java.awt.*;\r\n\r\npublic class ExerciseCard {\r\n    private JPanel mainPanel;\r\n    private JLabel nameLabel;\r\n    private JLabel typeLabel;\r\n    private JLabel calorieLabel;\r\n\r\n    /**Default Constructor*/\r\n    public ExerciseCard(){};\r\n\r\n    /**Parameterized Constructor\r\n     * @param name Name of exercise\r\n     * @param type Type of exercise\r\n     * @param calories Calories burned per minute of exercise\r\n     */\r\n    public ExerciseCard(String name,String type, String calories){\r\n        nameLabel.setText(name);\r\n        typeLabel.setText(type);\r\n        calorieLabel.setText(calories);\r\n    }\r\n\r\n    /**Get Main Panel of Exercise Card\r\n     * @return Main Panel of Exercise Card\r\n     */\r\n    public JPanel getPanel(){\r\n        return mainPanel;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/ExerciseCard.java b/src/ExerciseCard.java
+--- a/src/ExerciseCard.java	(revision d48b9c6aba1165f2a81dd1f4ab68643b9ea73777)
++++ b/src/ExerciseCard.java	(date 1618280934469)
+@@ -1,5 +1,4 @@
+ import javax.swing.*;
+-import java.awt.*;
+ 
+ public class ExerciseCard {
+     private JPanel mainPanel;
+@@ -8,7 +7,7 @@
+     private JLabel calorieLabel;
+ 
+     /**Default Constructor*/
+-    public ExerciseCard(){};
++    public ExerciseCard(){}
+ 
+     /**Parameterized Constructor
+      * @param name Name of exercise
+Index: out/production/WorkoutManager/database
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>[{\"exercise\":{\"name\":\"Curls\",\"calories\":\"5\",\"type\":\"Arms\"}},{\"exercise\":{\"name\":\"Push-ups\",\"calories\":\"7\",\"type\":\"Arms\"}},{\"exercise\":{\"name\":\"Running\",\"calories\":\"10\",\"type\":\"Cardio\"}},{\"exercise\":{\"name\":\"Jumping Jacks\",\"calories\":\"8\",\"type\":\"Cardio\"}},{\"exercise\":{\"name\":\"Squats\",\"calories\":\"8\",\"type\":\"Legs\"}},{\"exercise\":{\"name\":\"Lunges\",\"calories\":\"6\",\"type\":\"Legs\"}},{\"exercise\":{\"name\":\"Sit-ups\",\"calories\":\"3\",\"type\":\"Abs\"}},{\"exercise\":{\"name\":\"Crunches\",\"calories\":\"6\",\"type\":\"Abs\"}},{\"exercise\":{\"name\":\"Pull-ups\",\"calories\":\"11\",\"type\":\"Back\"}},{\"exercise\":{\"name\":\"Leg Raises\",\"calories\":\"4\",\"type\":\"Abs\"}},{\"exercise\":{\"name\":\"Jump Rope\",\"calories\":\"15\",\"type\":\"Cardio\"}},{\"exercise\":{\"name\":\"Plank\",\"calories\":\"2\",\"type\":\"Back\"}},{\"exercise\":{\"name\":\"Bicycle Crunch\",\"calories\":\"3\",\"type\":\"Abs\"}},{\"exercise\":{\"name\":\"Superman Raise\",\"calories\":\"3\",\"type\":\"Back\"}},{\"exercise\":{\"name\":\"Bridge Raise\",\"calories\":\"8\",\"type\":\"Abs\"}},{\"exercise\":{\"name\":\"Mountain Climb\",\"calories\":\"11\",\"type\":\"Legs\"}},{\"exercise\":{\"name\":\"High Knees\",\"calories\":\"6\",\"type\":\"Legs\"}},{\"exercise\":{\"name\":\"Side Lunges\",\"calories\":\"6\",\"type\":\"Legs\"}},{\"exercise\":{\"name\":\"Burpees\",\"calories\":\"8\",\"type\":\"Abs\"}},{\"exercise\":{\"name\":\"Plank Hops\",\"calories\":\"2\",\"type\":\"Abs\"}},{\"workout\":{\"reps\":[\"5\",\"4\",\"3\"],\"exercises\":[\"Plank Hops\",\"Burpees\",\"Side Lunges\"],\"name\":\"workout1\"}}]
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/out/production/WorkoutManager/database b/out/production/WorkoutManager/database
+--- a/out/production/WorkoutManager/database	(revision d48b9c6aba1165f2a81dd1f4ab68643b9ea73777)
++++ b/out/production/WorkoutManager/database	(date 1618280934496)
+@@ -1,1 +1,41 @@
+-[{"exercise":{"name":"Curls","calories":"5","type":"Arms"}},{"exercise":{"name":"Push-ups","calories":"7","type":"Arms"}},{"exercise":{"name":"Running","calories":"10","type":"Cardio"}},{"exercise":{"name":"Jumping Jacks","calories":"8","type":"Cardio"}},{"exercise":{"name":"Squats","calories":"8","type":"Legs"}},{"exercise":{"name":"Lunges","calories":"6","type":"Legs"}},{"exercise":{"name":"Sit-ups","calories":"3","type":"Abs"}},{"exercise":{"name":"Crunches","calories":"6","type":"Abs"}},{"exercise":{"name":"Pull-ups","calories":"11","type":"Back"}},{"exercise":{"name":"Leg Raises","calories":"4","type":"Abs"}},{"exercise":{"name":"Jump Rope","calories":"15","type":"Cardio"}},{"exercise":{"name":"Plank","calories":"2","type":"Back"}},{"exercise":{"name":"Bicycle Crunch","calories":"3","type":"Abs"}},{"exercise":{"name":"Superman Raise","calories":"3","type":"Back"}},{"exercise":{"name":"Bridge Raise","calories":"8","type":"Abs"}},{"exercise":{"name":"Mountain Climb","calories":"11","type":"Legs"}},{"exercise":{"name":"High Knees","calories":"6","type":"Legs"}},{"exercise":{"name":"Side Lunges","calories":"6","type":"Legs"}},{"exercise":{"name":"Burpees","calories":"8","type":"Abs"}},{"exercise":{"name":"Plank Hops","calories":"2","type":"Abs"}},{"workout":{"reps":["5","4","3"],"exercises":["Plank Hops","Burpees","Side Lunges"],"name":"workout1"}}]
+\ No newline at end of file
++[{"exercise":{"name":"Bicycle Crunch","calories":"3","type":"Abs"}},
++{"exercise":{"name":"Bridge Raise","calories":"8","type":"Abs"}},
++{"exercise":{"name":"Burpees","calories":"8","type":"Abs"}},
++{"exercise":{"name":"Crunches","calories":"6","type":"Abs"}},
++{"exercise":{"name":"Leg Raises","calories":"4","type":"Abs"}},
++{"exercise":{"name":"Plank Hops","calories":"2","type":"Abs"}},
++{"exercise":{"name":"Sit-ups","calories":"3","type":"Abs"}},
++{"exercise":{"name":"Body Saw","calories":"2","type":"Arms"}},
++{"exercise":{"name":"Curls","calories":"5","type":"Arms"}},
++{"exercise":{"name":"Plank Tap","calories":"3","type":"Arms"}},
++{"exercise":{"name":"Plank Walk","calories":"3","type":"Arms"}},
++{"exercise":{"name":"Push-ups","calories":"7","type":"Arms"}},
++{"exercise":{"name":"Side Planks","calories":"3","type":"Arms"}},
++{"exercise":{"name":"Tricep Dips","calories":"5","type":"Arms"}},
++{"exercise":{"name":"Lateral Raise","calories":"2","type":"Back"}},
++{"exercise":{"name":"Pilates Press","calories":"7","type":"Back"}},
++{"exercise":{"name":"Plank","calories":"2","type":"Back"}},
++{"exercise":{"name":"Pull-ups","calories":"11","type":"Back"}},
++{"exercise":{"name":"Superman Raise","calories":"3","type":"Back"}},
++{"exercise":{"name":"Twisters","calories":"3","type":"Back"}},
++{"exercise":{"name":"Bear Crawls","calories":"5","type":"Cardio"}},
++{"exercise":{"name":"Jog in Place","calories":"6","type":"Cardio"}},
++{"exercise":{"name":"Jump Rope","calories":"15","type":"Cardio"}},
++{"exercise":{"name":"Jumping Jacks","calories":"8","type":"Cardio"}},
++{"exercise":{"name":"Running","calories":"10","type":"Cardio"}},
++{"exercise":{"name":"Squat Jumps","calories":"10","type":"Cardio"}},
++{"exercise":{"name":"Trunk Rotations","calories":"4","type":"Cardio"}},
++{"exercise":{"name":"High Knees","calories":"6","type":"Legs"}},
++{"exercise":{"name":"Hip Bridges","calories":"3","type":"Legs"}},
++{"exercise":{"name":"Lunges","calories":"6","type":"Legs"}},
++{"exercise":{"name":"Mountain Climb","calories":"11","type":"Legs"}},
++{"exercise":{"name":"Side Lunges","calories":"6","type":"Legs"}},
++{"exercise":{"name":"Squats","calories":"8","type":"Legs"}},
++{"exercise":{"name":"Jumping Lunges","calories":"8","type":"Legs"}},
++{"exercise":{"name":"Crab Walk","calories":"4","type":"Shoulders"}},
++{"exercise":{"name":"Dips","calories":"7","type":"Shoulders"}},
++{"exercise":{"name":"Dolphin Dive","calories":"5","type":"Shoulders"}},
++{"exercise":{"name":"Pike Push-ups","calories":"7","type":"Shoulders"}},
++{"exercise":{"name":"Plank Ups","calories":"5","type":"Shoulders"}},
++{"exercise":{"name":"Y's and T's","calories":"1","type":"Shoulders"}},
++{"workout":{"reps":["5","4","3"],"exercises":["Plank Hops","Burpees","Side Lunges"],"name":"workout1"}}]
+\ No newline at end of file
+Index: src/App.form
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<form xmlns=\"http://www.intellij.com/uidesigner/form/\" version=\"1\" bind-to-class=\"App\">\r\n  <grid id=\"27dc6\" binding=\"mainPanel\" layout-manager=\"GridLayoutManager\" row-count=\"1\" column-count=\"1\" same-size-horizontally=\"false\" same-size-vertically=\"false\" hgap=\"-1\" vgap=\"-1\">\r\n    <margin top=\"0\" left=\"0\" bottom=\"0\" right=\"0\"/>\r\n    <constraints>\r\n      <xy x=\"20\" y=\"20\" width=\"774\" height=\"604\"/>\r\n    </constraints>\r\n    <properties/>\r\n    <border type=\"none\"/>\r\n    <children>\r\n      <tabbedpane id=\"93c78\" binding=\"tabbedPane1\" default-binding=\"true\">\r\n        <constraints>\r\n          <grid row=\"0\" column=\"0\" row-span=\"1\" col-span=\"1\" vsize-policy=\"3\" hsize-policy=\"3\" anchor=\"0\" fill=\"3\" indent=\"0\" use-parent-layout=\"false\">\r\n            <preferred-size width=\"200\" height=\"200\"/>\r\n          </grid>\r\n        </constraints>\r\n        <properties>\r\n          <doubleBuffered value=\"true\"/>\r\n        </properties>\r\n        <border type=\"none\"/>\r\n        <children>\r\n          <grid id=\"c1e40\" layout-manager=\"GridLayoutManager\" row-count=\"6\" column-count=\"3\" same-size-horizontally=\"false\" same-size-vertically=\"false\" hgap=\"-1\" vgap=\"-1\">\r\n            <margin top=\"0\" left=\"0\" bottom=\"0\" right=\"0\"/>\r\n            <constraints>\r\n              <tabbedpane title=\"Planner\"/>\r\n            </constraints>\r\n            <properties/>\r\n            <border type=\"none\"/>\r\n            <children>\r\n              <scrollpane id=\"de3a0\" binding=\"ExercisePanelScroll\">\r\n                <constraints>\r\n                  <grid row=\"1\" column=\"0\" row-span=\"1\" col-span=\"3\" vsize-policy=\"7\" hsize-policy=\"7\" anchor=\"0\" fill=\"3\" indent=\"0\" use-parent-layout=\"false\"/>\r\n                </constraints>\r\n                <properties>\r\n                  <doubleBuffered value=\"true\"/>\r\n                  <horizontalScrollBarPolicy value=\"32\"/>\r\n                  <inheritsPopupMenu value=\"false\"/>\r\n                  <verticalScrollBarPolicy value=\"21\"/>\r\n                  <wheelScrollingEnabled value=\"true\"/>\r\n                </properties>\r\n                <border type=\"empty\"/>\r\n                <children>\r\n                  <grid id=\"326cf\" binding=\"ExercisesPanel\" layout-manager=\"FlowLayout\" hgap=\"5\" vgap=\"5\" flow-align=\"1\">\r\n                    <constraints/>\r\n                    <properties>\r\n                      <autoscrolls value=\"false\"/>\r\n                      <opaque value=\"false\"/>\r\n                      <visible value=\"true\"/>\r\n                    </properties>\r\n                    <border type=\"none\"/>\r\n                    <children/>\r\n                  </grid>\r\n                </children>\r\n              </scrollpane>\r\n              <component id=\"8db5f\" class=\"javax.swing.JLabel\">\r\n                <constraints>\r\n                  <grid row=\"4\" column=\"0\" row-span=\"1\" col-span=\"3\" vsize-policy=\"0\" hsize-policy=\"0\" anchor=\"8\" fill=\"0\" indent=\"0\" use-parent-layout=\"false\"/>\r\n                </constraints>\r\n                <properties>\r\n                  <text value=\"Current Plan\"/>\r\n                </properties>\r\n              </component>\r\n              <scrollpane id=\"51008\" binding=\"CurrentPlanAScroll\">\r\n                <constraints>\r\n                  <grid row=\"5\" column=\"0\" row-span=\"1\" col-span=\"3\" vsize-policy=\"7\" hsize-policy=\"7\" anchor=\"0\" fill=\"3\" indent=\"0\" use-parent-layout=\"false\"/>\r\n                </constraints>\r\n                <properties>\r\n                  <doubleBuffered value=\"true\"/>\r\n                  <horizontalScrollBarPolicy value=\"32\"/>\r\n                  <verticalScrollBarPolicy value=\"21\"/>\r\n                </properties>\r\n                <border type=\"empty\"/>\r\n                <children>\r\n                  <grid id=\"8228e\" binding=\"currentPlanA\" layout-manager=\"FlowLayout\" hgap=\"5\" vgap=\"5\" flow-align=\"1\">\r\n                    <constraints/>\r\n                    <properties/>\r\n                    <border type=\"none\"/>\r\n                    <children/>\r\n                  </grid>\r\n                </children>\r\n              </scrollpane>\r\n              <component id=\"e4b99\" class=\"javax.swing.JLabel\">\r\n                <constraints>\r\n                  <grid row=\"2\" column=\"0\" row-span=\"1\" col-span=\"1\" vsize-policy=\"0\" hsize-policy=\"0\" anchor=\"8\" fill=\"0\" indent=\"0\" use-parent-layout=\"false\"/>\r\n                </constraints>\r\n                <properties>\r\n                  <text value=\"Details\"/>\r\n                </properties>\r\n              </component>\r\n              <grid id=\"193c9\" layout-manager=\"GridLayoutManager\" row-count=\"1\" column-count=\"3\" same-size-horizontally=\"false\" same-size-vertically=\"false\" hgap=\"-1\" vgap=\"-1\">\r\n                <margin top=\"0\" left=\"0\" bottom=\"0\" right=\"0\"/>\r\n                <constraints>\r\n                  <grid row=\"0\" column=\"0\" row-span=\"1\" col-span=\"3\" vsize-policy=\"3\" hsize-policy=\"3\" anchor=\"0\" fill=\"3\" indent=\"0\" use-parent-layout=\"false\"/>\r\n                </constraints>\r\n                <properties/>\r\n                <border type=\"none\"/>\r\n                <children>\r\n                  <component id=\"dfa1\" class=\"javax.swing.JLabel\">\r\n                    <constraints>\r\n                      <grid row=\"0\" column=\"0\" row-span=\"1\" col-span=\"1\" vsize-policy=\"0\" hsize-policy=\"0\" anchor=\"8\" fill=\"0\" indent=\"0\" use-parent-layout=\"false\"/>\r\n                    </constraints>\r\n                    <properties>\r\n                      <text value=\"Add Exercise\"/>\r\n                    </properties>\r\n                  </component>\r\n                  <hspacer id=\"d4836\">\r\n                    <constraints>\r\n                      <grid row=\"0\" column=\"1\" row-span=\"1\" col-span=\"1\" vsize-policy=\"1\" hsize-policy=\"6\" anchor=\"0\" fill=\"1\" indent=\"0\" use-parent-layout=\"false\"/>\r\n                    </constraints>\r\n                  </hspacer>\r\n                  <component id=\"9aa39\" class=\"javax.swing.JComboBox\" binding=\"comboBox1\" default-binding=\"true\">\r\n                    <constraints>\r\n                      <grid row=\"0\" column=\"2\" row-span=\"1\" col-span=\"1\" vsize-policy=\"0\" hsize-policy=\"2\" anchor=\"8\" fill=\"1\" indent=\"0\" use-parent-layout=\"false\"/>\r\n                    </constraints>\r\n                    <properties>\r\n                      <model>\r\n                        <item value=\"Exercise Type\"/>\r\n                        <item value=\"Abs\"/>\r\n                        <item value=\"Arms\"/>\r\n                        <item value=\"Back\"/>\r\n                        <item value=\"Cardio\"/>\r\n                        <item value=\"Legs\"/>\r\n                        <item value=\"Shoulders\"/>\r\n                      </model>\r\n                    </properties>\r\n                  </component>\r\n                </children>\r\n              </grid>\r\n              <scrollpane id=\"68265\" binding=\"DetailPanelScroll\">\r\n                <constraints>\r\n                  <grid row=\"3\" column=\"0\" row-span=\"1\" col-span=\"3\" vsize-policy=\"7\" hsize-policy=\"7\" anchor=\"0\" fill=\"3\" indent=\"0\" use-parent-layout=\"false\"/>\r\n                </constraints>\r\n                <properties>\r\n                  <doubleBuffered value=\"true\"/>\r\n                  <horizontalScrollBarPolicy value=\"31\"/>\r\n                  <verticalScrollBarPolicy value=\"21\"/>\r\n                </properties>\r\n                <border type=\"none\"/>\r\n                <children>\r\n                  <grid id=\"94fce\" binding=\"DetailPanel\" layout-manager=\"GridLayoutManager\" row-count=\"1\" column-count=\"1\" same-size-horizontally=\"false\" same-size-vertically=\"false\" hgap=\"-1\" vgap=\"-1\">\r\n                    <margin top=\"0\" left=\"0\" bottom=\"0\" right=\"0\"/>\r\n                    <constraints/>\r\n                    <properties>\r\n                      <opaque value=\"true\"/>\r\n                    </properties>\r\n                    <border type=\"none\"/>\r\n                    <children/>\r\n                  </grid>\r\n                </children>\r\n              </scrollpane>\r\n              <component id=\"aef45\" class=\"javax.swing.JButton\" binding=\"addExerciseButton\" default-binding=\"true\">\r\n                <constraints>\r\n                  <grid row=\"2\" column=\"2\" row-span=\"1\" col-span=\"1\" vsize-policy=\"0\" hsize-policy=\"3\" anchor=\"0\" fill=\"1\" indent=\"0\" use-parent-layout=\"false\"/>\r\n                </constraints>\r\n                <properties>\r\n                  <text value=\"Add Exercise\"/>\r\n                </properties>\r\n              </component>\r\n              <hspacer id=\"bfc41\">\r\n                <constraints>\r\n                  <grid row=\"2\" column=\"1\" row-span=\"1\" col-span=\"1\" vsize-policy=\"1\" hsize-policy=\"6\" anchor=\"0\" fill=\"1\" indent=\"0\" use-parent-layout=\"false\"/>\r\n                </constraints>\r\n              </hspacer>\r\n            </children>\r\n          </grid>\r\n          <grid id=\"59061\" layout-manager=\"GridLayoutManager\" row-count=\"7\" column-count=\"3\" same-size-horizontally=\"false\" same-size-vertically=\"false\" hgap=\"-1\" vgap=\"-1\">\r\n            <margin top=\"0\" left=\"0\" bottom=\"0\" right=\"0\"/>\r\n            <constraints>\r\n              <tabbedpane title=\"My Plan\"/>\r\n            </constraints>\r\n            <properties/>\r\n            <border type=\"none\"/>\r\n            <children>\r\n              <scrollpane id=\"9ca50\" binding=\"CurrentPlanBScroll\">\r\n                <constraints>\r\n                  <grid row=\"1\" column=\"0\" row-span=\"1\" col-span=\"3\" vsize-policy=\"7\" hsize-policy=\"7\" anchor=\"0\" fill=\"3\" indent=\"0\" use-parent-layout=\"false\"/>\r\n                </constraints>\r\n                <properties>\r\n                  <doubleBuffered value=\"true\"/>\r\n                </properties>\r\n                <border type=\"empty\"/>\r\n                <children>\r\n                  <grid id=\"baf7c\" binding=\"currentPlanB\" layout-manager=\"GridLayoutManager\" row-count=\"1\" column-count=\"1\" same-size-horizontally=\"false\" same-size-vertically=\"false\" hgap=\"-1\" vgap=\"-1\">\r\n                    <margin top=\"0\" left=\"0\" bottom=\"0\" right=\"0\"/>\r\n                    <constraints/>\r\n                    <properties/>\r\n                    <border type=\"none\"/>\r\n                    <children/>\r\n                  </grid>\r\n                </children>\r\n              </scrollpane>\r\n              <scrollpane id=\"66549\">\r\n                <constraints>\r\n                  <grid row=\"3\" column=\"0\" row-span=\"1\" col-span=\"3\" vsize-policy=\"7\" hsize-policy=\"7\" anchor=\"0\" fill=\"3\" indent=\"0\" use-parent-layout=\"false\"/>\r\n                </constraints>\r\n                <properties>\r\n                  <doubleBuffered value=\"true\"/>\r\n                </properties>\r\n                <border type=\"none\"/>\r\n                <children>\r\n                  <grid id=\"e0def\" binding=\"settingsPanel\" layout-manager=\"GridLayoutManager\" row-count=\"1\" column-count=\"1\" same-size-horizontally=\"false\" same-size-vertically=\"false\" hgap=\"-1\" vgap=\"-1\">\r\n                    <margin top=\"0\" left=\"0\" bottom=\"0\" right=\"0\"/>\r\n                    <constraints/>\r\n                    <properties/>\r\n                    <border type=\"none\"/>\r\n                    <children/>\r\n                  </grid>\r\n                </children>\r\n              </scrollpane>\r\n              <scrollpane id=\"b205e\">\r\n                <constraints>\r\n                  <grid row=\"5\" column=\"0\" row-span=\"1\" col-span=\"3\" vsize-policy=\"7\" hsize-policy=\"7\" anchor=\"0\" fill=\"3\" indent=\"0\" use-parent-layout=\"false\"/>\r\n                </constraints>\r\n                <properties>\r\n                  <doubleBuffered value=\"true\"/>\r\n                </properties>\r\n                <border type=\"none\"/>\r\n                <children>\r\n                  <grid id=\"73ee5\" binding=\"metricsPanel\" layout-manager=\"GridLayoutManager\" row-count=\"2\" column-count=\"3\" same-size-horizontally=\"false\" same-size-vertically=\"false\" hgap=\"-1\" vgap=\"-1\">\r\n                    <margin top=\"0\" left=\"0\" bottom=\"0\" right=\"0\"/>\r\n                    <constraints/>\r\n                    <properties/>\r\n                    <border type=\"none\"/>\r\n                    <children>\r\n                      <grid id=\"231c2\" layout-manager=\"GridLayoutManager\" row-count=\"4\" column-count=\"1\" same-size-horizontally=\"false\" same-size-vertically=\"true\" hgap=\"-1\" vgap=\"-1\">\r\n                        <margin top=\"0\" left=\"0\" bottom=\"0\" right=\"0\"/>\r\n                        <constraints>\r\n                          <grid row=\"0\" column=\"0\" row-span=\"2\" col-span=\"1\" vsize-policy=\"3\" hsize-policy=\"3\" anchor=\"0\" fill=\"3\" indent=\"0\" use-parent-layout=\"false\"/>\r\n                        </constraints>\r\n                        <properties/>\r\n                        <border type=\"none\"/>\r\n                        <children>\r\n                          <component id=\"4c5cc\" class=\"javax.swing.JLabel\">\r\n                            <constraints>\r\n                              <grid row=\"0\" column=\"0\" row-span=\"1\" col-span=\"1\" vsize-policy=\"3\" hsize-policy=\"0\" anchor=\"8\" fill=\"0\" indent=\"0\" use-parent-layout=\"false\">\r\n                                <preferred-size width=\"28\" height=\"29\"/>\r\n                              </grid>\r\n                            </constraints>\r\n                            <properties>\r\n                              <text value=\"Total Calories Burnt:\"/>\r\n                            </properties>\r\n                          </component>\r\n                          <component id=\"75c0\" class=\"javax.swing.JLabel\" binding=\"bottomLabel\">\r\n                            <constraints>\r\n                              <grid row=\"3\" column=\"0\" row-span=\"1\" col-span=\"1\" vsize-policy=\"3\" hsize-policy=\"0\" anchor=\"8\" fill=\"0\" indent=\"0\" use-parent-layout=\"false\"/>\r\n                            </constraints>\r\n                            <properties>\r\n                              <text value=\"Label\"/>\r\n                            </properties>\r\n                          </component>\r\n                          <component id=\"72d25\" class=\"javax.swing.JLabel\">\r\n                            <constraints>\r\n                              <grid row=\"1\" column=\"0\" row-span=\"1\" col-span=\"1\" vsize-policy=\"3\" hsize-policy=\"0\" anchor=\"8\" fill=\"0\" indent=\"0\" use-parent-layout=\"false\"/>\r\n                            </constraints>\r\n                            <properties>\r\n                              <text value=\"Total Time Taken:\"/>\r\n                            </properties>\r\n                          </component>\r\n                          <component id=\"e84ad\" class=\"javax.swing.JLabel\">\r\n                            <constraints>\r\n                              <grid row=\"2\" column=\"0\" row-span=\"1\" col-span=\"1\" vsize-policy=\"3\" hsize-policy=\"0\" anchor=\"8\" fill=\"0\" indent=\"0\" use-parent-layout=\"false\">\r\n                                <preferred-size width=\"28\" height=\"27\"/>\r\n                              </grid>\r\n                            </constraints>\r\n                            <properties>\r\n                              <text value=\"Muscle Group Focus:\"/>\r\n                            </properties>\r\n                          </component>\r\n                        </children>\r\n                      </grid>\r\n                      <grid id=\"45392\" layout-manager=\"GridLayoutManager\" row-count=\"4\" column-count=\"1\" same-size-horizontally=\"false\" same-size-vertically=\"true\" hgap=\"-1\" vgap=\"-1\">\r\n                        <margin top=\"0\" left=\"0\" bottom=\"0\" right=\"0\"/>\r\n                        <constraints>\r\n                          <grid row=\"0\" column=\"1\" row-span=\"2\" col-span=\"1\" vsize-policy=\"3\" hsize-policy=\"3\" anchor=\"0\" fill=\"3\" indent=\"0\" use-parent-layout=\"false\"/>\r\n                        </constraints>\r\n                        <properties/>\r\n                        <border type=\"none\"/>\r\n                        <children>\r\n                          <component id=\"586af\" class=\"javax.swing.JLabel\">\r\n                            <constraints>\r\n                              <grid row=\"0\" column=\"0\" row-span=\"1\" col-span=\"1\" vsize-policy=\"0\" hsize-policy=\"0\" anchor=\"8\" fill=\"0\" indent=\"0\" use-parent-layout=\"false\"/>\r\n                            </constraints>\r\n                            <properties>\r\n                              <text value=\"1000\"/>\r\n                            </properties>\r\n                          </component>\r\n                          <component id=\"7b823\" class=\"javax.swing.JLabel\">\r\n                            <constraints>\r\n                              <grid row=\"1\" column=\"0\" row-span=\"1\" col-span=\"1\" vsize-policy=\"0\" hsize-policy=\"0\" anchor=\"8\" fill=\"0\" indent=\"0\" use-parent-layout=\"false\"/>\r\n                            </constraints>\r\n                            <properties>\r\n                              <text value=\"1 Hour\"/>\r\n                            </properties>\r\n                          </component>\r\n                          <component id=\"b2088\" class=\"javax.swing.JLabel\">\r\n                            <constraints>\r\n                              <grid row=\"2\" column=\"0\" row-span=\"1\" col-span=\"1\" vsize-policy=\"0\" hsize-policy=\"0\" anchor=\"8\" fill=\"0\" indent=\"0\" use-parent-layout=\"false\"/>\r\n                            </constraints>\r\n                            <properties>\r\n                              <text value=\"Arms\"/>\r\n                            </properties>\r\n                          </component>\r\n                          <component id=\"a2f4c\" class=\"javax.swing.JLabel\">\r\n                            <constraints>\r\n                              <grid row=\"3\" column=\"0\" row-span=\"1\" col-span=\"1\" vsize-policy=\"0\" hsize-policy=\"0\" anchor=\"8\" fill=\"0\" indent=\"0\" use-parent-layout=\"false\"/>\r\n                            </constraints>\r\n                            <properties>\r\n                              <text value=\"...\"/>\r\n                            </properties>\r\n                          </component>\r\n                        </children>\r\n                      </grid>\r\n                      <hspacer id=\"3f91e\">\r\n                        <constraints>\r\n                          <grid row=\"0\" column=\"2\" row-span=\"2\" col-span=\"1\" vsize-policy=\"1\" hsize-policy=\"6\" anchor=\"0\" fill=\"1\" indent=\"0\" use-parent-layout=\"false\"/>\r\n                        </constraints>\r\n                      </hspacer>\r\n                    </children>\r\n                  </grid>\r\n                </children>\r\n              </scrollpane>\r\n              <grid id=\"fa9d7\" layout-manager=\"GridLayoutManager\" row-count=\"1\" column-count=\"3\" same-size-horizontally=\"false\" same-size-vertically=\"false\" hgap=\"-1\" vgap=\"-1\">\r\n                <margin top=\"0\" left=\"0\" bottom=\"0\" right=\"0\"/>\r\n                <constraints>\r\n                  <grid row=\"0\" column=\"0\" row-span=\"1\" col-span=\"3\" vsize-policy=\"3\" hsize-policy=\"3\" anchor=\"0\" fill=\"3\" indent=\"0\" use-parent-layout=\"false\"/>\r\n                </constraints>\r\n                <properties/>\r\n                <border type=\"none\"/>\r\n                <children>\r\n                  <component id=\"b2f31\" class=\"javax.swing.JLabel\">\r\n                    <constraints>\r\n                      <grid row=\"0\" column=\"0\" row-span=\"1\" col-span=\"1\" vsize-policy=\"0\" hsize-policy=\"0\" anchor=\"8\" fill=\"0\" indent=\"0\" use-parent-layout=\"false\"/>\r\n                    </constraints>\r\n                    <properties>\r\n                      <text value=\"Current Plan\"/>\r\n                    </properties>\r\n                  </component>\r\n                  <hspacer id=\"65de5\">\r\n                    <constraints>\r\n                      <grid row=\"0\" column=\"1\" row-span=\"1\" col-span=\"1\" vsize-policy=\"1\" hsize-policy=\"6\" anchor=\"0\" fill=\"1\" indent=\"0\" use-parent-layout=\"false\"/>\r\n                    </constraints>\r\n                  </hspacer>\r\n                  <component id=\"4c553\" class=\"javax.swing.JComboBox\" binding=\"comboBox2\" default-binding=\"true\">\r\n                    <constraints>\r\n                      <grid row=\"0\" column=\"2\" row-span=\"1\" col-span=\"1\" vsize-policy=\"0\" hsize-policy=\"2\" anchor=\"8\" fill=\"1\" indent=\"0\" use-parent-layout=\"false\"/>\r\n                    </constraints>\r\n                    <properties>\r\n                      <model>\r\n                        <item value=\"Exercise Type\"/>\r\n                        <item value=\"Abs\"/>\r\n                        <item value=\"Arms\"/>\r\n                        <item value=\"Back\"/>\r\n                        <item value=\"Cardio\"/>\r\n                        <item value=\"Legs\"/>\r\n                        <item value=\"Shoulders\"/>\r\n                      </model>\r\n                    </properties>\r\n                  </component>\r\n                </children>\r\n              </grid>\r\n              <component id=\"addec\" class=\"javax.swing.JLabel\">\r\n                <constraints>\r\n                  <grid row=\"2\" column=\"0\" row-span=\"1\" col-span=\"3\" vsize-policy=\"0\" hsize-policy=\"0\" anchor=\"8\" fill=\"0\" indent=\"0\" use-parent-layout=\"false\"/>\r\n                </constraints>\r\n                <properties>\r\n                  <text value=\"Exercise Settings\"/>\r\n                </properties>\r\n              </component>\r\n              <component id=\"3984e\" class=\"javax.swing.JLabel\">\r\n                <constraints>\r\n                  <grid row=\"4\" column=\"0\" row-span=\"1\" col-span=\"1\" vsize-policy=\"0\" hsize-policy=\"0\" anchor=\"8\" fill=\"0\" indent=\"0\" use-parent-layout=\"false\"/>\r\n                </constraints>\r\n                <properties>\r\n                  <text value=\"My Plan Metrics\"/>\r\n                </properties>\r\n              </component>\r\n              <component id=\"bd9bc\" class=\"javax.swing.JButton\" binding=\"updateExerciseButton\" default-binding=\"true\">\r\n                <constraints>\r\n                  <grid row=\"4\" column=\"2\" row-span=\"1\" col-span=\"1\" vsize-policy=\"0\" hsize-policy=\"3\" anchor=\"0\" fill=\"1\" indent=\"0\" use-parent-layout=\"false\"/>\r\n                </constraints>\r\n                <properties>\r\n                  <text value=\"Update Exercise\"/>\r\n                </properties>\r\n              </component>\r\n              <hspacer id=\"6975a\">\r\n                <constraints>\r\n                  <grid row=\"4\" column=\"1\" row-span=\"1\" col-span=\"1\" vsize-policy=\"1\" hsize-policy=\"6\" anchor=\"0\" fill=\"1\" indent=\"0\" use-parent-layout=\"false\"/>\r\n                </constraints>\r\n              </hspacer>\r\n              <component id=\"d68fa\" class=\"javax.swing.JButton\" binding=\"importPlanButton\" default-binding=\"true\">\r\n                <constraints>\r\n                  <grid row=\"6\" column=\"0\" row-span=\"1\" col-span=\"1\" vsize-policy=\"0\" hsize-policy=\"3\" anchor=\"0\" fill=\"1\" indent=\"0\" use-parent-layout=\"false\"/>\r\n                </constraints>\r\n                <properties>\r\n                  <text value=\"Import Plan\"/>\r\n                </properties>\r\n              </component>\r\n              <component id=\"d4127\" class=\"javax.swing.JButton\" binding=\"exportPlanButton\" default-binding=\"true\">\r\n                <constraints>\r\n                  <grid row=\"6\" column=\"2\" row-span=\"1\" col-span=\"1\" vsize-policy=\"0\" hsize-policy=\"3\" anchor=\"0\" fill=\"1\" indent=\"0\" use-parent-layout=\"false\"/>\r\n                </constraints>\r\n                <properties>\r\n                  <text value=\"Export Plan\"/>\r\n                </properties>\r\n              </component>\r\n            </children>\r\n          </grid>\r\n        </children>\r\n      </tabbedpane>\r\n    </children>\r\n  </grid>\r\n</form>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/App.form b/src/App.form
+--- a/src/App.form	(revision d48b9c6aba1165f2a81dd1f4ab68643b9ea73777)
++++ b/src/App.form	(date 1618280934490)
+@@ -8,7 +8,7 @@
+     <properties/>
+     <border type="none"/>
+     <children>
+-      <tabbedpane id="93c78" binding="tabbedPane1" default-binding="true">
++      <tabbedpane id="93c78" default-binding="true">
+         <constraints>
+           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+             <preferred-size width="200" height="200"/>
+@@ -126,7 +126,7 @@
+                   </component>
+                 </children>
+               </grid>
+-              <scrollpane id="68265" binding="DetailPanelScroll">
++              <scrollpane id="68265">
+                 <constraints>
+                   <grid row="3" column="0" row-span="1" col-span="3" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                 </constraints>
+Index: src/database
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>[{\"exercise\":{\"name\":\"Curls\",\"calories\":\"5\",\"type\":\"Arms\"}},{\"exercise\":{\"name\":\"Push-ups\",\"calories\":\"7\",\"type\":\"Arms\"}},{\"exercise\":{\"name\":\"Running\",\"calories\":\"10\",\"type\":\"Cardio\"}},{\"exercise\":{\"name\":\"Jumping Jacks\",\"calories\":\"8\",\"type\":\"Cardio\"}},{\"exercise\":{\"name\":\"Squats\",\"calories\":\"8\",\"type\":\"Legs\"}},{\"exercise\":{\"name\":\"Lunges\",\"calories\":\"6\",\"type\":\"Legs\"}},{\"exercise\":{\"name\":\"Sit-ups\",\"calories\":\"3\",\"type\":\"Abs\"}},{\"exercise\":{\"name\":\"Crunches\",\"calories\":\"6\",\"type\":\"Abs\"}},{\"exercise\":{\"name\":\"Pull-ups\",\"calories\":\"11\",\"type\":\"Back\"}},{\"exercise\":{\"name\":\"Leg Raises\",\"calories\":\"4\",\"type\":\"Abs\"}},{\"exercise\":{\"name\":\"Jump Rope\",\"calories\":\"15\",\"type\":\"Cardio\"}},{\"exercise\":{\"name\":\"Plank\",\"calories\":\"2\",\"type\":\"Back\"}},{\"exercise\":{\"name\":\"Bicycle Crunch\",\"calories\":\"3\",\"type\":\"Abs\"}},{\"exercise\":{\"name\":\"Superman Raise\",\"calories\":\"3\",\"type\":\"Back\"}},{\"exercise\":{\"name\":\"Bridge Raise\",\"calories\":\"8\",\"type\":\"Abs\"}},{\"exercise\":{\"name\":\"Mountain Climb\",\"calories\":\"11\",\"type\":\"Legs\"}},{\"exercise\":{\"name\":\"High Knees\",\"calories\":\"6\",\"type\":\"Legs\"}},{\"exercise\":{\"name\":\"Side Lunges\",\"calories\":\"6\",\"type\":\"Legs\"}},{\"exercise\":{\"name\":\"Burpees\",\"calories\":\"8\",\"type\":\"Abs\"}},{\"exercise\":{\"name\":\"Plank Hops\",\"calories\":\"2\",\"type\":\"Abs\"}},{\"workout\":{\"reps\":[\"5\",\"4\",\"3\"],\"exercises\":[\"Plank Hops\",\"Burpees\",\"Side Lunges\"],\"name\":\"workout1\"}}]
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/database b/src/database
+--- a/src/database	(revision d48b9c6aba1165f2a81dd1f4ab68643b9ea73777)
++++ b/src/database	(date 1618280934496)
+@@ -1,1 +1,41 @@
+-[{"exercise":{"name":"Curls","calories":"5","type":"Arms"}},{"exercise":{"name":"Push-ups","calories":"7","type":"Arms"}},{"exercise":{"name":"Running","calories":"10","type":"Cardio"}},{"exercise":{"name":"Jumping Jacks","calories":"8","type":"Cardio"}},{"exercise":{"name":"Squats","calories":"8","type":"Legs"}},{"exercise":{"name":"Lunges","calories":"6","type":"Legs"}},{"exercise":{"name":"Sit-ups","calories":"3","type":"Abs"}},{"exercise":{"name":"Crunches","calories":"6","type":"Abs"}},{"exercise":{"name":"Pull-ups","calories":"11","type":"Back"}},{"exercise":{"name":"Leg Raises","calories":"4","type":"Abs"}},{"exercise":{"name":"Jump Rope","calories":"15","type":"Cardio"}},{"exercise":{"name":"Plank","calories":"2","type":"Back"}},{"exercise":{"name":"Bicycle Crunch","calories":"3","type":"Abs"}},{"exercise":{"name":"Superman Raise","calories":"3","type":"Back"}},{"exercise":{"name":"Bridge Raise","calories":"8","type":"Abs"}},{"exercise":{"name":"Mountain Climb","calories":"11","type":"Legs"}},{"exercise":{"name":"High Knees","calories":"6","type":"Legs"}},{"exercise":{"name":"Side Lunges","calories":"6","type":"Legs"}},{"exercise":{"name":"Burpees","calories":"8","type":"Abs"}},{"exercise":{"name":"Plank Hops","calories":"2","type":"Abs"}},{"workout":{"reps":["5","4","3"],"exercises":["Plank Hops","Burpees","Side Lunges"],"name":"workout1"}}]
+\ No newline at end of file
++[{"exercise":{"name":"Bicycle Crunch","calories":"3","type":"Abs"}},
++{"exercise":{"name":"Bridge Raise","calories":"8","type":"Abs"}},
++{"exercise":{"name":"Burpees","calories":"8","type":"Abs"}},
++{"exercise":{"name":"Crunches","calories":"6","type":"Abs"}},
++{"exercise":{"name":"Leg Raises","calories":"4","type":"Abs"}},
++{"exercise":{"name":"Plank Hops","calories":"2","type":"Abs"}},
++{"exercise":{"name":"Sit-ups","calories":"3","type":"Abs"}},
++{"exercise":{"name":"Body Saw","calories":"2","type":"Arms"}},
++{"exercise":{"name":"Curls","calories":"5","type":"Arms"}},
++{"exercise":{"name":"Plank Tap","calories":"3","type":"Arms"}},
++{"exercise":{"name":"Plank Walk","calories":"3","type":"Arms"}},
++{"exercise":{"name":"Push-ups","calories":"7","type":"Arms"}},
++{"exercise":{"name":"Side Planks","calories":"3","type":"Arms"}},
++{"exercise":{"name":"Tricep Dips","calories":"5","type":"Arms"}},
++{"exercise":{"name":"Lateral Raise","calories":"2","type":"Back"}},
++{"exercise":{"name":"Pilates Press","calories":"7","type":"Back"}},
++{"exercise":{"name":"Plank","calories":"2","type":"Back"}},
++{"exercise":{"name":"Pull-ups","calories":"11","type":"Back"}},
++{"exercise":{"name":"Superman Raise","calories":"3","type":"Back"}},
++{"exercise":{"name":"Twisters","calories":"3","type":"Back"}},
++{"exercise":{"name":"Bear Crawls","calories":"5","type":"Cardio"}},
++{"exercise":{"name":"Jog in Place","calories":"6","type":"Cardio"}},
++{"exercise":{"name":"Jump Rope","calories":"15","type":"Cardio"}},
++{"exercise":{"name":"Jumping Jacks","calories":"8","type":"Cardio"}},
++{"exercise":{"name":"Running","calories":"10","type":"Cardio"}},
++{"exercise":{"name":"Squat Jumps","calories":"10","type":"Cardio"}},
++{"exercise":{"name":"Trunk Rotations","calories":"4","type":"Cardio"}},
++{"exercise":{"name":"High Knees","calories":"6","type":"Legs"}},
++{"exercise":{"name":"Hip Bridges","calories":"3","type":"Legs"}},
++{"exercise":{"name":"Lunges","calories":"6","type":"Legs"}},
++{"exercise":{"name":"Mountain Climb","calories":"11","type":"Legs"}},
++{"exercise":{"name":"Side Lunges","calories":"6","type":"Legs"}},
++{"exercise":{"name":"Squats","calories":"8","type":"Legs"}},
++{"exercise":{"name":"Jumping Lunges","calories":"8","type":"Legs"}},
++{"exercise":{"name":"Crab Walk","calories":"4","type":"Shoulders"}},
++{"exercise":{"name":"Dips","calories":"7","type":"Shoulders"}},
++{"exercise":{"name":"Dolphin Dive","calories":"5","type":"Shoulders"}},
++{"exercise":{"name":"Pike Push-ups","calories":"7","type":"Shoulders"}},
++{"exercise":{"name":"Plank Ups","calories":"5","type":"Shoulders"}},
++{"exercise":{"name":"Y's and T's","calories":"1","type":"Shoulders"}},
++{"workout":{"reps":["5","4","3"],"exercises":["Plank Hops","Burpees","Side Lunges"],"name":"workout1"}}]
+\ No newline at end of file
+Index: src/Workout.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import java.util.ArrayList;\r\n\r\npublic class Workout {\r\n\r\n    private String name;\r\n    private ArrayList<String> exercises = new ArrayList<>();\r\n    private ArrayList<String> reps = new ArrayList<>();\r\n\r\n    /**Default Constructor*/\r\n    public Workout(){}\r\n\r\n    /**Parameterized Constructor\r\n     * @param name The name of this workout\r\n     * @param exercises The exercises in this workout\r\n     */\r\n    public Workout(String name, ArrayList<String> reps,ArrayList<String> exercises){\r\n        this.name = name;\r\n        this.reps.addAll(reps);\r\n        this.exercises.addAll(exercises);\r\n    }\r\n\r\n    /**Get name of this workout\r\n     * @return The name of this workout\r\n     */\r\n    public String getName(){\r\n        return this.name;\r\n    }\r\n\r\n    /**Get exercises in workout\r\n     * @return The exercises in this workout\r\n     */\r\n    public String getExercisesInWorkout() {\r\n        return exercises.toString();\r\n    }\r\n\r\n    public String getReps(){ return reps.toString();}\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Workout.java b/src/Workout.java
+--- a/src/Workout.java	(revision d48b9c6aba1165f2a81dd1f4ab68643b9ea73777)
++++ b/src/Workout.java	(date 1618280934501)
+@@ -3,8 +3,8 @@
+ public class Workout {
+ 
+     private String name;
+-    private ArrayList<String> exercises = new ArrayList<>();
+-    private ArrayList<String> reps = new ArrayList<>();
++    private final ArrayList<String> exercises = new ArrayList<>();
++    private final ArrayList<String> reps = new ArrayList<>();
+ 
+     /**Default Constructor*/
+     public Workout(){}
