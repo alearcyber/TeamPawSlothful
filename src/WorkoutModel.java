@@ -121,6 +121,7 @@ public class WorkoutModel {
         notifyObservers();
     }
 
+
     /**
      * save the current plan to the database
      */
