@@ -148,6 +148,8 @@
       <list>
         <item itemvalue="Application.App" />
         <item itemvalue="Application.DBmanager" />
+        <item itemvalue="Application.App" />
+        <item itemvalue="Application.DBmanager" />
       </list>
     </recent_temporary>
   </component>

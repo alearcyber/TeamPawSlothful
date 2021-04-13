@@ -1,0 +1,61 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"93c9d068-fb06-4dac-bbda-e50b8db393f8\" name=\"Default Changelist\" comment=\"Added a Box.Filler child class that maintains a specified size ratio; fixed various issues with dynamic creation of exercise panels.\">\r\n      <change afterPath=\"$PROJECT_DIR$/src/ExerciseCard.form\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/ExerciseCard.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/WorkoutManager/App.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/WorkoutManager/App.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/App.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/App.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/BoxFillerRatio.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/BoxFillerRatio.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/WorkoutModel.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/WorkoutModel.java\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"master\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n    <option name=\"UPDATE_TYPE\" value=\"REBASE\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"1pSBje8GcHaAV4ORmVnfy38tIdA\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">\r\n    <property name=\"RunOnceActivity.OpenProjectViewOnStart\" value=\"true\" />\r\n    <property name=\"RunOnceActivity.ShowReadmeOnStart\" value=\"true\" />\r\n    <property name=\"SHARE_PROJECT_CONFIGURATION_FILES\" value=\"true\" />\r\n    <property name=\"last_opened_file_path\" value=\"$PROJECT_DIR$\" />\r\n    <property name=\"settings.editor.selected.configurable\" value=\"preferences.pluginManager\" />\r\n  </component>\r\n  <component name=\"RunManager\" selected=\"Application.App\">\r\n    <configuration name=\"App\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"App\" />\r\n      <module name=\"WorkoutManager\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"DBmanager\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"DBmanager\" />\r\n      <module name=\"WorkoutManager\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Application.App\" />\r\n        <item itemvalue=\"Application.DBmanager\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"93c9d068-fb06-4dac-bbda-e50b8db393f8\" name=\"Default Changelist\" comment=\"\" />\r\n      <created>1615166747495</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1615166747495</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Added basic GUI design\">\r\n      <created>1616970136878</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1616970136878</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"Consolidated methods in DBmanager; Fleshed out Exercise class, and Workout class; added JavaDoc for DBmanager, Exercise class, and Workout class\">\r\n      <created>1617305275361</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1617305275361</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"Removed old debug prints; added DBManager.getData() to WorkoutModel; fixed comboBox GUI update bug\">\r\n      <created>1617347847866</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1617347847866</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"Added a Box.Filler child class that maintains a specified size ratio; fixed various issues with dynamic creation of exercise panels.\">\r\n      <created>1617430159548</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1617430159548</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"5\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n    <option name=\"oldMeFiltersMigrated\" value=\"true\" />\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"Added basic GUI design\" />\r\n    <MESSAGE value=\"Consolidated methods in DBmanager; Fleshed out Exercise class, and Workout class; added JavaDoc for DBmanager, Exercise class, and Workout class\" />\r\n    <MESSAGE value=\"Removed old debug prints; added DBManager.getData() to WorkoutModel; fixed comboBox GUI update bug\" />\r\n    <MESSAGE value=\"Added a Box.Filler child class that maintains a specified size ratio; fixed various issues with dynamic creation of exercise panels.\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Added a Box.Filler child class that maintains a specified size ratio; fixed various issues with dynamic creation of exercise panels.\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 4da2391fe226075943a34c19842d86c92d1ed768)
++++ b/.idea/workspace.xml	(date 1617733646970)
+@@ -1,14 +1,8 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="ChangeListManager">
+-    <list default="true" id="93c9d068-fb06-4dac-bbda-e50b8db393f8" name="Default Changelist" comment="Added a Box.Filler child class that maintains a specified size ratio; fixed various issues with dynamic creation of exercise panels.">
+-      <change afterPath="$PROJECT_DIR$/src/ExerciseCard.form" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/ExerciseCard.java" afterDir="false" />
++    <list default="true" id="93c9d068-fb06-4dac-bbda-e50b8db393f8" name="Default Changelist" comment="Added an ExerciseCard class; Changed WorkoutModel.firstPaneList to private and added getter">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/App.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/BoxFillerRatio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BoxFillerRatio.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/WorkoutModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/WorkoutModel.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -42,7 +36,7 @@
+     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
++    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+   </component>
+   <component name="RunManager" selected="Application.App">
+     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+@@ -103,7 +97,14 @@
+       <option name="project" value="LOCAL" />
+       <updated>1617430159548</updated>
+     </task>
+-    <option name="localTasksCounter" value="5" />
++    <task id="LOCAL-00005" summary="Added an ExerciseCard class; Changed WorkoutModel.firstPaneList to private and added getter">
++      <created>1617432351575</created>
++      <option name="number" value="00005" />
++      <option name="presentableId" value="LOCAL-00005" />
++      <option name="project" value="LOCAL" />
++      <updated>1617432351575</updated>
++    </task>
++    <option name="localTasksCounter" value="6" />
+     <servers />
+   </component>
+   <component name="Vcs.Log.Tabs.Properties">
+@@ -123,6 +124,7 @@
+     <MESSAGE value="Consolidated methods in DBmanager; Fleshed out Exercise class, and Workout class; added JavaDoc for DBmanager, Exercise class, and Workout class" />
+     <MESSAGE value="Removed old debug prints; added DBManager.getData() to WorkoutModel; fixed comboBox GUI update bug" />
+     <MESSAGE value="Added a Box.Filler child class that maintains a specified size ratio; fixed various issues with dynamic creation of exercise panels." />
+-    <option name="LAST_COMMIT_MESSAGE" value="Added a Box.Filler child class that maintains a specified size ratio; fixed various issues with dynamic creation of exercise panels." />
++    <MESSAGE value="Added an ExerciseCard class; Changed WorkoutModel.firstPaneList to private and added getter" />
++    <option name="LAST_COMMIT_MESSAGE" value="Added an ExerciseCard class; Changed WorkoutModel.firstPaneList to private and added getter" />
+   </component>
+ </project>
+\ No newline at end of file
