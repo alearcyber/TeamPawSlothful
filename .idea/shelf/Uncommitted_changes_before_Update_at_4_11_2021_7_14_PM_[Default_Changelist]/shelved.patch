@@ -1,0 +1,959 @@
+Index: src/Workout.java
+===================================================================
+diff --git a/src/Workout.java b/src/Workout.java
+deleted file mode 100644
+--- a/src/Workout.java	(revision e0ca708df4c02ee132e027979d39d8dc6f942d26)
++++ /dev/null	(revision e0ca708df4c02ee132e027979d39d8dc6f942d26)
+@@ -1,33 +0,0 @@
+-import java.util.ArrayList;
+-
+-public class Workout {
+-
+-    private String name;
+-    private ArrayList<String> exercises = new ArrayList<>();
+-
+-    /**Default Constructor*/
+-    public Workout(){}
+-
+-    /**Parameterized Constructor
+-     * @param name The name of this workout
+-     * @param exercises The exercises in this workout
+-     */
+-    public Workout(String name, ArrayList<String> exercises){
+-        this.name = name;
+-        this.exercises.addAll(exercises);
+-    }
+-
+-    /**Get name of this workout
+-     * @return The name of this workout
+-     */
+-    public String getName(){
+-        return this.name;
+-    }
+-
+-    /**Get exercises in workout
+-     * @return The exercises in this workout
+-     */
+-    public String getExercisesInWorkout() {
+-        return exercises.toString();
+-    }
+-}
+Index: src/HelloWorld.java
+===================================================================
+diff --git a/src/HelloWorld.java b/src/HelloWorld.java
+deleted file mode 100644
+--- a/src/HelloWorld.java	(revision e0ca708df4c02ee132e027979d39d8dc6f942d26)
++++ /dev/null	(revision e0ca708df4c02ee132e027979d39d8dc6f942d26)
+@@ -1,5 +0,0 @@
+-public class HelloWorld {
+-    public static void main(String[] args){
+-        System.out.println("go team, woooooo!");
+-    }
+-}
+Index: src/App.java
+===================================================================
+diff --git a/src/App.java b/src/App.java
+deleted file mode 100644
+--- a/src/App.java	(revision e0ca708df4c02ee132e027979d39d8dc6f942d26)
++++ /dev/null	(revision e0ca708df4c02ee132e027979d39d8dc6f942d26)
+@@ -1,106 +0,0 @@
+-import javax.swing.*;
+-import java.awt.*;
+-import java.awt.event.ActionEvent;
+-import java.awt.event.ActionListener;
+-import java.awt.event.MouseAdapter;
+-import java.awt.event.MouseEvent;
+-
+-public class App implements Observer<WorkoutModel>{
+-    private JPanel panel1;
+-    private JTabbedPane tabbedPane1;
+-    private JComboBox comboBox1;
+-    private JPanel ExercisesPanel;
+-    private JPanel DetailPanel;
+-    private JButton addExerciseButton;
+-    private JPanel currentPlanA;
+-
+-    private WorkoutController controller;
+-    private WorkoutModel model;
+-
+-
+-
+-
+-
+-    public App(){
+-        model = new WorkoutModel();
+-        model.addObserver(this);
+-        controller = new WorkoutController(model);
+-        controller.updateWorkouts(comboBox1.getSelectedItem().toString());
+-
+-
+-        ExercisesPanel.setLayout(new BoxLayout(ExercisesPanel, BoxLayout.X_AXIS));
+-        DetailPanel.setLayout(new BoxLayout(DetailPanel, BoxLayout.X_AXIS));
+-        currentPlanA.setLayout(new BoxLayout(currentPlanA, BoxLayout.X_AXIS));
+-
+-        comboBox1.addActionListener(new ActionListener() {
+-            @Override
+-            public void actionPerformed(ActionEvent e) {
+-                controller.updateWorkouts(comboBox1.getSelectedItem().toString());
+-                ExercisesPanel.revalidate();
+-            }
+-        });
+-
+-
+-        addExerciseButton.addActionListener(new ActionListener() {
+-            @Override
+-            public void actionPerformed(ActionEvent e) {
+-                try {
+-                    controller.addToPlan(model.getSelectedEx());
+-                }catch(NullPointerException ex){
+-                    System.out.println("No exercise selected");
+-                }
+-            }
+-        });
+-    }
+-
+-
+-    @Override
+-    public void update(WorkoutModel model) {
+-        ExercisesPanel.removeAll();
+-        //Integer index=1;
+-        for(Exercise exercise: model.getFirstPaneList()){
+-            String calString = "Cal / Min: " + exercise.getCalories();
+-            BoxFillerRatio filler = new BoxFillerRatio(3,4,
+-                    new ExerciseCard(exercise.getName(),exercise.getType(), exercise.getCalories(), calString).getPanel(),
+-                    BoxLayout.Y_AXIS);
+-            filler.addMouseListener(new MouseAdapter() {
+-                public void mouseClicked(MouseEvent me) {
+-                    BoxFillerRatio temp = new BoxFillerRatio(3,4,
+-                            new ExerciseCard(exercise.getName(),exercise.getType(), exercise.getCalories(), calString).getPanel(),
+-                            BoxLayout.Y_AXIS);
+-                    DetailPanel.removeAll();
+-                    DetailPanel.add(temp);
+-                    panel1.revalidate();
+-
+-                    //tracking selected exercise
+-                    controller.setSelected(exercise);
+-                }
+-            });
+-            ExercisesPanel.add(filler);
+-        }
+-        panel1.revalidate();
+-
+-
+-        //setting the selected exercise
+-        currentPlanA.removeAll();
+-        for(Exercise exercise: model.getCurrentPlan()){
+-            BoxFillerRatio newbox = new BoxFillerRatio(3,4,
+-                    new ExerciseCard(exercise.getName(),exercise.getType(), exercise.getCalories(), "Cal / Min: " + exercise.getCalories()).getPanel(),
+-                    BoxLayout.Y_AXIS);
+-
+-            currentPlanA.add(newbox);
+-        }
+-        panel1.revalidate();
+-    }
+-
+-    public static void main(String[] args) {
+-        JFrame frame = new JFrame("My Exercise Planner");
+-        Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+-        frame.setPreferredSize(new Dimension((int) size.getWidth() / 2, (int) size.getHeight() / 2));
+-        frame.setLocation(new Point((int) size.getWidth() / 4, (int) size.getHeight() / 4));
+-        frame.setContentPane(new App().panel1);
+-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+-        frame.pack();
+-        frame.setVisible(true);
+-    }
+-}
+Index: src/WorkoutGUI.java
+===================================================================
+diff --git a/src/WorkoutGUI.java b/src/WorkoutGUI.java
+deleted file mode 100644
+--- a/src/WorkoutGUI.java	(revision e0ca708df4c02ee132e027979d39d8dc6f942d26)
++++ /dev/null	(revision e0ca708df4c02ee132e027979d39d8dc6f942d26)
+@@ -1,80 +0,0 @@
+-import javax.swing.*;
+-import java.awt.*;
+-import java.io.InputStream;
+-import java.util.ArrayList;
+-import java.util.List;
+-
+-/**
+- * gui class for sudoku, represents the veiw,
+- * actually not sure what part of MVC it is...
+- * will code stuff and find out later
+- *
+- * @Author Aidan Lear, atl9004, 5/22/2019
+- */
+-
+-public class WorkoutGUI extends JFrame implements Observer<WorkoutModel> {
+-
+-
+-
+-    /** instance of the model here */
+-    WorkoutModel model;
+-
+-    /** instance of the controller here */
+-    WorkoutController controller;
+-
+-
+-
+-    public WorkoutGUI(){
+-
+-    }
+-
+-
+-    public void init(){
+-        System.out.println("starting initialization...");
+-
+-        model = new WorkoutModel();
+-        controller = new WorkoutController(model);
+-        model.addObserver(this);
+-
+-        JFrame stage = new JFrame();
+-        JButton button = new JButton("Easy");
+-        //JPanel panel = new JPanel();
+-        stage.setLayout(new BoxLayout(stage, BoxLayout.PAGE_AXIS));
+-        button.setBounds(140, 100, 100, 130);
+-        stage.add(button);
+-        stage.setSize(500,500);
+-        stage.setLayout(null);
+-        stage.setVisible(true);
+-
+-        //todo finish initialization...
+-
+-
+-        System.out.println("initialization completed.");
+-    }
+-
+-
+-
+-
+-    public void stop(){
+-        System.out.println("stop was called....");
+-    }
+-
+-
+-    /**
+-     * lets us know that changes have been made to the model.
+-     * From here, we update the changes in the view by reading the model
+-     * @param WorkoutModel
+-     */
+-    @Override
+-    public void update(WorkoutModel WorkoutModel) {
+-        //TODO update the gui based on the model?
+-    }
+-
+-
+-    public static void main(String[] args){
+-        System.out.println("Testing the GUI...");
+-        WorkoutGUI gui = new WorkoutGUI();
+-        gui.init();
+-    }
+-
+-}
+\ No newline at end of file
+Index: src/ExerciseCard.java
+===================================================================
+diff --git a/src/ExerciseCard.java b/src/ExerciseCard.java
+deleted file mode 100644
+--- a/src/ExerciseCard.java	(revision e0ca708df4c02ee132e027979d39d8dc6f942d26)
++++ /dev/null	(revision e0ca708df4c02ee132e027979d39d8dc6f942d26)
+@@ -1,18 +0,0 @@
+-import javax.swing.*;
+-
+-public class ExerciseCard {
+-    private JPanel panel1;
+-    private JLabel nameLabel;
+-    private JLabel typeLabel;
+-    private JLabel indexLabel;
+-
+-    public ExerciseCard(String name,String type,Integer index, String calories){
+-        nameLabel.setText(name);
+-        typeLabel.setText(type);
+-        //indexLabel.setText(index.toString());
+-        indexLabel.setText(calories);
+-    }
+-    public JPanel getPanel(){
+-        return panel1;
+-    }
+-}
+Index: src/ExerciseCard.form
+===================================================================
+diff --git a/src/ExerciseCard.form b/src/ExerciseCard.form
+deleted file mode 100644
+--- a/src/ExerciseCard.form	(revision e0ca708df4c02ee132e027979d39d8dc6f942d26)
++++ /dev/null	(revision e0ca708df4c02ee132e027979d39d8dc6f942d26)
+@@ -1,47 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="ExerciseCard">
+-  <grid id="27dc6" binding="panel1" default-binding="true" layout-manager="GridLayoutManager" row-count="5" column-count="1" same-size-horizontally="false" same-size-vertically="true" hgap="-1" vgap="-1">
+-    <margin top="0" left="0" bottom="0" right="0"/>
+-    <constraints>
+-      <xy x="20" y="20" width="500" height="400"/>
+-    </constraints>
+-    <properties/>
+-    <border type="none"/>
+-    <children>
+-      <component id="d4e86" class="javax.swing.JLabel" binding="nameLabel">
+-        <constraints>
+-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+-        </constraints>
+-        <properties>
+-          <text value="Name"/>
+-        </properties>
+-      </component>
+-      <component id="aba54" class="javax.swing.JLabel" binding="typeLabel">
+-        <constraints>
+-          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+-        </constraints>
+-        <properties>
+-          <text value="Type"/>
+-        </properties>
+-      </component>
+-      <component id="891a1" class="javax.swing.JLabel" binding="indexLabel">
+-        <constraints>
+-          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+-        </constraints>
+-        <properties>
+-          <text value="Index"/>
+-        </properties>
+-      </component>
+-      <vspacer id="381ea">
+-        <constraints>
+-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+-        </constraints>
+-      </vspacer>
+-      <vspacer id="38c79">
+-        <constraints>
+-          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+-        </constraints>
+-      </vspacer>
+-    </children>
+-  </grid>
+-</form>
+Index: src/WorkoutModel.java
+===================================================================
+diff --git a/src/WorkoutModel.java b/src/WorkoutModel.java
+deleted file mode 100644
+--- a/src/WorkoutModel.java	(revision e0ca708df4c02ee132e027979d39d8dc6f942d26)
++++ /dev/null	(revision e0ca708df4c02ee132e027979d39d8dc6f942d26)
+@@ -1,103 +0,0 @@
+-import java.util.ArrayList;
+-import java.util.List;
+-
+-/**
+- * this class will serve as the model in the mvc to hold the data that belongs in the
+- * application.
+- *
+- * @Author - add your name when you make changes and whatnot
+- * Aidan Lear
+- *
+- * Date - 2/15/2021
+- *
+- * Notes:
+- *  currently this will be my strating point with regards to coding. Also testing git a little
+- */
+-public class WorkoutModel {
+-
+-    /** list of observers to notify when something changes */
+-    private List<Observer<WorkoutModel>> observers;
+-
+-    private ArrayList<Exercise> firstPaneList = new ArrayList<>(); //exercises to be displayed
+-
+-    private ArrayList<Exercise> currentPlan = new ArrayList<>();
+-
+-    private Exercise selectedEx;
+-
+-    //private ArrayList<Exercise> listOfExercises;
+-
+-    //private DBmanager database;
+-
+-
+-    //public WokroutModel(){
+-        //databse.getall the exersicse
+-    //}
+-    public WorkoutModel(){
+-        DBmanager.getData();
+-        observers = new ArrayList<>();
+-    }
+-
+-
+-
+-
+-    /**
+-     * add an observer to the list of observers to be observed
+-     * @param observer the observer to be registered
+-     */
+-    public void addObserver(Observer<WorkoutModel> observer){
+-        observers.add(observer);
+-    }
+-
+-
+-    /**
+-     * helper function to use when changes occur to notify the observers
+-     * that a change has occured
+-     */
+-    private void notifyObservers(){
+-        for(Observer<WorkoutModel> observer: observers){
+-            observer.update(this);
+-        }
+-    }
+-
+-
+-
+-    public void updateWorkout(String type) throws Exception{
+-        firstPaneList.clear();
+-        ArrayList<Exercise> exercises = DBmanager.getExercises();
+-
+-        for(Exercise e: exercises){
+-
+-            if(e.getType().toLowerCase().equals(type.toLowerCase()) || type == "Exercise Type"){
+-                firstPaneList.add(e);
+-            }
+-        }
+-        notifyObservers();
+-    }
+-
+-    public ArrayList<Exercise> getFirstPaneList(){
+-        return firstPaneList;
+-    }
+-
+-
+-    public void setSelectedEx(Exercise selectedEx) {
+-        this.selectedEx = selectedEx;
+-        notifyObservers();
+-    }
+-
+-    public Exercise getSelectedEx(){
+-        return selectedEx;
+-    }
+-
+-    public ArrayList<Exercise> getCurrentPlan(){
+-        return this.currentPlan;
+-    }
+-
+-    /***
+-     * add an exercise to the plan
+-     * @param ex exercise to be added
+-     */
+-    public void addToPlan(Exercise ex){
+-        currentPlan.add(ex);
+-        notifyObservers();
+-    }
+-}
+Index: src/BoxFillerRatio.java
+===================================================================
+diff --git a/src/BoxFillerRatio.java b/src/BoxFillerRatio.java
+deleted file mode 100644
+--- a/src/BoxFillerRatio.java	(revision e0ca708df4c02ee132e027979d39d8dc6f942d26)
++++ /dev/null	(revision e0ca708df4c02ee132e027979d39d8dc6f942d26)
+@@ -1,40 +0,0 @@
+-import javax.swing.*;
+-import java.awt.*;
+-import java.awt.event.ComponentAdapter;
+-import java.awt.event.ComponentEvent;
+-
+-public class BoxFillerRatio extends Box.Filler {
+-    private int xRatio,yRatio;
+-
+-    public BoxFillerRatio(int xRatio, int yRatio,Container content, int axis){
+-        super(new Dimension(100,0),new Dimension(10000,0),new Dimension(100000,1000000));
+-        this.xRatio=xRatio;
+-        this.yRatio=yRatio;
+-        setLayout(new BoxLayout(this,axis));
+-        if(axis==0){
+-            add(Box.createHorizontalGlue());
+-            add(content);
+-            add(Box.createHorizontalGlue());
+-        }
+-        else{
+-            add(Box.createVerticalGlue());
+-            add(content);
+-            add(Box.createVerticalGlue());
+-        }
+-        setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
+-        addComponentListener(new ComponentAdapter() {
+-            @Override
+-            public void componentResized(ComponentEvent e) {
+-                super.componentResized(e);
+-                fixRatio();
+-            }
+-        });
+-    }
+-
+-    public void fixRatio(){
+-        Dimension newSize= new Dimension(getHeight() * xRatio/yRatio,0);
+-        setMaximumSize(new Dimension(getHeight() * xRatio/yRatio,100000));
+-        setPreferredSize(newSize);
+-        revalidate();
+-    }
+-}
+\ No newline at end of file
+Index: src/DBmanager.java
+===================================================================
+diff --git a/src/DBmanager.java b/src/DBmanager.java
+deleted file mode 100644
+--- a/src/DBmanager.java	(revision e0ca708df4c02ee132e027979d39d8dc6f942d26)
++++ /dev/null	(revision e0ca708df4c02ee132e027979d39d8dc6f942d26)
+@@ -1,147 +0,0 @@
+-import org.json.simple.JSONArray;
+-import org.json.simple.JSONObject;
+-import org.json.simple.parser.JSONParser;
+-import org.json.simple.parser.ParseException;
+-
+-import java.io.FileReader;
+-import java.io.FileWriter;
+-import java.io.IOException;
+-import java.util.ArrayList;
+-import java.util.Collections;
+-
+-public class DBmanager {
+-
+-    private static final String FILENAME = "src//database";
+-    private static JSONArray dataArray;
+-    private static final ArrayList<Exercise> exercises = new ArrayList<>();
+-    private static final ArrayList<Workout> workouts = new ArrayList<>();
+-
+-    /**Main method, constructs model from database*/
+-    public static void main(String[] args) {
+-        getData();
+-        /*Un-suppress to test adding exercises to database
+-        System.out.println(getExercises());
+-        addExercise("Back-flips", "legs", "1");
+-        System.out.println(getExercises());
+-        */
+-
+-        /*Un-suppress to test adding workouts to database
+-        System.out.println(getWorkouts());
+-        addWorkout("workout2", "Back-flips", "Curls");
+-        System.out.println(getWorkouts());
+-        */
+-    }
+-
+-    /**Gets data from JSON database file
+-     */
+-    public static void getData() {
+-        try {
+-            FileReader reader = new FileReader(FILENAME);
+-            JSONParser parser = new JSONParser();
+-            Object data = parser.parse(reader);
+-            dataArray = (JSONArray) data;
+-            dataArray.forEach( exe -> parseExercise((JSONObject) exe));
+-            dataArray.forEach( exe -> parseWorkout((JSONObject) exe));
+-        }catch (IOException| ParseException e) {e.printStackTrace();}
+-    }
+-
+-    /**Parse database for exercises
+-     * @param exerciseData: Exercise data from database
+-     */
+-    public static void parseExercise(JSONObject exerciseData){
+-        if(exerciseData.containsKey("exercise")) {
+-            JSONObject exerciseObjects = (JSONObject) exerciseData.get("exercise");
+-            String name = (String) exerciseObjects.get("name");
+-            String type = (String) exerciseObjects.get("type");
+-            String calories = (String) exerciseObjects.get("calories");
+-            Exercise exercise = new Exercise(name, calories, type);
+-            exercises.add(exercise);
+-        }
+-    }
+-
+-    /**Parse database for workouts
+-     * @param workoutData: Workout data from database
+-     */
+-    public static void parseWorkout(JSONObject workoutData){
+-        if(workoutData.containsKey("workout")) {
+-                JSONObject workoutObjects = (JSONObject) workoutData.get("workout");
+-                String name = (String) workoutObjects.get("name");
+-
+-                Object temp = workoutObjects.get("exercises");
+-                ArrayList<String> tempArray = (ArrayList<String>) temp;
+-
+-                Workout workout = new Workout(name, tempArray);
+-                workouts.add(workout);
+-        }
+-    }
+-
+-    /**Add new exercise to database
+-     * @param name: Name of the exercise to add
+-     * @param calories: Calories burned per minute of the exercise to add
+-     * @param type: Type of the exercise to add
+-     */
+-    public static void addExercise(String name, String type, String calories) {
+-        JSONObject ex = new JSONObject();
+-        JSONObject exRapper = new JSONObject();
+-
+-        ex.put("name", name);
+-        ex.put("type", type);
+-        ex.put("calories", calories);
+-
+-        exRapper.put("exercise", ex);
+-        dataArray.add(exRapper);
+-
+-        try (FileWriter file = new FileWriter(FILENAME)) {
+-            file.write(dataArray.toJSONString());
+-            file.flush();
+-        } catch (IOException e) {
+-            e.printStackTrace();
+-        }
+-
+-        Exercise exerciseToAdd = new Exercise(name, type, calories);
+-        exercises.add(exerciseToAdd);
+-    }
+-
+-    /**Add new workout to database
+-     * @param name: Name of the workout to add
+-     * @param exercises: Exercises in the workout to add
+-     */
+-    private static void addWorkout(String name, String ...exercises) {
+-        JSONObject workout = new JSONObject();
+-        JSONObject workoutRapper = new JSONObject();
+-        ArrayList<String> workoutExercises = new ArrayList<>();
+-
+-        Collections.addAll(workoutExercises, exercises);
+-
+-        workout.put("name", name);
+-        workout.put("exercises", workoutExercises);
+-
+-        workoutRapper.put("workout", workout);
+-        dataArray.add(workoutRapper);
+-
+-        try (FileWriter file = new FileWriter(FILENAME)) {
+-            file.write(dataArray.toJSONString());
+-            file.flush();
+-        } catch (IOException e) {
+-            e.printStackTrace();
+-        }
+-
+-        Workout workoutToAdd = new Workout(name, workoutExercises);
+-        workouts.add(workoutToAdd);
+-    }
+-
+-    /**Gets workouts stored in the database
+-     * @return Workouts stored in database
+-     */
+-    public static ArrayList<Workout> getWorkouts(){
+-        return workouts;
+-    }
+-
+-    /**Gets exercises stored in the database
+-     * @return Exercises stored in database
+-     */
+-    public static ArrayList<Exercise> getExercises(){
+-        return exercises;
+-    }
+-}
+-
+Index: src/Observer.java
+===================================================================
+diff --git a/src/Observer.java b/src/Observer.java
+deleted file mode 100644
+--- a/src/Observer.java	(revision e0ca708df4c02ee132e027979d39d8dc6f942d26)
++++ /dev/null	(revision e0ca708df4c02ee132e027979d39d8dc6f942d26)
+@@ -1,26 +0,0 @@
+-/**
+- * This interface is follows the simple observer design.
+- * it allows us to know when something changes in a different class.
+- *
+- * @Author
+- * Aidan Lear
+- *
+- *
+- * Date 2/15/2021
+- *
+- * Notes:
+- * This class shouldn't be messed with, just a simple observer interface for
+- * the observer design pattern.
+- *
+- * @param <Observered> what is being observered
+- */
+-
+-public interface Observer<Observered> {
+-
+-    /**
+-     * update whatever it is that is being observed
+-     *
+-     * @param observered the object that is being observed
+-     */
+-    void update(Observered observered);
+-}
+\ No newline at end of file
+Index: src/TYPEPROTOCOL.java
+===================================================================
+diff --git a/src/TYPEPROTOCOL.java b/src/TYPEPROTOCOL.java
+deleted file mode 100644
+--- a/src/TYPEPROTOCOL.java	(revision e0ca708df4c02ee132e027979d39d8dc6f942d26)
++++ /dev/null	(revision e0ca708df4c02ee132e027979d39d8dc6f942d26)
+@@ -1,12 +0,0 @@
+-/**
+- * this class standardizes the strings for what the types are
+- */
+-public class TYPEPROTOCOL {
+-    final static public String arms = "Arms";
+-    final static public String legs = "Legs";
+-    final static public String shoulders = "Shoulders";
+-    final static public String cardio = "Cardio";
+-    final static public String abs = "Abs";
+-    final static public String back = "Back";
+-
+-}
+Index: src/Exercise.java
+===================================================================
+diff --git a/src/Exercise.java b/src/Exercise.java
+deleted file mode 100644
+--- a/src/Exercise.java	(revision e0ca708df4c02ee132e027979d39d8dc6f942d26)
++++ /dev/null	(revision e0ca708df4c02ee132e027979d39d8dc6f942d26)
+@@ -1,41 +0,0 @@
+-public class Exercise{
+-
+-    private String name;
+-    private String calories;
+-    private String type;
+-
+-    /**Default Constructor*/
+-    public Exercise(){}
+-
+-    /**Parameterized Constructor
+-     * @param name Name of this exercise
+-     * @param calories Number of calories this exercise burns per minute
+-     * @param type Type of this exercise
+-     */
+-    public Exercise(String name, String calories, String type){
+-        this.name = name;
+-        this.calories = calories;
+-        this.type = type;
+-    }
+-
+-    /**Gets exercise name
+-     * @return The name of this exercise
+-     */
+-    public String getName() {
+-        return name;
+-    }
+-
+-    /**Gets number of calories burned per minute of this exercise
+-     * @return Number of calories burned per minute of this exercise
+-     */
+-    public int getCalories() {
+-        return Integer.parseInt(calories);
+-    }
+-
+-    /**Gets exercise type
+-     * @return The type of this exercise
+-     */
+-    public String getType() {
+-        return type;
+-    }
+-}
+Index: src/WorkoutController.java
+===================================================================
+diff --git a/src/WorkoutController.java b/src/WorkoutController.java
+deleted file mode 100644
+--- a/src/WorkoutController.java	(revision e0ca708df4c02ee132e027979d39d8dc6f942d26)
++++ /dev/null	(revision e0ca708df4c02ee132e027979d39d8dc6f942d26)
+@@ -1,34 +0,0 @@
+-public class WorkoutController {
+-
+-    /** local instance of the model */
+-    private WorkoutModel model;
+-
+-    /**
+-     * construct and set the model
+-     * @param model this classes instance of the model
+-     */
+-    public WorkoutController(WorkoutModel model){
+-        this.model = model;
+-    }
+-
+-
+-    public void setSelected(Exercise ex){
+-        model.setSelectedEx(ex);
+-    }
+-
+-
+-    public void addToPlan(Exercise ex){
+-        model.addToPlan(ex);
+-    }
+-
+-
+-    /**
+-     * update workouts int he first panel thing
+-     */
+-    public void updateWorkouts(String type){
+-        try {
+-            model.updateWorkout(type);
+-        }catch(Exception e){}
+-    }
+-
+-}
+Index: src/App.form
+===================================================================
+diff --git a/src/App.form b/src/App.form
+deleted file mode 100644
+--- a/src/App.form	(revision e0ca708df4c02ee132e027979d39d8dc6f942d26)
++++ /dev/null	(revision e0ca708df4c02ee132e027979d39d8dc6f942d26)
+@@ -1,166 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="App">
+-  <grid id="27dc6" binding="panel1" default-binding="true" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+-    <margin top="0" left="0" bottom="0" right="0"/>
+-    <constraints>
+-      <xy x="20" y="20" width="774" height="604"/>
+-    </constraints>
+-    <properties/>
+-    <border type="none"/>
+-    <children>
+-      <tabbedpane id="93c78" binding="tabbedPane1" default-binding="true">
+-        <constraints>
+-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+-            <preferred-size width="200" height="200"/>
+-          </grid>
+-        </constraints>
+-        <properties/>
+-        <border type="none"/>
+-        <children>
+-          <grid id="c1e40" layout-manager="GridLayoutManager" row-count="6" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+-            <margin top="0" left="0" bottom="0" right="0"/>
+-            <constraints>
+-              <tabbedpane title="Planner"/>
+-            </constraints>
+-            <properties/>
+-            <border type="none"/>
+-            <children>
+-              <scrollpane id="de3a0">
+-                <constraints>
+-                  <grid row="1" column="0" row-span="1" col-span="3" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+-                </constraints>
+-                <properties>
+-                  <horizontalScrollBarPolicy value="32"/>
+-                  <verticalScrollBarPolicy value="21"/>
+-                </properties>
+-                <border type="none"/>
+-                <children>
+-                  <grid id="326cf" binding="ExercisesPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+-                    <constraints/>
+-                    <properties/>
+-                    <border type="none"/>
+-                    <children/>
+-                  </grid>
+-                </children>
+-              </scrollpane>
+-              <component id="8db5f" class="javax.swing.JLabel">
+-                <constraints>
+-                  <grid row="4" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+-                </constraints>
+-                <properties>
+-                  <text value="Current Plan"/>
+-                </properties>
+-              </component>
+-              <scrollpane id="51008">
+-                <constraints>
+-                  <grid row="5" column="0" row-span="1" col-span="3" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+-                </constraints>
+-                <properties>
+-                  <horizontalScrollBarPolicy value="32"/>
+-                  <verticalScrollBarPolicy value="21"/>
+-                </properties>
+-                <border type="none"/>
+-                <children>
+-                  <grid id="8228e" binding="currentPlanA" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+-                    <constraints/>
+-                    <properties/>
+-                    <border type="none"/>
+-                    <children/>
+-                  </grid>
+-                </children>
+-              </scrollpane>
+-              <component id="e4b99" class="javax.swing.JLabel">
+-                <constraints>
+-                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+-                </constraints>
+-                <properties>
+-                  <text value="Details"/>
+-                </properties>
+-              </component>
+-              <grid id="193c9" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+-                <margin top="0" left="0" bottom="0" right="0"/>
+-                <constraints>
+-                  <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+-                </constraints>
+-                <properties/>
+-                <border type="none"/>
+-                <children>
+-                  <component id="dfa1" class="javax.swing.JLabel">
+-                    <constraints>
+-                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+-                    </constraints>
+-                    <properties>
+-                      <text value="Add Exercise"/>
+-                    </properties>
+-                  </component>
+-                  <hspacer id="d4836">
+-                    <constraints>
+-                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+-                    </constraints>
+-                  </hspacer>
+-                  <component id="9aa39" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
+-                    <constraints>
+-                      <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+-                    </constraints>
+-                    <properties>
+-                      <model>
+-                        <item value="Exercise Type"/>
+-                        <item value="Abs"/>
+-                        <item value="Arms"/>
+-                        <item value="Back"/>
+-                        <item value="Cardio"/>
+-                        <item value="Legs"/>
+-                        <item value="Shoulders"/>
+-                      </model>
+-                    </properties>
+-                  </component>
+-                </children>
+-              </grid>
+-              <scrollpane id="68265">
+-                <constraints>
+-                  <grid row="3" column="0" row-span="1" col-span="3" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+-                </constraints>
+-                <properties>
+-                  <horizontalScrollBarPolicy value="31"/>
+-                  <verticalScrollBarPolicy value="21"/>
+-                </properties>
+-                <border type="none"/>
+-                <children>
+-                  <grid id="94fce" binding="DetailPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+-                    <margin top="0" left="0" bottom="0" right="0"/>
+-                    <constraints/>
+-                    <properties/>
+-                    <border type="none"/>
+-                    <children/>
+-                  </grid>
+-                </children>
+-              </scrollpane>
+-              <component id="aef45" class="javax.swing.JButton" binding="addExerciseButton" default-binding="true">
+-                <constraints>
+-                  <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+-                </constraints>
+-                <properties>
+-                  <text value="Add Exercise"/>
+-                </properties>
+-              </component>
+-              <hspacer id="bfc41">
+-                <constraints>
+-                  <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+-                </constraints>
+-              </hspacer>
+-            </children>
+-          </grid>
+-          <grid id="59061" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+-            <margin top="0" left="0" bottom="0" right="0"/>
+-            <constraints>
+-              <tabbedpane title="My Plan"/>
+-            </constraints>
+-            <properties/>
+-            <border type="none"/>
+-            <children/>
+-          </grid>
+-        </children>
+-      </tabbedpane>
+-    </children>
+-  </grid>
+-</form>
