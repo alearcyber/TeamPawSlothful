@@ -131,6 +131,7 @@ public class WorkoutModel {
             exerciseNames.add(exercise.getName());
         }
         DBmanager.addWorkout(workoutName, reps, exerciseNames);
+        notifyObservers();
     }
 
     /**

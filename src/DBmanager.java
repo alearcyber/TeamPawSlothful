@@ -107,7 +107,6 @@ public class DBmanager {
         if(alreadyInDB(name)){
             //do nothing;
         }else{
-            getData();
             JSONObject workout = new JSONObject();
             JSONObject workoutRapper = new JSONObject();
 

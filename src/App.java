@@ -244,6 +244,7 @@ public class App implements Observer<WorkoutModel>{
      */
     public void updateImportDropdown(){
         importDropdown.removeAllItems();
+        mainPanel.revalidate();
         ArrayList<Workout> workouts = DBmanager.getWorkouts();
         for(Workout workout: workouts){
             importDropdown.addItem(workout.getName());
