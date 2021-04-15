@@ -13,11 +13,14 @@ public class WorkoutController {
     }
 
     /**Set selected exercise from Add Exercise panel
-     * @param ex Exercise selected from Add Exercise panel
+     * @param exercise Exercise selected from Add Exercise panel
      */
-    public void setSelected(Exercise ex){
-        model.setSelectedEx(ex);
+    public void setSelectedExercise(Exercise exercise){
+        model.setSelectedEx(exercise);
     }
+
+    /**Set selected workout from Import Workout drop down menu*/
+    public void setSelectedWorkout(Workout workout){model.setSelectedWorkout(workout);}
 
     /**Add selected exercise from Add Exercise panel to Current Plan panel
      * @param ex Exercise from Add Exercise panel to Current Plan panel
@@ -41,18 +44,19 @@ public class WorkoutController {
 
     public void setName(String name){ model.setWorkoutName(name);}
 
-    public void exportPlan(){model.savePlanToDB();}
-    public void setSelectedWorkout(Workout workout){model.setSelectedFromDB(workout);}
+
 
     public void importPlan(){
         model.clearPlan();
-        Workout selectedFromDB = model.getSelectedFromDB();
-        for(String exercisenames: selectedFromDB.getExercisesInWorkout()){
+        Workout selectedFromDB = model.getSelectedWorkout();
+        for(String exerciseNames: selectedFromDB.getExercisesInWorkout()){
             for(Exercise exercise: DBmanager.getExercises()){
-                if(exercise.getName().equalsIgnoreCase(exercisenames)){
+                if(exercise.getName().equals(exerciseNames)){
                     model.addToPlan(exercise);
                 }
             }
         }
     }
+
+    public void exportPlan(String workoutName){ model.savePlanToDB(workoutName);}
 }

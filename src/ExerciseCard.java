@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.awt.*;
 
 public class ExerciseCard {
     private JPanel mainPanel;
@@ -8,7 +7,7 @@ public class ExerciseCard {
     private JLabel calorieLabel;
 
     /**Default Constructor*/
-    public ExerciseCard(){};
+    public ExerciseCard(){}
 
     /**Parameterized Constructor
      * @param name Name of exercise

@@ -2,15 +2,20 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.Document;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.*;
+import java.awt.event.*;
 
 public class ExerciseSettings {
-    private JPanel MainPanel;
+    private JPanel mainPanel;
     public JTextField numberOfRepsField;
     public JTextField exerciseTimeField;
     public JTextField caloriesBurntField;
+    private JPanel fieldPanel;
 
+    private String setting;
+
+
+    private Document original;
     private static int mult = 1;
     private static String exName = "";
 
@@ -24,9 +29,29 @@ public class ExerciseSettings {
 
     public ExerciseSettings() {
 
+        for(Component c : fieldPanel.getComponents()){
+            if(c instanceof JTextField){
+                c.setEnabled(false);
+            }
+        }
+
+        constructListeners();
+    }
+
+    /**Constructs Listeners for Exercise Settings panel*/
+    private void constructListeners() {
+
+        //Resizes text on Exercise Settings panel
+        for (Component c : mainPanel.getComponents()) {
+            c.addComponentListener(new ComponentAdapter() {
+                @Override
+                public void componentResized(ComponentEvent e) {
+                    resizeText(c);
+                }
+            });
+        }
 
         DocumentListener docListener = new DocumentListener() {
-            private Document original;
             @Override
             public void insertUpdate(DocumentEvent e) {
                 updateLabel(e);
@@ -41,89 +66,107 @@ public class ExerciseSettings {
             public void changedUpdate(DocumentEvent e) {
                 updateLabel(e);
             }
-
-
-
-            private void updateLabel(DocumentEvent e) {
-
-                if (original == null) {
-                    original = e.getDocument();
-                    String text = "";
-                    try {
-                        text = original.getText(0, original.getLength());
-                    } catch (final Exception ex) {
-                        ex.printStackTrace();
-                    }
-                    if (!text.isEmpty()) {
-                        final int p = Integer.parseInt(text);
-                        final int rate = mult;
-
-                        if (original.equals(numberOfRepsField.getDocument())) {
-                            final int y = (p * rate / 5);
-                            final String toCals = String.valueOf(y);
-                            caloriesBurntField.setText(toCals);
-                            final int x = (p / 5);
-                            final String toTime = String.valueOf(x);
-                            exerciseTimeField.setText(toTime);
-
-                        }else if(original.equals(caloriesBurntField.getDocument())) {
-                            final int x = ((p * 5) / rate);
-                            final String toReps = String.valueOf(x);
-                            numberOfRepsField.setText(toReps);
-                            final int y = (p / rate);
-                            final String toTime = String.valueOf(y);
-                            exerciseTimeField.setText(toTime);
-
-                        } else {        //if(original.equals(exerciseTimeField.getDocument()))
-                            final int x = (p * 5);
-                            final String toReps = String.valueOf(x);
-                            numberOfRepsField.setText(toReps);
-                            final int y = (p * rate);
-                            final String toCals = String.valueOf(y);
-                            caloriesBurntField.setText(toCals);
-
-                        }
-
-                    }
-
-
-
-                    original = null;
-                }
-            }
         };
+
+        for(Component c : fieldPanel.getComponents()){
+            //Handles when the text field loses focus
+            if(c instanceof JTextField){
+                c.addFocusListener(new FocusAdapter() {
+                    @Override
+                    public void focusLost(FocusEvent e) {
+                        setting = ((JTextField) c).getText();
+                        c.setEnabled(false);
+                    }
+                });
+
+                //Handles when the text field is clicked
+                c.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        c.requestFocus();
+                        c.setEnabled(true);
+                    }
+                });
+
+                //Handles when something other than a number is typed
+                c.addKeyListener(new KeyAdapter() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+                        if(!Character.isDigit(e.getKeyChar())) {
+                            e.consume();
+                        }
+                    }
+                });
+            }
+        }
+
         numberOfRepsField.getDocument().addDocumentListener(docListener);
         caloriesBurntField.getDocument().addDocumentListener(docListener);
         exerciseTimeField.getDocument().addDocumentListener(docListener);
-        numberOfRepsField.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                super.keyTyped(e);
-                if(!Character.isDigit(e.getKeyChar())) {
-                    e.consume();
-                }
-            }
-        });
-
-        caloriesBurntField.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                super.keyTyped(e);
-                if(!Character.isDigit(e.getKeyChar())) {
-                    e.consume();
-                }
-            }
-        });
-        exerciseTimeField.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                super.keyTyped(e);
-                if(!Character.isDigit(e.getKeyChar())) {
-                    e.consume();
-                }
-            }
-        });
     }
 
-    public JPanel getMainPanel() {return MainPanel;}
+    /**Resizes text of Exercise Settings panel*/
+    private void resizeText(Component component){
+
+        if(component instanceof Container){
+            for(Component c : (((Container) component).getComponents())){
+                c.setFont(new Font("Dialog", Font.PLAIN, (int) (mainPanel.getWidth() / 70.8)));
+            }
+        }
+    }
+
+    /**Gets Exercise Settings Panel
+     * @return Exercise Settings Panel
+     */
+    public JPanel getMainPanel() { return mainPanel; }
+
+    /**Return setting string from setting fields
+     * @return Setting taken from setting fields
+     */
+    public String getSetting(){ return setting; }
+
+    private void updateLabel(DocumentEvent e) {
+
+        if (original == null) {
+            original = e.getDocument();
+            String text = "";
+            try {
+                text = original.getText(0, original.getLength());
+            } catch (final Exception ex) {
+                ex.printStackTrace();
+            }
+            if (!text.isEmpty()) {
+                final int p = Integer.parseInt(text);
+                final int rate = mult;
+
+                if (original.equals(numberOfRepsField.getDocument())) {
+                    final int y = (p * rate / 5);
+                    final String toCals = String.valueOf(y);
+                    caloriesBurntField.setText(toCals);
+                    final int x = (p / 5);
+                    final String toTime = String.valueOf(x);
+                    exerciseTimeField.setText(toTime);
+
+                }else if(original.equals(caloriesBurntField.getDocument())) {
+                    final int x = ((p * 5) / rate);
+                    final String toReps = String.valueOf(x);
+                    numberOfRepsField.setText(toReps);
+                    final int y = (p / rate);
+                    final String toTime = String.valueOf(y);
+                    exerciseTimeField.setText(toTime);
+
+                } else {
+                    final int x = (p * 5);
+                    final String toReps = String.valueOf(x);
+                    numberOfRepsField.setText(toReps);
+                    final int y = (p * rate);
+                    final String toCals = String.valueOf(y);
+                    caloriesBurntField.setText(toCals);
+
+                }
+
+            }
+            original = null;
+        }
+    }
 }
