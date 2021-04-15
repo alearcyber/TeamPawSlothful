@@ -1,8 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ItemEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -165,7 +163,8 @@ public class App implements Observer<WorkoutModel>{
                             BoxLayout.Y_AXIS);
                     settingsPanel.removeAll();
                     settingsPanel.add(temp);
-
+                    ExerciseSettings.setMult(exercise.getCalories());
+                    ExerciseSettings.setExName(exercise.getName());
                     settingsPanel.add(new ExerciseSettings().getMainPanel());
                     mainPanel.revalidate();
                     controller.setSelected(exercise);
@@ -244,6 +243,7 @@ public class App implements Observer<WorkoutModel>{
      */
     public void updateImportDropdown(){
         importDropdown.removeAllItems();
+        mainPanel.revalidate();
         ArrayList<Workout> workouts = DBmanager.getWorkouts();
         for(Workout workout: workouts){
             importDropdown.addItem(workout.getName());
