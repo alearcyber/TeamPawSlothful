@@ -163,7 +163,8 @@ public class App implements Observer<WorkoutModel>{
                             BoxLayout.Y_AXIS);
                     settingsPanel.removeAll();
                     settingsPanel.add(temp);
-
+                    ExerciseSettings.setMult(exercise.getCalories());
+                    ExerciseSettings.setExName(exercise.getName());
                     settingsPanel.add(new ExerciseSettings().getMainPanel());
                     mainPanel.revalidate();
                     controller.setSelected(exercise);

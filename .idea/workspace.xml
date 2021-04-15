@@ -15,35 +15,11 @@
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_8_2021_11_28_PM__Default_Changelist_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_8_2021_11_28_PM__Default_Changelist_1.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_8_2021_12_23_PM__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_8_2021_12_23_PM__Default_Changelist_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/App$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/App$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/App$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/App$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/App$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/App$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/App.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/BoxFillerRatio$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/BoxFillerRatio$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/BoxFillerRatio.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/BoxFillerRatio.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/DBmanager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/DBmanager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/Exercise.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/Exercise.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/ExerciseCard.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/ExerciseCard.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/ExerciseSettings.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/ExerciseSettings.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/Observer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/Observer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/TYPEPROTOCOL.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/TYPEPROTOCOL.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/Workout.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/Workout.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/WorkoutController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/WorkoutController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/WorkoutModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/WorkoutModel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/AbstractLayout.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/AbstractLayout.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/DimensionInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/DimensionInfo.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/GridConstraints.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/GridConstraints.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/GridLayoutManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/GridLayoutManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/HorizontalInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/HorizontalInfo.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/LayoutState.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/LayoutState.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/Spacer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/Spacer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/SupportCode$TextWithMnemonic.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/SupportCode$TextWithMnemonic.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/SupportCode.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/SupportCode.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/Util.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/Util.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/VerticalInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/VerticalInfo.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/database" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/database" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ExerciseSettings.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/ExerciseSettings.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ExerciseSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ExerciseSettings.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/database" beforeDir="false" afterPath="$PROJECT_DIR$/src/database" afterDir="false" />
     </list>
@@ -207,7 +183,7 @@
       </list>
     </recent_temporary>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="false" />
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -388,7 +364,7 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/WorkoutGUI.java" />
-    <entry file="jar://C:/Program Files/Java/jdk-12.0.1/lib/src.zip!/java.desktop/java/awt/Container.java">
+    <entry file="jar://$PROJECT_DIR$/../../../../Program Files/Java/jdk-12.0.1/lib/src.zip!/java.desktop/java/awt/Container.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
           <caret line="435" column="8" selection-start-line="435" selection-start-column="8" selection-end-line="435" selection-end-column="8" />
