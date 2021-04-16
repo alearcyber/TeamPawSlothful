@@ -16,6 +16,7 @@ public class WorkoutController {
      * @param exercise Exercise selected from Add Exercise panel
      */
     public void setSelectedExercise(Exercise exercise){
+        ExerciseSettings.setMult(exercise.getCalories()); //control
         model.setSelectedEx(exercise);
     }
 
@@ -58,5 +59,14 @@ public class WorkoutController {
         }
     }
 
-    public void exportPlan(String workoutName){ model.savePlanToDB(workoutName);}
+    public void exportPlan(String workoutName){
+        model.savePlanToDB(workoutName);
+        model.notifyObservers();
+    }
+
+
+    public void setReps(int numberOfReps){
+        model.setReps(numberOfReps);
+        model.notifyObservers();
+    }
 }

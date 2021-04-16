@@ -1,10 +1,11 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Workout {
 
     private String name;
     private ArrayList<String> exercises = new ArrayList<>();
-    private ArrayList<String> reps = new ArrayList<>();
+    private HashMap<String, Integer> reps = new HashMap<>();
 
     /**Default Constructor*/
     public Workout(){}
@@ -13,9 +14,13 @@ public class Workout {
      * @param name The name of this workout
      * @param exercises The exercises in this workout
      */
-    public Workout(String name, ArrayList<String> reps,ArrayList<String> exercises){
+    public Workout(String name, HashMap<String, Integer> reps,ArrayList<String> exercises){
         this.name = name;
-        this.reps.addAll(reps);
+
+        //copy over the hashmap
+        for (String exerciseName: reps.keySet()) { //exercise names from the hashmap
+            this.reps.put(exerciseName, reps.get(exerciseName));
+        }
         this.exercises.addAll(exercises);
     }
 
@@ -33,5 +38,9 @@ public class Workout {
         return exercises;
     }
 
-    public String getReps(){ return reps.toString();}
+    public HashMap<String, Integer> getReps(){ return reps;}
+
+    public void setReps(String exerciseName, int numberOfReps){
+        reps.put(exerciseName, numberOfReps);
+    }
 }

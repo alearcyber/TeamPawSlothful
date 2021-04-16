@@ -66,7 +66,7 @@ public class App implements Observer<WorkoutModel>{
 
         settingsPanel.add(temp);
 
-        ExerciseSettings exerciseSettings = new ExerciseSettings();
+        ExerciseSettings exerciseSettings = new ExerciseSettings(0);
         settingsPanel.add(exerciseSettings.getMainPanel());
     }
 
@@ -149,8 +149,17 @@ public class App implements Observer<WorkoutModel>{
                     settingsPanel.removeAll();
                     settingsPanel.add(temp);
 
-                    settingsPanel.add(new ExerciseSettings().getMainPanel());
+
                     controller.setSelectedExercise(exercise);
+
+                    try{
+                        settingsPanel.add(new ExerciseSettings(model.getSelectedWorkout().getReps().get(exercise.getName())).getMainPanel());
+                    }catch(NullPointerException e){
+                        settingsPanel.add(new ExerciseSettings(0).getMainPanel());
+                    }
+
+
+                    //NOW WE LOAD UP THOSE FIELDS BASED ON THAT INFO
                 }
             });
             currentPlanB.add(filler);
@@ -238,7 +247,8 @@ public class App implements Observer<WorkoutModel>{
         updateExerciseButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                //System.out.println(exerciseSettings.getSetting());
+                int reps = Integer.parseInt(ExerciseSettings.getReps().strip());
+                controller.setReps(reps);
             }
         });
 
@@ -259,10 +269,12 @@ public class App implements Observer<WorkoutModel>{
                         null,
                         options,
                         options[1]);
-            }
-            if(n == 0){
-                //controller.exportPlan(Objects.requireNonNull(workoutNameField.getText()));
-                System.out.println("This is where database overwriting would be, IF I HAD IT");                             //consider adding overwrite
+                if(n == 0){
+                    //controller.exportPlan(Objects.requireNonNull(workoutNameField.getText()));
+                    System.out.println("This is where database overwriting would be, IF I HAD IT");                             //consider adding overwrite
+                }
+            } else {
+                controller.exportPlan(Objects.requireNonNull(workoutNameField.getText()));
             }
         });
 
@@ -290,6 +302,7 @@ public class App implements Observer<WorkoutModel>{
         });
 
         //Action Listener for Workout import button
+        controller.setSelectedWorkout(DBmanager.getWorkouts().get(0));
         importDropdown.addItemListener( e->{
             if (e.getStateChange() == ItemEvent.SELECTED && importDropdown.hasFocus()) {
                 String item = (String) e.getItem();

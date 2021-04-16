@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class WorkoutModel {
@@ -7,7 +8,7 @@ public class WorkoutModel {
     private final ArrayList<Exercise> firstPaneList = new ArrayList<>();
     private final ArrayList<Exercise> currentPlanA = new ArrayList<>();
     private final ArrayList<Exercise> currentPlanB = new ArrayList<>();
-    private final ArrayList<String> reps = new ArrayList<>();
+    //private final HashMap<String, Integer> reps = new HashMap<>();
 
     private Exercise selectedExercise;
     private Workout selectedWorkout;
@@ -20,7 +21,7 @@ public class WorkoutModel {
     }
 
     /**Notifies observers when a change has occurred*/
-    private void notifyObservers(){
+    public void notifyObservers(){
         for(Observer<WorkoutModel> observer: observers){
             observer.update(this);
         }
@@ -55,8 +56,7 @@ public class WorkoutModel {
      */
     public void addToPlan(Exercise ex){
         currentPlanA.add(ex);
-        currentPlanB.add(ex);
-        reps.add("0");
+        currentPlanB.add(ex);;
         notifyObservers();
     }
 
@@ -82,13 +82,10 @@ public class WorkoutModel {
     }
 
     /**
-     * function sets the number of reps based on the index.
-     * You should give it the index of the corresponding exercise contained
-     * within the currentPlanA
+     * function sets the number of reps based on the exercise name
      */
-    public void setReps(int index, String numberOfReps){
-        reps.add(index, numberOfReps);
-        notifyObservers();
+    public void setReps(int numberOfReps){
+        selectedWorkout.setReps(selectedExercise.getName(), numberOfReps);
     }
 
     /**Set the name of the workout
@@ -141,7 +138,7 @@ public class WorkoutModel {
         for(Exercise exercise: currentPlanA){
             exerciseNames.add(exercise.getName());
         }
-        DBmanager.addWorkout(workoutName, reps, exerciseNames);
+        DBmanager.addWorkout(workoutName, selectedWorkout.getReps(), exerciseNames);
     }
 
 

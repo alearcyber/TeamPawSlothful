@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**Default Constructor*/
 public class DBmanager {
@@ -66,7 +67,13 @@ public class DBmanager {
             ArrayList<String> exeArray = (ArrayList<String>) workoutObjects.get("exercises");
             ArrayList<String> repArray = (ArrayList<String>) workoutObjects.get("reps");
 
-            Workout workout = new Workout(name, repArray, exeArray);
+            //construct it into a hashmap
+            HashMap<String, Integer> reps = new HashMap<>();
+            for(int i = 0; i < exeArray.size();i++){
+                reps.put(exeArray.get(i), Integer.parseInt(repArray.get(i)));
+            }
+
+            Workout workout = new Workout(name, reps, exeArray);
             workouts.add(workout);
         }
     }
@@ -76,32 +83,36 @@ public class DBmanager {
      * @param reps: Number of reps tied to a given exercise
      * @param exercises: Exercises in the workout to add
      */
-    public static void addWorkout(String name, ArrayList<String> reps, ArrayList<String> exercises) {                   //can only store workouts with new name
+    public static void addWorkout(String name, HashMap<String, Integer> reps, ArrayList<String> exercises) {                   //can only store workouts with new name
 
         Workout workoutToAdd = new Workout(name, reps, exercises);
 
-        for(Workout w : workouts){
-            if(!w.getName().equals(name)){
-                workouts.add(workoutToAdd);
+        workouts.add(workoutToAdd);
 
-                JSONObject workout = new JSONObject();
-                JSONObject workoutRapper = new JSONObject();
+        JSONObject workout = new JSONObject();
+        JSONObject workoutRapper = new JSONObject();
 
-                workout.put("name", name);
-                workout.put("exercises", exercises);
-                workout.put("reps", reps);
-
-                workoutRapper.put("workout", workout);
-                dataArray.add(workoutRapper);
+        workout.put("name", name);
+        workout.put("exercises", exercises);
 
 
-                try (FileWriter file = new FileWriter(FILENAME)) {
-                    file.write(dataArray.toJSONString());
-                    file.flush();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+        //construct reps from hashmap
+        ArrayList<String> repsArray = new ArrayList<>();
+        for(int i = 0; i < exercises.size();i++){
+            repsArray.add(reps.get(exercises.get(i)).toString());
+        }
+
+        workout.put("reps", repsArray);
+
+        workoutRapper.put("workout", workout);
+        dataArray.add(workoutRapper);
+
+
+        try (FileWriter file = new FileWriter(FILENAME)) {
+            file.write(dataArray.toJSONString());
+            file.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

@@ -16,8 +16,13 @@ public class ExerciseSettings {
 
 
     private Document original;
-    private static int mult = 1;
+    private static int mult = 1; //its just the calories
     private static String exName = "";
+
+    //static field representations of the stats and whatnot
+    private static String reps;
+    private static String cals;
+    private static String time;
 
     public static void setMult(int mult) {
         ExerciseSettings.mult = mult;
@@ -27,7 +32,7 @@ public class ExerciseSettings {
         ExerciseSettings.exName = exName;
     }
 
-    public ExerciseSettings() {
+    public ExerciseSettings(int reps) {
 
         for(Component c : fieldPanel.getComponents()){
             if(c instanceof JTextField){
@@ -36,6 +41,14 @@ public class ExerciseSettings {
         }
 
         constructListeners();
+
+        final int y = (reps * mult / 5);
+        final String toCals = String.valueOf(y);
+        caloriesBurntField.setText(toCals);
+        final int x = (reps / 5);
+        final String toTime = String.valueOf(x);
+        exerciseTimeField.setText(toTime);
+
     }
 
     /**Constructs Listeners for Exercise Settings panel*/
@@ -140,33 +153,55 @@ public class ExerciseSettings {
                 final int rate = mult;
 
                 if (original.equals(numberOfRepsField.getDocument())) {
-                    final int y = (p * rate / 5);
+                    final int y = (p * mult / 5);
                     final String toCals = String.valueOf(y);
                     caloriesBurntField.setText(toCals);
                     final int x = (p / 5);
                     final String toTime = String.valueOf(x);
                     exerciseTimeField.setText(toTime);
+                    reps = p + " ";
+                    cals = toCals;
+                    time = toTime;
 
                 }else if(original.equals(caloriesBurntField.getDocument())) {
-                    final int x = ((p * 5) / rate);
+                    final int x = ((p * 5) / mult);
                     final String toReps = String.valueOf(x);
                     numberOfRepsField.setText(toReps);
-                    final int y = (p / rate);
+                    final int y = (p / mult);
                     final String toTime = String.valueOf(y);
                     exerciseTimeField.setText(toTime);
+                    reps = toReps;
+                    cals = p + " ";
+                    time = toTime;
 
-                } else {
+                } else { //minutes
                     final int x = (p * 5);
                     final String toReps = String.valueOf(x);
                     numberOfRepsField.setText(toReps);
-                    final int y = (p * rate);
+                    final int y = (p * mult);
                     final String toCals = String.valueOf(y);
                     caloriesBurntField.setText(toCals);
-
+                    reps = toReps;
+                    cals = toCals;
+                    time = p + " ";
                 }
 
             }
             original = null;
         }
     }
+
+    public static String getReps(){
+        return reps;
+    }
+
+    public static String getCal(){
+        return cals;
+    }
+
+    public static String getMin(){
+        return time;
+    }
+
+
 }
