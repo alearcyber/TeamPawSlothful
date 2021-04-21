@@ -1,8 +1,18 @@
+
+/**Class that defines an exercise*/
 public class Exercise{
 
+    /**Name of exercise*/
     private String name;
+
+    /**Calories burned per minute of exercise*/
     private String calories;
+
+    /**Type of exercise*/
     private String type;
+
+    /**Exercise details*/
+    private String details;
 
     /**Default Constructor*/
     public Exercise(){}
@@ -11,11 +21,13 @@ public class Exercise{
      * @param name Name of this exercise
      * @param calories Number of calories this exercise burns per minute
      * @param type Type of this exercise
+     * @param details Details of this exercise
      */
-    public Exercise(String name, String calories, String type){
+    public Exercise(String name, String calories, String type, String details){
         this.name = name;
         this.calories = calories;
         this.type = type;
+        this.details = details;
     }
 
     /**Gets exercise name
@@ -37,5 +49,9 @@ public class Exercise{
      */
     public String getType() {
         return type;
+    }
+
+    public String getDetails(){
+        return details;
     }
 }

@@ -3,10 +3,13 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Objects;
 
+/**Class that implements view design pattern*/
 public class App implements Observer<WorkoutModel>{
 
+    /**Size of the user's screen*/
     private static final Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
 
+    /**Main Frame of application*/
     private static final JFrame frame = new JFrame("My Exercise Planner");
 
     private JTabbedPane tabbedPane1;
@@ -15,8 +18,8 @@ public class App implements Observer<WorkoutModel>{
     private JScrollPane CurrentPlanBScroll;
 
     private JPanel mainPanel;
-    private JPanel ExercisesPanel;
-    private JPanel DetailPanel;
+    private JPanel exercisesPanel;
+    private JPanel detailPanel;
     private JPanel currentPlanA;
     private JPanel currentPlanB;
     private JPanel settingsPanel;
@@ -33,10 +36,13 @@ public class App implements Observer<WorkoutModel>{
 
     private JTextField workoutNameField;
 
+    private JTextArea detailTextArea;
+
     private final WorkoutModel model;
     private final WorkoutController controller;
 
     private BoxFillerRatio temp;
+    private BoxFillerRatio filler;
 
     /**Default Constructor*/
     public App(){
@@ -44,8 +50,8 @@ public class App implements Observer<WorkoutModel>{
         controller = new WorkoutController(model);
         controller.updateWorkouts(Objects.requireNonNull(comboBox1.getSelectedItem()).toString(), Objects.requireNonNull(comboBox2.getSelectedItem()).toString());
 
-        ExercisesPanel.setLayout(new BoxLayout(ExercisesPanel, BoxLayout.X_AXIS));
-        DetailPanel.setLayout(new BoxLayout(DetailPanel, BoxLayout.X_AXIS));
+        exercisesPanel.setLayout(new BoxLayout(exercisesPanel, BoxLayout.X_AXIS));
+        detailPanel.setLayout(new BoxLayout(detailPanel, BoxLayout.X_AXIS));
         currentPlanA.setLayout(new BoxLayout(currentPlanA, BoxLayout.X_AXIS));
         currentPlanB.setLayout(new BoxLayout(currentPlanB, BoxLayout.X_AXIS));
         settingsPanel.setLayout(new BoxLayout(settingsPanel, BoxLayout.X_AXIS));
@@ -60,12 +66,30 @@ public class App implements Observer<WorkoutModel>{
         //Methods that construct various things
         constructListeners();
 
-        temp = new BoxFillerRatio(3,4,                                                                     //put an empty card in exercise settings
+        //Adds an empty exercise card to details panel
+        temp = new BoxFillerRatio(3,4,
+                new ExerciseCard("Name", "Type", "Cal / Min: ").getPanel(),
+                BoxLayout.Y_AXIS);
+
+        detailPanel.add(temp);
+
+        //Adds space between exercise card and detail pane
+        detailPanel.add(Box.createRigidArea(new Dimension(3, 0)));
+
+        //Adds an empty text area to details panel
+        detailTextArea = new JTextArea();
+        detailTextArea.setBorder(BorderFactory.createLineBorder(Color.black));
+        detailTextArea.setEditable(false);
+        detailPanel.add(detailTextArea);
+
+        //Adds an empty exerciseCard to settings panel
+        temp = new BoxFillerRatio(3,4,
                 new ExerciseCard("Name", "Type", "Cal / Min: ").getPanel(),
                 BoxLayout.Y_AXIS);
 
         settingsPanel.add(temp);
 
+        //Adds an empty exerciseSettings to settings panel
         ExerciseSettings exerciseSettings = new ExerciseSettings(0);
         settingsPanel.add(exerciseSettings.getMainPanel());
     }
@@ -75,12 +99,19 @@ public class App implements Observer<WorkoutModel>{
      */
     @Override
     public void update(WorkoutModel model) {
+        updateAddExercisesPanel();
+        updateCurrentPlanA();
+        updateCurrentPlanB();
+        updateImportDropdown();
+        resizeText();
+    }
 
-        BoxFillerRatio filler;
+    /**Updates exercises in Add Exercises panel*/
+    public void updateAddExercisesPanel(){
         int i = 0;
 
         //Update Add Exercises panel
-        ExercisesPanel.removeAll();
+        exercisesPanel.removeAll();
         for(Exercise exercise : model.getFirstPaneList()){
             filler = new BoxFillerRatio(3,4,
                     new ExerciseCard(exercise.getName(),exercise.getType(), "Cal / Min: " + exercise.getCalories()).getPanel(),
@@ -92,21 +123,33 @@ public class App implements Observer<WorkoutModel>{
                     BoxFillerRatio temp = new BoxFillerRatio(3,4,
                             new ExerciseCard(exercise.getName(),exercise.getType(), "Cal / Min: " + exercise.getCalories()).getPanel(),
                             BoxLayout.Y_AXIS);
-                    DetailPanel.removeAll();
-                    DetailPanel.add(temp);
+                    detailPanel.removeAll();
+                    detailPanel.add(temp);
+
+                    detailPanel.add(Box.createRigidArea(new Dimension(3, 0)));
+
+                    detailTextArea = new JTextArea(exercise.getDetails());
+                    detailTextArea.setBorder(BorderFactory.createLineBorder(Color.black));
+                    detailTextArea.setEditable(false);
+                    detailPanel.add(detailTextArea);
+
                     addExerciseButton.setEnabled(true);
                     controller.setSelectedExercise(Objects.requireNonNull(exercise));
                     if(me.getButton() == MouseEvent.BUTTON3) addExerciseButton.doClick();
                 }
             });
-            if(i > 0)ExercisesPanel.add(Box.createRigidArea(new Dimension(3, 0)));
-            ExercisesPanel.add(filler);
+            if(i > 0) exercisesPanel.add(Box.createRigidArea(new Dimension(3, 0)));
+            exercisesPanel.add(filler);
             i++;
         }
+    }
+
+    /**Updates exercises in Tab One, Current Plan panel*/
+    public void updateCurrentPlanA(){
+        int i = 0;
 
         //Update Tab One Current Plan panel
         currentPlanA.removeAll();
-        i = 0;
         for(Exercise exercise: model.getCurrentPlanA()){
             filler = new BoxFillerRatio(3,4,
                     new ExerciseCard(exercise.getName(),exercise.getType(), "Cal / Min: " + exercise.getCalories()).getPanel(),
@@ -118,8 +161,18 @@ public class App implements Observer<WorkoutModel>{
                         temp = new BoxFillerRatio(3, 4,
                                 new ExerciseCard(exercise.getName(), exercise.getType(), "Cal / Min: " + exercise.getCalories()).getPanel(),
                                 BoxLayout.Y_AXIS);
-                        DetailPanel.removeAll();
-                        DetailPanel.add(temp);
+                        detailPanel.removeAll();
+                        detailPanel.add(temp);
+
+                        detailPanel.add(Box.createRigidArea(new Dimension(3, 0)));
+
+                        detailTextArea = new JTextArea(exercise.getDetails());
+                        detailTextArea.setBorder(BorderFactory.createLineBorder(Color.black));
+                        detailTextArea.setEditable(false);
+                        detailPanel.add(detailTextArea);
+
+                        addExerciseButton.setEnabled(true);
+                        controller.setSelectedExercise(Objects.requireNonNull(exercise));
                     }
                     else{
                         controller.removeExercises(exercise);
@@ -132,6 +185,11 @@ public class App implements Observer<WorkoutModel>{
             currentPlanA.add(filler);
             i++;
         }
+    }
+
+    /**Updates exercises in Tab Two, Current Plan panel*/
+    public void updateCurrentPlanB(){
+        int i = 0;
 
         //Update Tab Two Current Plan panel
         currentPlanB.removeAll();
@@ -140,7 +198,6 @@ public class App implements Observer<WorkoutModel>{
                     new ExerciseCard(exercise.getName(),exercise.getType(), "Cal / Min: " + exercise.getCalories()).getPanel(),
                     BoxLayout.Y_AXIS);
 
-            if(i > 0) currentPlanB.add(Box.createRigidArea(new Dimension(3, 0)));
             filler.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent me) {
                     temp = new BoxFillerRatio(3,4,
@@ -162,23 +219,13 @@ public class App implements Observer<WorkoutModel>{
                     //NOW WE LOAD UP THOSE FIELDS BASED ON THAT INFO
                 }
             });
+            if(i > 0) currentPlanB.add(Box.createRigidArea(new Dimension(3, 0)));
             currentPlanB.add(filler);
+            i++;
         }
-
-
-        //*****************************************
-        //additional updates to be performed here
-        //*****************************************
-        updateImportDropdown();
-        resizeText();
-        //mainPanel.revalidate();
     }
 
-    /**
-     * UPDATE
-     * adds the names of the workouts in the database to the
-     * dropdown
-     */
+    /**Updates workout names to Import Dropdown menu*/
     public void updateImportDropdown(){
         importDropdown.removeAllItems();
         for(Workout workout: DBmanager.getWorkouts()){
@@ -236,7 +283,7 @@ public class App implements Observer<WorkoutModel>{
         //Action Listener for Add Exercise Button
         addExerciseButton.addActionListener(e -> {
             try {
-                controller.addToPlan(model.getSelectedEx());
+                controller.addToPlan(model.getSelectedExercise());
                 controller.updateWorkouts(Objects.requireNonNull(comboBox1.getSelectedItem()).toString(), Objects.requireNonNull(comboBox2.getSelectedItem()).toString());
             }catch(NullPointerException ex){
                 ex.printStackTrace();
@@ -257,7 +304,7 @@ public class App implements Observer<WorkoutModel>{
 
         //Action Listener for Export Plan button
         exportPlanButton.addActionListener( e -> {
-            int n = 0;
+            int n;
             if(Objects.requireNonNull(importDropdown.getSelectedItem()).toString().equals(workoutNameField.getText())){
                 Object[] options = {"Overwrite",
                         "Cancel"};

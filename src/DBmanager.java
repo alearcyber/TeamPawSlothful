@@ -12,31 +12,28 @@ import java.util.HashMap;
 /**Default Constructor*/
 public class DBmanager {
 
+    /**Database file to reference*/
     private static final String FILENAME = "src//database";
-    private static JSONArray dataArray;
-    private static final ArrayList<Exercise> exercises = new ArrayList<>();
-    private static final ArrayList<Workout> workouts = new ArrayList<>();
 
-    /**Main method for testing*/
-    public static void main(String[] args) {
-        getData();
-        for(Workout w : workouts) {
-            System.out.println(w.getReps());
-        }
-        for(Workout w : workouts) {
-            System.out.println(w.getReps());
-        }
-    }
+    /**Array that contains data from database*/
+    private static JSONArray dataArray;
+
+    /**ArrayList that contains exercises in database*/
+    private static final ArrayList<Exercise> exercises = new ArrayList<>();
+
+    /**ArrayList that contains workouts in database*/
+    private static final ArrayList<Workout> workouts = new ArrayList<>();
 
     /**Gets data from JSON database file*/
     public static void getData() {
+
         try {
             FileReader reader = new FileReader(FILENAME);
             JSONParser parser = new JSONParser();
             Object data = parser.parse(reader);
             dataArray = (JSONArray) data;
-            dataArray.forEach(exe -> parseExercise((JSONObject) exe));
-            dataArray.forEach(exe -> parseWorkout((JSONObject) exe));
+            dataArray.forEach(e -> parseExercise((JSONObject) e));
+            dataArray.forEach(e -> parseWorkout((JSONObject) e));
         }catch (IOException| ParseException e) {e.printStackTrace();}
     }
 
@@ -44,14 +41,16 @@ public class DBmanager {
      * @param exerciseData: Exercise data from database
      */
     public static void parseExercise(JSONObject exerciseData){
+
         if(exerciseData.containsKey("exercise")) {
             JSONObject exerciseObjects = (JSONObject) exerciseData.get("exercise");
 
             String name = (String) exerciseObjects.get("name");
             String type = (String) exerciseObjects.get("type");
             String calories = (String) exerciseObjects.get("calories");
+            String details = (String) exerciseObjects.get("details");
 
-            Exercise exercise = new Exercise(name, calories, type);
+            Exercise exercise = new Exercise(name, calories, type, details);
             exercises.add(exercise);
         }
     }
@@ -60,6 +59,7 @@ public class DBmanager {
      * @param workoutData: Workout data from database
      */
     public static void parseWorkout(JSONObject workoutData){
+
         if(workoutData.containsKey("workout")) {
             JSONObject workoutObjects = (JSONObject) workoutData.get("workout");
             String name = (String) workoutObjects.get("name");
@@ -67,7 +67,7 @@ public class DBmanager {
             ArrayList<String> exeArray = (ArrayList<String>) workoutObjects.get("exercises");
             ArrayList<String> repArray = (ArrayList<String>) workoutObjects.get("reps");
 
-            //construct it into a hashmap
+            //Construct repetitions hash map
             HashMap<String, Integer> reps = new HashMap<>();
             for(int i = 0; i < exeArray.size();i++){
                 reps.put(exeArray.get(i), Integer.parseInt(repArray.get(i)));
@@ -83,7 +83,7 @@ public class DBmanager {
      * @param reps: Number of reps tied to a given exercise
      * @param exercises: Exercises in the workout to add
      */
-    public static void addWorkout(String name, HashMap<String, Integer> reps, ArrayList<String> exercises) {                   //can only store workouts with new name
+    public static void addWorkout(String name, HashMap<String, Integer> reps, ArrayList<String> exercises) {
 
         Workout workoutToAdd = new Workout(name, reps, exercises);
 
@@ -94,7 +94,6 @@ public class DBmanager {
 
         workout.put("name", name);
         workout.put("exercises", exercises);
-
 
         //construct reps from hashmap
         ArrayList<String> repsArray = new ArrayList<>();
@@ -107,7 +106,7 @@ public class DBmanager {
         workoutRapper.put("workout", workout);
         dataArray.add(workoutRapper);
 
-
+        //Write workout to database file
         try (FileWriter file = new FileWriter(FILENAME)) {
             file.write(dataArray.toJSONString());
             file.flush();

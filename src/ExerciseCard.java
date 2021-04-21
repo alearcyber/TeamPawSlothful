@@ -1,5 +1,6 @@
 import javax.swing.*;
 
+/**Class that defines the form of an exercise card*/
 public class ExerciseCard {
     private JPanel mainPanel;
     private JLabel nameLabel;

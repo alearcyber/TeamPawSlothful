@@ -1,19 +1,30 @@
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
+/**Class that implements model design pattern*/
 public class WorkoutModel {
 
+    /**List of observers for application*/
     private final List<Observer<WorkoutModel>> observers;
-    private final ArrayList<Exercise> firstPaneList = new ArrayList<>();
-    private final ArrayList<Exercise> currentPlanA = new ArrayList<>();
-    private final ArrayList<Exercise> currentPlanB = new ArrayList<>();
-    //private final HashMap<String, Integer> reps = new HashMap<>();
 
+    /**ArrayList of exercises contained in the Add Exercises panel*/
+    private final ArrayList<Exercise> firstPaneList = new ArrayList<>();
+
+    /**ArrayList of exercises contained in the Tab One, Current Plan panel*/
+    private final ArrayList<Exercise> currentPlanA = new ArrayList<>();
+
+    /**ArrayList of exercises contained in the Tab Two, Current Plan panel*/
+    private final ArrayList<Exercise> currentPlanB = new ArrayList<>();
+
+    /**Exercise selected from the Add Exercises panel*/
     private Exercise selectedExercise;
+
+    /**Workout selected from Import Workout drop down menu*/
     private Workout selectedWorkout;
 
-    /**Default Constructor*/
+    /**Default Constructor
+     * @param observer Observer for this model
+     */
     public WorkoutModel(Observer<WorkoutModel> observer){
         DBmanager.getData();
         observers = new ArrayList<>();
@@ -56,83 +67,21 @@ public class WorkoutModel {
      */
     public void addToPlan(Exercise ex){
         currentPlanA.add(ex);
-        currentPlanB.add(ex);;
+        currentPlanB.add(ex);
         notifyObservers();
     }
 
-    /**Remove an exercise from current plan*/
+    /**Remove an exercise from current plan
+     * @param exercise Exercise to remove from current plan
+     */
     public void removeExercise(Exercise exercise){
         currentPlanA.remove(exercise);
         notifyObservers();
     }
 
-    /**Set selected exercise from Add Exercise panel
-     * @param selectedEx Exercise selected from Add Exercise panel
+    /**Save the current plan to the database
+     * @param workoutName Name of workout to add to database
      */
-    public void setSelectedEx(Exercise selectedEx) {
-        this.selectedExercise = selectedEx;
-        notifyObservers();
-    }
-
-    /**Sets the workout that is being selected in the Import Workout drop down menu
-     * @param workout The workout selected from the Import Workout drop down menu
-     */
-    public void setSelectedWorkout(Workout workout){
-        this.selectedWorkout = workout;
-    }
-
-    /**
-     * function sets the number of reps based on the exercise name
-     */
-    public void setReps(int numberOfReps){
-        selectedWorkout.setReps(selectedExercise.getName(), numberOfReps);
-    }
-
-    /**Set the name of the workout
-     * @param name Name of workout to name
-     */
-    public void setWorkoutName(String name){
-        notifyObservers();
-    }                                                                         //necessary?
-
-    /**Get list of exercises contained in Add Exercise panel
-     * @return List of exercises contained in Add Exercise panel
-     */
-    public ArrayList<Exercise> getFirstPaneList(){
-        return firstPaneList;
-    }
-
-    /**Get selected exercise from Add Exercise panel
-     * @return Selected exercise from Add Exercise panel
-     */
-    public Exercise getSelectedEx(){
-        return selectedExercise;
-    }
-
-    /**Get current plan
-     * @return Current plan
-     */
-    public ArrayList<Exercise> getCurrentPlanA(){
-        return this.currentPlanA;
-    }
-
-    /**Get plan displayed on Tab Two, Current Plan panel
-     * @return Plan displayed on Tab Two, Current Plan panel
-     */
-    public ArrayList<Exercise> getCurrentPlanB(){
-        return this.currentPlanB;
-    }
-
-    /**Get the currently selected workout*/
-    public Workout getSelectedWorkout(){
-        return this.selectedWorkout;
-    }
-
-
-
-
-
-    /**Save the current plan to the database*/
     public void savePlanToDB(String workoutName){
         ArrayList<String> exerciseNames = new ArrayList<>();
         for(Exercise exercise: currentPlanA){
@@ -141,7 +90,6 @@ public class WorkoutModel {
         DBmanager.addWorkout(workoutName, selectedWorkout.getReps(), exerciseNames);
     }
 
-
     /**Remove everything from Current Plan*/
     public void clearPlan(){
         currentPlanA.clear();
@@ -149,4 +97,60 @@ public class WorkoutModel {
         notifyObservers();
     }
 
+    /**Set selected exercise from Add Exercise panel
+     * @param selectedEx Exercise selected from Add Exercise panel
+     */
+    public void setSelectedExercise(Exercise selectedEx) {
+        this.selectedExercise = selectedEx;
+        notifyObservers();
+    }
+
+    /**Sets the workout selected in the Import Workout drop down menu
+     * @param workout The workout selected from the Import Workout drop down menu
+     */
+    public void setSelectedWorkout(Workout workout){
+        this.selectedWorkout = workout;
+    }
+
+    /**Sets the number of repetitions for the exercise selected from Tab Two, Current Plan
+     * @param numberOfReps Number of repetitions for a given exercise
+     */
+    public void setReps(int numberOfReps){
+        selectedWorkout.setReps(selectedExercise.getName(), numberOfReps);
+    }
+
+    /**Get selected exercise from Add Exercise panel
+     * @return Selected exercise from Add Exercise panel
+     */
+    public Exercise getSelectedExercise(){
+        return selectedExercise;
+    }
+
+    /**Get the currently selected workout from the Import Workout drop down menu
+     * @return Selected workout from Import Workout drop down menu
+     */
+    public Workout getSelectedWorkout(){
+        return this.selectedWorkout;
+    }
+
+    /**Get list of exercises contained in Add Exercise panel
+     * @return List of exercises contained in Add Exercise panel
+     */
+    public ArrayList<Exercise> getFirstPaneList(){
+        return firstPaneList;
+    }
+
+    /**Get list of exercises contained in Tab One, Current Plan pane
+     * @return List of exercises contained in Tab One, Current Plan pane
+     */
+    public ArrayList<Exercise> getCurrentPlanA(){
+        return this.currentPlanA;
+    }
+
+    /**Get list of exercises contained in Tab Two, Current Plan pane
+     * @return List of exercises contained in Tab Two, Current Plan pane
+     */
+    public ArrayList<Exercise> getCurrentPlanB(){
+        return this.currentPlanB;
+    }
 }
