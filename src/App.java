@@ -65,6 +65,7 @@ public class App implements Observer<WorkoutModel>{
 
         //Methods that construct various things
         constructListeners();
+        updateImportDropdown();
 
         //Adds an empty exercise card to details panel
         temp = new BoxFillerRatio(3,4,
@@ -102,7 +103,6 @@ public class App implements Observer<WorkoutModel>{
         updateAddExercisesPanel();
         updateCurrentPlanA();
         updateCurrentPlanB();
-        updateImportDropdown();
         resizeText();
     }
 
@@ -128,9 +128,16 @@ public class App implements Observer<WorkoutModel>{
 
                     detailPanel.add(Box.createRigidArea(new Dimension(3, 0)));
 
-                    detailTextArea = new JTextArea(exercise.getDetails());
+                    detailTextArea = new JTextArea();
+
+
+                    for(String s : exercise.getDetails()){
+                        detailTextArea.append(s + "\n");
+                    }
+
                     detailTextArea.setBorder(BorderFactory.createLineBorder(Color.black));
                     detailTextArea.setEditable(false);
+                    detailTextArea.setFocusable(false);
                     detailPanel.add(detailTextArea);
 
                     addExerciseButton.setEnabled(true);
@@ -166,9 +173,15 @@ public class App implements Observer<WorkoutModel>{
 
                         detailPanel.add(Box.createRigidArea(new Dimension(3, 0)));
 
-                        detailTextArea = new JTextArea(exercise.getDetails());
+                        detailTextArea = new JTextArea();
+
+                        for(String s : exercise.getDetails()){
+                            detailTextArea.append(s + "\n");
+                        }
+
                         detailTextArea.setBorder(BorderFactory.createLineBorder(Color.black));
                         detailTextArea.setEditable(false);
+                        detailTextArea.setFocusable(false);
                         detailPanel.add(detailTextArea);
 
                         addExerciseButton.setEnabled(true);
@@ -238,6 +251,9 @@ public class App implements Observer<WorkoutModel>{
 
         tabbedPane1.setFont(new Font("Dialog", Font.PLAIN, (int) (mainPanel.getHeight() / 41.75)));
 
+        detailTextArea = new JTextArea("");
+        detailTextArea.setFont(new Font("Dialog", Font.PLAIN, (int) (mainPanel.getHeight() / 41.75)));
+
         for(Component c : tabbedPane1.getComponents()){
             if(c instanceof Container){
                 for (Component d : (((Container) c).getComponents())) {
@@ -305,23 +321,31 @@ public class App implements Observer<WorkoutModel>{
         //Action Listener for Export Plan button
         exportPlanButton.addActionListener( e -> {
             int n;
-            if(Objects.requireNonNull(importDropdown.getSelectedItem()).toString().equals(workoutNameField.getText())){
-                Object[] options = {"Overwrite",
-                        "Cancel"};
-                n = JOptionPane.showOptionDialog(frame,
-                        "Error:" + "\n" +"New Workout name is the same as one in the database",
-                        "Error Adding Workout",
-                        JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE,
-                        null,
-                        options,
-                        options[1]);
-                if(n == 0){
-                    //controller.exportPlan(Objects.requireNonNull(workoutNameField.getText()));
-                    System.out.println("This is where database overwriting would be, IF I HAD IT");                             //consider adding overwrite
+            boolean overwriteFlag = false;
+
+            for(int i = 0; i < importDropdown.getItemCount(); i++){
+                if(Objects.requireNonNull(importDropdown.getItemAt(i)).equals(workoutNameField.getText())) {
+                    Object[] options = {"Overwrite",
+                            "Cancel"};
+                    n = JOptionPane.showOptionDialog(frame,
+                            "Error:" + "\n" +"New Workout name is the same as one in the database",
+                            "Error Adding Workout",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE,
+                            null,
+                            options,
+                            options[1]);
+                    if(n == 0) overwriteFlag = true;
+                    else overwriteFlag = false;
                 }
-            } else {
+                else overwriteFlag = true;
+            }
+
+            if(overwriteFlag == true){
+                DBmanager.overwriteDatabase(workoutNameField.getText());
                 controller.exportPlan(Objects.requireNonNull(workoutNameField.getText()));
+                controller.setSelectedWorkout(DBmanager.getWorkouts().get(0));
+                updateImportDropdown();
             }
         });
 
@@ -360,6 +384,7 @@ public class App implements Observer<WorkoutModel>{
                 }
             }
         });
+
     }
 
     /**Main method to set up application window*/

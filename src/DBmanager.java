@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 /**Default Constructor*/
@@ -26,7 +27,6 @@ public class DBmanager {
 
     /**Gets data from JSON database file*/
     public static void getData() {
-
         try {
             FileReader reader = new FileReader(FILENAME);
             JSONParser parser = new JSONParser();
@@ -34,7 +34,7 @@ public class DBmanager {
             dataArray = (JSONArray) data;
             dataArray.forEach(e -> parseExercise((JSONObject) e));
             dataArray.forEach(e -> parseWorkout((JSONObject) e));
-        }catch (IOException| ParseException e) {e.printStackTrace();}
+        }catch (IOException| ParseException e) {e.printStackTrace(); }
     }
 
     /**Parse database for exercises
@@ -48,7 +48,7 @@ public class DBmanager {
             String name = (String) exerciseObjects.get("name");
             String type = (String) exerciseObjects.get("type");
             String calories = (String) exerciseObjects.get("calories");
-            String details = (String) exerciseObjects.get("details");
+            JSONArray details = (JSONArray) exerciseObjects.get("details");
 
             Exercise exercise = new Exercise(name, calories, type, details);
             exercises.add(exercise);
@@ -69,7 +69,7 @@ public class DBmanager {
 
             //Construct repetitions hash map
             HashMap<String, Integer> reps = new HashMap<>();
-            for(int i = 0; i < exeArray.size();i++){
+            for(int i = 0; i < exeArray.size(); i++){
                 reps.put(exeArray.get(i), Integer.parseInt(repArray.get(i)));
             }
 
@@ -97,8 +97,10 @@ public class DBmanager {
 
         //construct reps from hashmap
         ArrayList<String> repsArray = new ArrayList<>();
-        for(int i = 0; i < exercises.size();i++){
-            repsArray.add(reps.get(exercises.get(i)).toString());
+        for(int i = 0; i < exercises.size(); i++){
+            try {
+                repsArray.add(reps.get(exercises.get(i)).toString());
+            }catch (Exception e) { repsArray.add("0"); }
         }
 
         workout.put("reps", repsArray);
@@ -127,6 +129,27 @@ public class DBmanager {
      */
     public static ArrayList<Exercise> getExercises(){
         return exercises;
+    }
+
+    /**Removes workout if its name matches the user's export name
+     * @param workoutToOverwrite Workout to remove
+     */
+    public static void overwriteDatabase(String workoutToOverwrite){
+        for(int i = 0; i < dataArray.size(); i++){
+            try{
+                JSONObject temp = (JSONObject) dataArray.get(i);
+                if(temp.containsKey("workout")){
+                    for(Object p : temp.values()){
+                        if(((JSONObject) p).containsValue(workoutToOverwrite)){
+                            dataArray.remove(i);
+                        }
+                    }
+                }
+            }catch (Exception e) { e.printStackTrace();}
+        }
+
+        workouts.clear();
+        dataArray.forEach(e -> parseWorkout((JSONObject) e));
     }
 }
 

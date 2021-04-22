@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 /**Class that defines an exercise*/
 public class Exercise{
@@ -12,7 +13,7 @@ public class Exercise{
     private String type;
 
     /**Exercise details*/
-    private String details;
+    private ArrayList<String> details = new ArrayList<>();
 
     /**Default Constructor*/
     public Exercise(){}
@@ -23,11 +24,14 @@ public class Exercise{
      * @param type Type of this exercise
      * @param details Details of this exercise
      */
-    public Exercise(String name, String calories, String type, String details){
+    public Exercise(String name, String calories, String type, ArrayList<String> details){
         this.name = name;
         this.calories = calories;
         this.type = type;
-        this.details = details;
+
+        for(String s : details){
+            this.details.add(s);
+        }
     }
 
     /**Gets exercise name
@@ -51,7 +55,5 @@ public class Exercise{
         return type;
     }
 
-    public String getDetails(){
-        return details;
-    }
+    public ArrayList<String> getDetails(){ return details; }
 }

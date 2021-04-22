@@ -12,25 +12,14 @@ public class ExerciseSettings {
     public JTextField caloriesBurntField;
     private JPanel fieldPanel;
 
-    private String setting;
-
 
     private Document original;
     private static int mult = 1; //its just the calories
-    private static String exName = "";
 
     //static field representations of the stats and whatnot
     private static String reps;
     private static String cals;
     private static String time;
-
-    public static void setMult(int mult) {
-        ExerciseSettings.mult = mult;
-    }
-
-    public static void setExName(String exName) {
-        ExerciseSettings.exName = exName;
-    }
 
     public ExerciseSettings(int reps) {
 
@@ -87,7 +76,6 @@ public class ExerciseSettings {
                 c.addFocusListener(new FocusAdapter() {
                     @Override
                     public void focusLost(FocusEvent e) {
-                        setting = ((JTextField) c).getText();
                         c.setEnabled(false);
                     }
                 });
@@ -105,7 +93,7 @@ public class ExerciseSettings {
                 c.addKeyListener(new KeyAdapter() {
                     @Override
                     public void keyTyped(KeyEvent e) {
-                        if(!Character.isDigit(e.getKeyChar())) {
+                        if(!Character.isDigit(e.getKeyChar()) || ((JTextField) c).getText().length() >= 6) {
                             e.consume();
                         }
                     }
@@ -128,16 +116,6 @@ public class ExerciseSettings {
         }
     }
 
-    /**Gets Exercise Settings Panel
-     * @return Exercise Settings Panel
-     */
-    public JPanel getMainPanel() { return mainPanel; }
-
-    /**Return setting string from setting fields
-     * @return Setting taken from setting fields
-     */
-    public String getSetting(){ return setting; }
-
     private void updateLabel(DocumentEvent e) {
 
         if (original == null) {
@@ -150,7 +128,6 @@ public class ExerciseSettings {
             }
             if (!text.isEmpty()) {
                 final int p = Integer.parseInt(text);
-                final int rate = mult;
 
                 if (original.equals(numberOfRepsField.getDocument())) {
                     final int y = (p * mult / 5);
@@ -174,7 +151,7 @@ public class ExerciseSettings {
                     cals = p + " ";
                     time = toTime;
 
-                } else { //minutes
+                } else {
                     final int x = (p * 5);
                     final String toReps = String.valueOf(x);
                     numberOfRepsField.setText(toReps);
@@ -190,6 +167,15 @@ public class ExerciseSettings {
             original = null;
         }
     }
+
+    public static void setMult(int mult) {
+        ExerciseSettings.mult = mult;
+    }
+
+    /**Gets Exercise Settings Panel
+     * @return Exercise Settings Panel
+     */
+    public JPanel getMainPanel() { return mainPanel; }
 
     public static String getReps(){
         return reps;
