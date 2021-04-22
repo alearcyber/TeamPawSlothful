@@ -1,41 +1,452 @@
-[{"exercise":{"name":"Bicycle Crunch","calories":"3","type":"Abs", "details": ["1. Lay flat on the ground with your head and shoulders slightly raised.", "2. Place your hands on the sides of your head and lift one leg.", "3. Lift the other leg to your chest and twist your chest so that your knee and elbow meet.", "4. Repeat for other leg."]}},
-{"exercise":{"name":"Bridge Raise","calories":"8","type":"Abs", "details": ["None"]}},
-{"exercise":{"name":"Burpees","calories":"8","type":"Abs", "details": ["None"]}},
-{"exercise":{"name":"Crunches","calories":"6","type":"Abs", "details": ["None"]}},
-{"exercise":{"name":"Leg Raises","calories":"4","type":"Abs", "details": ["None"]}},
-{"exercise":{"name":"Plank Hops","calories":"2","type":"Abs", "details": ["None"]}},
-{"exercise":{"name":"Sit-ups","calories":"3","type":"Abs", "details": ["None"]}},
-{"exercise":{"name":"Body Saw","calories":"2","type":"Arms", "details": ["None"]}},
-{"exercise":{"name":"Curls","calories":"5","type":"Arms", "details": ["None"]}},
-{"exercise":{"name":"Plank Tap","calories":"3","type":"Arms", "details": ["None"]}},
-{"exercise":{"name":"Plank Walk","calories":"3","type":"Arms", "details": ["None"]}},
-{"exercise":{"name":"Push-ups","calories":"7","type":"Arms", "details": ["None"]}},
-{"exercise":{"name":"Side Planks","calories":"3","type":"Arms", "details": ["None"]}},
-{"exercise":{"name":"Tricep Dips","calories":"5","type":"Arms", "details": ["None"]}},
-{"exercise":{"name":"Lateral Raise","calories":"2","type":"Back", "details": ["None"]}},
-{"exercise":{"name":"Pilates Press","calories":"7","type":"Back", "details": ["None"]}},
-{"exercise":{"name":"Plank","calories":"2","type":"Back", "details": ["None"]}},
-{"exercise":{"name":"Pull-ups","calories":"11","type":"Back", "details": ["None"]}},
-{"exercise":{"name":"Superman Raise","calories":"3","type":"Back", "details": ["None"]}},
-{"exercise":{"name":"Twisters","calories":"3","type":"Back", "details": ["None"]}},
-{"exercise":{"name":"Bear Crawls","calories":"5","type":"Cardio", "details": ["None"]}},
-{"exercise":{"name":"Jog in Place","calories":"6","type":"Cardio", "details": ["None"]}},
-{"exercise":{"name":"Jump Rope","calories":"15","type":"Cardio", "details": ["None"]}},
-{"exercise":{"name":"Jumping Jacks","calories":"8","type":"Cardio", "details": ["None"]}},
-{"exercise":{"name":"Running","calories":"10","type":"Cardio", "details": ["None"]}},
-{"exercise":{"name":"Squat Jumps","calories":"10","type":"Cardio", "details": ["None"]}},
-{"exercise":{"name":"Trunk Rotations","calories":"4","type":"Cardio", "details": ["None"]}},
-{"exercise":{"name":"High Knees","calories":"6","type":"Legs", "details": ["None"]}},
-{"exercise":{"name":"Hip Bridges","calories":"3","type":"Legs", "details": ["None"]}},
-{"exercise":{"name":"Lunges","calories":"6","type":"Legs", "details": ["None"]}},
-{"exercise":{"name":"Mountain Climb","calories":"11","type":"Legs", "details": ["None"]}},
-{"exercise":{"name":"Side Lunges","calories":"6","type":"Legs", "details": ["None"]}},
-{"exercise":{"name":"Squats","calories":"8","type":"Legs", "details": ["None"]}},
-{"exercise":{"name":"Jumping Lunges","calories":"8","type":"Legs", "details": ["None"]}},
-{"exercise":{"name":"Crab Walk","calories":"4","type":"Shoulders", "details": ["None"]}},
-{"exercise":{"name":"Dips","calories":"7","type":"Shoulders", "details": ["None"]}},
-{"exercise":{"name":"Dolphin Dive","calories":"5","type":"Shoulders", "details": ["None"]}},
-{"exercise":{"name":"Pike Push-ups","calories":"7","type":"Shoulders", "details": ["None"]}},
-{"exercise":{"name":"Plank Ups","calories":"5","type":"Shoulders", "details": ["None"]}},
-{"exercise":{"name":"Y's and T's","calories":"1","type":"Shoulders", "details": ["None"]}},
-{"workout":{"reps":["5","4","3"],"exercises":["Plank Hops","Burpees","Side Lunges"],"name":"workout1"}}]
+[
+  {
+    "exercise":{
+      "name":"Bicycle Crunch",
+      "details":[
+        "1. Lay flat on the ground with your head and shoulders slightly raised.",
+        "2. Place your hands on the sides of your head and lift one leg.",
+        "3. Lift the other leg to your chest and twist your chest so that your knee and elbow meet.",
+        "4. Repeat for other leg."
+      ],
+      "calories":"3",
+      "type":"Abs"
+    }
+  },
+  {
+    "exercise":{
+      "name":"Bridge Raise",
+      "details":[
+        "lay on ground raise hips to make 45 degree angle with hands and feet on ground"
+      ],
+      "calories":"8",
+      "type":"Abs"
+    }
+  },
+  {
+    "exercise":{
+      "name":"Burpees",
+      "details":[
+        "plank to squatjump"
+      ],
+      "calories":"8",
+      "type":"Abs"
+    }
+  },
+  {
+    "exercise":{
+      "name":"Crunches",
+      "details":[
+        "lay in situp position and curl your head up to your knees"
+      ],
+      "calories":"6",
+      "type":"Abs"
+    }
+  },
+  {
+    "exercise":{
+      "name":"Leg Raises",
+      "details":[
+        "Lay on back with hands under butt and raise legs to make 90 angle with bod"
+      ],
+      "calories":"4",
+      "type":"Abs"
+    }
+  },
+  {
+    "exercise":{
+      "name":"Plank Hops",
+      "details":[
+        "hop in the plank position"
+      ],
+      "calories":"2",
+      "type":"Abs"
+    }
+  },
+  {
+    "exercise":{
+      "name":"Sit-ups",
+      "details":[
+        "Just a vanilla situp, if you dont know, uninstall"
+      ],
+      "calories":"3",
+      "type":"Abs"
+    }
+  },
+  {
+    "exercise":{
+      "name":"Body Saw",
+      "details":[
+        "Move forward and backward laterally from the plank position"
+      ],
+      "calories":"2",
+      "type":"Arms"
+    }
+  },
+  {
+    "exercise":{
+      "name":"Curls",
+      "details":[
+        "point your arm to the ground, then bend at the elbow"
+      ],
+      "calories":"5",
+      "type":"Arms"
+    }
+  },
+  {
+    "exercise":{
+      "name":"Plank Tap",
+      "details":[
+        "Plank but you alternate tapping your shoulders"
+      ],
+      "calories":"3",
+      "type":"Arms"
+    }
+  },
+  {
+    "exercise":{
+      "name":"Plank Walk",
+      "details":[
+        "walk from the plank position"
+      ],
+      "calories":"3",
+      "type":"Arms"
+    }
+  },
+  {
+    "exercise":{
+      "name":"Push-ups",
+      "details":[
+        "bring chest to ground from plank position"
+      ],
+      "calories":"7",
+      "type":"Arms"
+    }
+  },
+  {
+    "exercise":{
+      "name":"Side Planks",
+      "details":[
+        "plank, but you bring your chest down to the ground and back up"
+      ],
+      "calories":"3",
+      "type":"Arms"
+    }
+  },
+  {
+    "exercise":{
+      "name":"Tricep Dips",
+      "details":[
+        "lean back against chair with legs straight and do a dip"
+      ],
+      "calories":"5",
+      "type":"Arms"
+    }
+  },
+  {
+    "exercise":{
+      "name":"Lateral Raise",
+      "details":[
+        "go from a standing pose to a tpose but with wrights in hands"
+      ],
+      "calories":"2",
+      "type":"Back"
+    }
+  },
+  {
+    "exercise":{
+      "name":"Pilates Press",
+      "details":[
+        "Its like a bench press but your doing it in pilattes"
+      ],
+      "calories":"7",
+      "type":"Back"
+    }
+  },
+  {
+    "exercise":{
+      "name":"Plank",
+      "details":[
+        "vanilla plank"
+      ],
+      "calories":"2",
+      "type":"Back"
+    }
+  },
+  {
+    "exercise":{
+      "name":"Pull-ups",
+      "details":[
+        "vanilla pull up"
+      ],
+      "calories":"11",
+      "type":"Back"
+    }
+  },
+  {
+    "exercise":{
+      "name":"Superman Raise",
+      "details":[
+        "you raise your body up to the position of superman"
+      ],
+      "calories":"3",
+      "type":"Back"
+    }
+  },
+  {
+    "exercise":{
+      "name":"Twisters",
+      "details":[
+        "you get caught in a wack fast and wicked tornado"
+      ],
+      "calories":"3",
+      "type":"Back"
+    }
+  },
+  {
+    "exercise":{
+      "name":"Bear Crawls",
+      "details":[
+        "when encountering a bear, you gotta crawl away slowly so he doesnt attack"
+      ],
+      "calories":"5",
+      "type":"Cardio"
+    }
+  },
+  {
+    "exercise":{
+      "name":"Jog in Place",
+      "details":[
+        "jog but dont move"
+      ],
+      "calories":"6",
+      "type":"Cardio"
+    }
+  },
+  {
+    "exercise":{
+      "name":"Jump Rope",
+      "details":[
+        "jump over a rope"
+      ],
+      "calories":"15",
+      "type":"Cardio"
+    }
+  },
+  {
+    "exercise":{
+      "name":"Jumping Jacks",
+      "details":[
+        "jump people named jack in the streets"
+      ],
+      "calories":"8",
+      "type":"Cardio"
+    }
+  },
+  {
+    "exercise":{
+      "name":"Running",
+      "details":[
+        "now"
+      ],
+      "calories":"10",
+      "type":"Cardio"
+    }
+  },
+  {
+    "exercise":{
+      "name":"Squat Jumps",
+      "details":[
+        "buurpees 2"
+      ],
+      "calories":"10",
+      "type":"Cardio"
+    }
+  },
+  {
+    "exercise":{
+      "name":"Trunk Rotations",
+      "details":[
+        "when you wring out a tree like a towel"
+      ],
+      "calories":"4",
+      "type":"Cardio"
+    }
+  },
+  {
+    "exercise":{
+      "name":"High Knees",
+      "details":[
+        "when your knees get way too high"
+      ],
+      "calories":"6",
+      "type":"Legs"
+    }
+  },
+  {
+    "exercise":{
+      "name":"Hip Bridges",
+      "details":[
+        "a hipster bridge"
+      ],
+      "calories":"3",
+      "type":"Legs"
+    }
+  },
+  {
+    "exercise":{
+      "name":"Lunges",
+      "details":[
+        "lunge forward"
+      ],
+      "calories":"6",
+      "type":"Legs"
+    }
+  },
+  {
+    "exercise":{
+      "name":"Mountain Climb",
+      "details":[
+        "you make it to the top of everest"
+      ],
+      "calories":"11",
+      "type":"Legs"
+    }
+  },
+  {
+    "exercise":{
+      "name":"Side Lunges",
+      "details":[
+        "you lunge but on your side"
+      ],
+      "calories":"6",
+      "type":"Legs"
+    }
+  },
+  {
+    "exercise":{
+      "name":"Squats",
+      "details":[
+        "mung daal from chowder"
+      ],
+      "calories":"8",
+      "type":"Legs"
+    }
+  },
+  {
+    "exercise":{
+      "name":"Jumping Lunges",
+      "details":[
+        "you jump while lunging"
+      ],
+      "calories":"8",
+      "type":"Legs"
+    }
+  },
+  {
+    "exercise":{
+      "name":"Crab Walk",
+      "details":[
+        "when you walk sideays clapping your hands in the air like a crab"
+      ],
+      "calories":"4",
+      "type":"Shoulders"
+    }
+  },
+  {
+    "exercise":{
+      "name":"Dips",
+      "details":[
+        "skoal, coppenhagen, redman, the holy trinity"
+      ],
+      "calories":"7",
+      "type":"Shoulders"
+    }
+  },
+  {
+    "exercise":{
+      "name":"Dolphin Dive",
+      "details":[
+        "sprint and hold the crouch button"
+      ],
+      "calories":"5",
+      "type":"Shoulders"
+    }
+  },
+  {
+    "exercise":{
+      "name":"Pike Push-ups",
+      "details":[
+        "you do a push up on top of a pike"
+      ],
+      "calories":"7",
+      "type":"Shoulders"
+    }
+  },
+  {
+    "exercise":{
+      "name":"Plank Ups",
+      "details":[
+        "its a plank and a push up combined"
+      ],
+      "calories":"5",
+      "type":"Shoulders"
+    }
+  },
+  {
+    "exercise":{
+      "name":"Y's and T's",
+      "details":[
+        "yous and tubes, its how you get famous"
+      ],
+      "calories":"1",
+      "type":"Shoulders"
+    }
+  },
+  {
+    "workout":{
+      "reps":[
+        "5",
+        "4",
+        "3"
+      ],
+      "exercises":[
+        "Plank Hops",
+        "Burpees",
+        "Side Lunges"
+      ],
+      "name":"workout1"
+    }
+  },
+  {
+    "workout":{
+      "reps":[
+        "50",
+        "100",
+        "83",
+        "166"
+      ],
+      "exercises":[
+        "Bridge Raise",
+        "Burpees",
+        "Crunches",
+        "Plank Walk"
+      ],
+      "name":"metricstest"
+    }
+  },
+  {
+    "workout":{
+      "reps":[
+        "62",
+        "125",
+        "50"
+      ],
+      "exercises":[
+        "Jumping Jacks",
+        "Trunk Rotations",
+        "Squat Jumps"
+      ],
+      "name":"cardioday"
+    }
+  }
+]

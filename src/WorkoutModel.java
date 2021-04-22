@@ -22,6 +22,11 @@ public class WorkoutModel {
     /**Workout selected from Import Workout drop down menu*/
     private Workout selectedWorkout;
 
+    /** metrics */
+    private int totalCalBurnt;
+    private int totalTime;
+    private String mainMuscleGroup;
+
     /**Default Constructor
      * @param observer Observer for this model
      */
@@ -152,5 +157,29 @@ public class WorkoutModel {
      */
     public ArrayList<Exercise> getCurrentPlanB(){
         return this.currentPlanB;
+    }
+
+    public void setMainMuscleGroup(String mainMuscleGroup) {
+        this.mainMuscleGroup = mainMuscleGroup;
+    }
+
+    public void setTotalCalBurnt(int totalCalBurnt) {
+        this.totalCalBurnt = totalCalBurnt;
+    }
+
+    public void setTotalTime(int totalTime) {
+        this.totalTime = totalTime;
+    }
+
+     public String getMainMuscleGroup(){
+        return mainMuscleGroup;
+     }
+
+    public int getTotalCalBurnt() {
+        return totalCalBurnt;
+    }
+
+    public int getTotalTime() {
+        return totalTime;
     }
 }

@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**Class that implements controller design pattern*/
 public class WorkoutController {
@@ -78,6 +80,70 @@ public class WorkoutController {
      */
     public void setReps(int numberOfReps){
         model.setReps(numberOfReps);
+        model.notifyObservers();
+    }
+
+    /**
+     * scan the exercises for their time
+     * multiple by cal/min to get cal
+     * total the time
+     * total the cal
+     * find which muscle group is most represented
+     * assign those three values
+     */
+    public void adjustPlanMetrics(String nameOfWorkout){
+        int totalTime = 0;
+        int totalCal = 0;
+        String maxType = "N/A";
+
+        Workout selectedWorkout = null;
+
+        for (Workout workout: DBmanager.getWorkouts()) {
+            if(workout.getName().equals(nameOfWorkout)){
+                selectedWorkout = workout;
+            }
+        }
+
+        ArrayList<String> typeOccurrences = new ArrayList<>(); //every type token in a list
+
+        for(String exerciseName: selectedWorkout.getExercisesInWorkout()){
+            int reps = selectedWorkout.getReps().get(exerciseName);  // number of reps stored for that exercise
+            Exercise exerciseAsObjectFromName = null;
+            for(Exercise exercise: DBmanager.getExercises()){
+                if(exerciseName.equals(exercise.getName())) {
+                    exerciseAsObjectFromName = exercise;
+                }
+            }
+            typeOccurrences.add(exerciseAsObjectFromName.getType());
+            int time = reps / 5;
+            int calPerMin = exerciseAsObjectFromName.getCalories();
+            totalCal += (calPerMin * time);
+            totalTime += time;
+        }
+        model.setTotalTime(totalTime);
+        model.setTotalCalBurnt(totalCal);
+
+        //now for the type occurrences calculation
+        HashMap<String,Integer> dictOfOccurrences = new HashMap<>();
+        for(String type: typeOccurrences){
+            try{
+                dictOfOccurrences.put(type,dictOfOccurrences.get(type) + 1);
+            } catch(Exception ex){
+                dictOfOccurrences.put(type,1);
+            }
+        }
+
+        //whichever has the highest number stays
+        //key is the name of the type of workout
+        for(String key: dictOfOccurrences.keySet()){
+            if(!dictOfOccurrences.keySet().contains(maxType)){
+                maxType = key;
+            } else if(dictOfOccurrences.get(key) > dictOfOccurrences.get(maxType)){
+                maxType = key;
+            }
+        }
+        model.setMainMuscleGroup(maxType);
+
         model.notifyObservers();
     }
 }

@@ -38,6 +38,10 @@ public class App implements Observer<WorkoutModel>{
 
     private JTextArea detailTextArea;
 
+    private JLabel totalCalBurnt;
+    private JLabel totalTimeTaken;
+    private JLabel muscleGroupFocus;
+
     private final WorkoutModel model;
     private final WorkoutController controller;
 
@@ -103,6 +107,7 @@ public class App implements Observer<WorkoutModel>{
         updateAddExercisesPanel();
         updateCurrentPlanA();
         updateCurrentPlanB();
+        updateMetrics();
         resizeText();
     }
 
@@ -246,6 +251,15 @@ public class App implements Observer<WorkoutModel>{
         }
     }
 
+    /**
+     * update the metrics
+     */
+    public void updateMetrics(){
+        totalTimeTaken.setText(model.getTotalTime() + "");
+        totalCalBurnt.setText(model.getTotalCalBurnt() + "");
+        muscleGroupFocus.setText(model.getMainMuscleGroup());
+    }
+
     /**Resizes all text displayed on the GUI*/
     private void resizeText(){
 
@@ -316,7 +330,10 @@ public class App implements Observer<WorkoutModel>{
         });
 
         //Action Listener for Import Plan button
-        importPlanButton.addActionListener(e -> controller.importPlan());
+        importPlanButton.addActionListener(e -> {
+            controller.importPlan();
+            controller.adjustPlanMetrics(model.getSelectedWorkout().getName());
+        });
 
         //Action Listener for Export Plan button
         exportPlanButton.addActionListener( e -> {
@@ -344,6 +361,7 @@ public class App implements Observer<WorkoutModel>{
             if(overwriteFlag == true){
                 DBmanager.overwriteDatabase(workoutNameField.getText());
                 controller.exportPlan(Objects.requireNonNull(workoutNameField.getText()));
+                controller.adjustPlanMetrics(workoutNameField.getText());
                 controller.setSelectedWorkout(DBmanager.getWorkouts().get(0));
                 updateImportDropdown();
             }
