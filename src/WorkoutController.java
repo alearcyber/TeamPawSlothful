@@ -83,13 +83,8 @@ public class WorkoutController {
         model.notifyObservers();
     }
 
-    /**
-     * scan the exercises for their time
-     * multiple by cal/min to get cal
-     * total the time
-     * total the cal
-     * find which muscle group is most represented
-     * assign those three values
+    /**Adjust plan metrics according repetitions
+     * @param nameOfWorkout Name of workout to adjust metrics for
      */
     public void adjustPlanMetrics(String nameOfWorkout){
         int totalTime = 0;

@@ -55,5 +55,8 @@ public class Exercise{
         return type;
     }
 
+    /**Get details of exercise
+     * @return The details of an exercise
+     */
     public ArrayList<String> getDetails(){ return details; }
 }

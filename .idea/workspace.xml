@@ -1,28 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="93c9d068-fb06-4dac-bbda-e50b8db393f8" name="Default Changelist" comment="Finished Java">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_28_2021_9_51_PM__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_28_2021_9_51_PM__Default_Changelist_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_31_2021_9_12_PM__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_31_2021_9_12_PM__Default_Changelist_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_7_2021_7_23_PM__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_7_2021_7_23_PM__Default_Changelist_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_11_2021_7_12_PM__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_11_2021_7_12_PM__Default_Changelist_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_11_2021_7_14_PM__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_11_2021_7_14_PM__Default_Changelist_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_12_2021_9_31_PM__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_12_2021_9_31_PM__Default_Changelist_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_8_2021_11_28_PM__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_8_2021_11_28_PM__Default_Changelist_.xml" afterDir="false" />
+    <list default="true" id="93c9d068-fb06-4dac-bbda-e50b8db393f8" name="Default Changelist" comment="Overwrite added; bug fixes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/App.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/App.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/BoxFillerRatio.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/BoxFillerRatio.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/DBmanager.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/DBmanager.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/Exercise.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/Exercise.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/ExerciseCard.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/ExerciseCard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/Observer.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/Observer.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/TYPEPROTOCOL.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/TYPEPROTOCOL.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/Workout.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/Workout.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/WorkoutController.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/WorkoutController.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/WorkoutModel.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/WorkoutModel.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/allclasses-index.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/allclasses-index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/allpackages-index.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/allpackages-index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/constant-values.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/constant-values.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/help-doc.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/help-doc.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-1.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-1.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-10.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-10.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-11.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-11.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-12.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-12.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-13.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-13.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-14.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-14.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-15.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-15.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-16.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-16.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-17.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-17.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-18.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-18.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-2.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-2.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-3.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-3.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-4.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-4.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-5.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-5.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-6.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-6.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-7.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-7.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-8.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-8.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-9.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-9.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/member-search-index.js" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/member-search-index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/overview-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/overview-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/serialized-form.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/serialized-form.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/App$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/App$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/App$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/App$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/App$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/App$3.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/App.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/BoxFillerRatio$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/BoxFillerRatio$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/BoxFillerRatio.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/BoxFillerRatio.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/DBmanager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/DBmanager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/Exercise.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/Exercise.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/ExerciseCard.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/ExerciseCard.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/ExerciseSettings.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/ExerciseSettings.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/Observer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/Observer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/TYPEPROTOCOL.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/TYPEPROTOCOL.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/Workout.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/Workout.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/WorkoutController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/WorkoutController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/WorkoutModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/WorkoutModel.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/AbstractLayout.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/AbstractLayout.class" afterDir="false" />
@@ -37,8 +60,8 @@
       <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/Util.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/Util.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/VerticalInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/com/intellij/uiDesigner/core/VerticalInfo.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/WorkoutManager/database" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WorkoutManager/database" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Exercise.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Exercise.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ExerciseSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ExerciseSettings.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/WorkoutController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/WorkoutController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/WorkoutModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/WorkoutModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/database" beforeDir="false" afterPath="$PROJECT_DIR$/src/database" afterDir="false" />
@@ -50,165 +73,6 @@
   </component>
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
-  </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/App.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="372" column="51" lean-forward="true" selection-start-line="372" selection-start-column="51" selection-end-line="372" selection-end-column="51" />
-              <folding>
-                <element signature="e#4442#5653#0" expanded="true" />
-                <element signature="e#5652#5653#0" expanded="true" />
-                <element signature="e#6314#7859#0" expanded="true" />
-                <element signature="e#7858#7859#0" expanded="true" />
-                <element signature="e#8517#9413#0" expanded="true" />
-                <element signature="e#9412#9413#0" expanded="true" />
-                <element signature="e#11241#11374#0" expanded="true" />
-                <element signature="e#11373#11374#0" expanded="true" />
-                <element signature="e#12582#12824#0" expanded="true" />
-                <element signature="e#12823#12824#0" expanded="true" />
-                <element signature="e#14452#14677#0" expanded="true" />
-                <element signature="e#14676#14677#0" expanded="true" />
-                <element signature="e#14779#15268#0" expanded="true" />
-                <element signature="e#15267#15268#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ExerciseSettings.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1649">
-              <caret line="179" column="25" selection-start-line="179" selection-start-column="25" selection-end-line="179" selection-end-column="25" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1387#1569#0" expanded="true" />
-                <element signature="e#1568#1569#0" expanded="true" />
-                <element signature="e#1723#1724#0" expanded="true" />
-                <element signature="e#1769#1770#0" expanded="true" />
-                <element signature="e#1848#1849#0" expanded="true" />
-                <element signature="e#1894#1895#0" expanded="true" />
-                <element signature="e#1974#1975#0" expanded="true" />
-                <element signature="e#2020#2021#0" expanded="true" />
-                <element signature="e#2219#2412#0" expanded="true" />
-                <element signature="e#2411#2412#0" expanded="true" />
-                <element signature="e#2508#2745#0" expanded="true" />
-                <element signature="e#2744#2745#0" expanded="true" />
-                <element signature="e#2852#3171#0" expanded="true" />
-                <element signature="e#3170#3171#0" expanded="true" />
-                <element signature="e#5787#5788#0" expanded="true" />
-                <element signature="e#5831#5832#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/WorkoutModel.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="170" column="35" selection-start-line="170" selection-start-column="35" selection-end-line="170" selection-end-column="35" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#3734#3735#0" expanded="true" />
-                <element signature="e#3780#3781#0" expanded="true" />
-                <element signature="e#3993#3994#0" expanded="true" />
-                <element signature="e#4074#4075#0" expanded="true" />
-                <element signature="e#4236#4237#0" expanded="true" />
-                <element signature="e#4275#4276#0" expanded="true" />
-                <element signature="e#4473#4474#0" expanded="true" />
-                <element signature="e#4516#4517#0" expanded="true" />
-                <element signature="e#4702#4703#0" expanded="true" />
-                <element signature="e#4738#4739#0" expanded="true" />
-                <element signature="e#4939#4940#0" expanded="true" />
-                <element signature="e#4979#4980#0" expanded="true" />
-                <element signature="e#5180#5181#0" expanded="true" />
-                <element signature="e#5220#5221#0" expanded="true" />
-                <element signature="e#5377#5378#0" expanded="true" />
-                <element signature="e#5431#5432#0" expanded="true" />
-                <element signature="e#5486#5487#0" expanded="true" />
-                <element signature="e#5536#5537#0" expanded="true" />
-                <element signature="e#5583#5584#0" expanded="true" />
-                <element signature="e#5625#5626#0" expanded="true" />
-                <element signature="e#5671#5672#0" expanded="true" />
-                <element signature="e#5693#5694#0" expanded="true" />
-                <element signature="e#5747#5748#0" expanded="true" />
-                <element signature="e#5783#5784#0" expanded="true" />
-                <element signature="e#5816#5817#0" expanded="true" />
-                <element signature="e#5848#5849#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/WorkoutController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="278">
-              <caret line="108" column="3" lean-forward="true" selection-start-line="108" selection-start-column="3" selection-end-line="108" selection-end-column="3" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#372#373#0" expanded="true" />
-                <element signature="e#406#407#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Exercise.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="346">
-              <caret line="47" column="34" selection-start-line="47" selection-start-column="34" selection-end-line="47" selection-end-column="34" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/App.form">
-          <provider selected="true" editor-type-id="ui-designer" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/database">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="567">
-              <caret line="451" column="1" selection-start-line="451" selection-start-column="1" selection-end-line="451" selection-end-column="1" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Workout.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="782">
-              <caret line="50" column="58" selection-start-line="50" selection-start-column="58" selection-end-line="50" selection-end-column="58" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/DBmanager.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="22" column="71" lean-forward="true" selection-start-line="22" selection-start-column="71" selection-end-line="22" selection-end-column="71" />
-              <folding>
-                <element signature="e#4376#4377#0" expanded="true" />
-                <element signature="e#4407#4408#0" expanded="true" />
-                <element signature="e#4559#4560#0" expanded="true" />
-                <element signature="e#4591#4592#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -307,18 +171,6 @@
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="inlay.hints.JAVA" />
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
   <component name="RunManager" selected="Application.App">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="App" />
@@ -343,7 +195,7 @@
       </list>
     </recent_temporary>
   </component>
-  <component name="SpellCheckerSettings" BundledDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -495,14 +347,7 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="RECENTLY_FILTERED_USER_GROUPS">
-                <collection />
-              </option>
-              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
-                <collection />
-              </option>
-            </State>
+            <State />
           </value>
         </entry>
       </map>
@@ -521,6 +366,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added basic GUI design" />
@@ -556,7 +402,7 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/WorkoutGUI.java" />
-    <entry file="jar://C:/Program Files/Java/jdk-12.0.1/lib/src.zip!/java.desktop/java/awt/Container.java">
+    <entry file="jar://$PROJECT_DIR$/../../../../../Program Files/Java/jdk-12.0.1/lib/src.zip!/java.desktop/java/awt/Container.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
           <caret line="435" column="8" selection-start-line="435" selection-start-column="8" selection-end-line="435" selection-end-column="8" />

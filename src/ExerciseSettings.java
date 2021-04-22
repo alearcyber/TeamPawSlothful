@@ -5,22 +5,42 @@ import javax.swing.text.Document;
 import java.awt.*;
 import java.awt.event.*;
 
+/**Class that builds exercise settings field*/
 public class ExerciseSettings {
+
+    /**Main panel containing components*/
     private JPanel mainPanel;
+
+    /**Text field for number of repetitions to perform*/
     public JTextField numberOfRepsField;
+
+    /**Text field for time taken*/
     public JTextField exerciseTimeField;
+
+    /**Text field for calories burnt*/
     public JTextField caloriesBurntField;
+
+    /**Panel containing text fields*/
     private JPanel fieldPanel;
 
-
+    /**Document from text field*/
     private Document original;
-    private static int mult = 1; //its just the calories
 
-    //static field representations of the stats and whatnot
+    /**Multiplier for text field math*/
+    private static int mult = 1;
+
+    /**String from number of repetitions field*/
     private static String reps;
+
+    /**String from calories burnt field*/
     private static String cals;
+
+    /**String from exercise time field*/
     private static String time;
 
+    /**Default Constructor
+     * @param reps Number of repetitions for chosen exercise
+     */
     public ExerciseSettings(int reps) {
 
         for(Component c : fieldPanel.getComponents()){
@@ -106,7 +126,9 @@ public class ExerciseSettings {
         exerciseTimeField.getDocument().addDocumentListener(docListener);
     }
 
-    /**Resizes text of Exercise Settings panel*/
+    /**Resizes text of Exercise Settings panel
+     * @param component Component containing text to resize
+     */
     private void resizeText(Component component){
 
         if(component instanceof Container){
@@ -116,6 +138,9 @@ public class ExerciseSettings {
         }
     }
 
+    /**Update the text fields when a user changes a value in any
+     * @param e The text field's document
+     */
     private void updateLabel(DocumentEvent e) {
 
         if (original == null) {
@@ -168,6 +193,9 @@ public class ExerciseSettings {
         }
     }
 
+    /**Set the multiplier for exercise settings
+     * @param mult New multiplier
+     */
     public static void setMult(int mult) {
         ExerciseSettings.mult = mult;
     }
@@ -177,14 +205,23 @@ public class ExerciseSettings {
      */
     public JPanel getMainPanel() { return mainPanel; }
 
+    /**Get number of repetitions in repetitions field
+     * @return Number of repetitions in repetitions field
+     */
     public static String getReps(){
         return reps;
     }
 
+    /**Get calories burnt per minute from calories field
+     * @return Calories burnt per minute from calories field
+     */
     public static String getCal(){
         return cals;
     }
 
+    /**Get time taken from time field
+     * @return Time taken from time field
+     */
     public static String getMin(){
         return time;
     }

@@ -124,6 +124,27 @@ public class WorkoutModel {
         selectedWorkout.setReps(selectedExercise.getName(), numberOfReps);
     }
 
+    /**Set the average muscle group for an exercise
+     * @param mainMuscleGroup Muscle group most represented in a workout
+     */
+    public void setMainMuscleGroup(String mainMuscleGroup) {
+        this.mainMuscleGroup = mainMuscleGroup;
+    }
+
+    /**Set the total amount of calories burnt per minute for a workout
+     * @param totalCalBurnt Total amount of calories burnt per minute for a workout
+     */
+    public void setTotalCalBurnt(int totalCalBurnt) {
+        this.totalCalBurnt = totalCalBurnt;
+    }
+
+    /**Set the total time taken for a workout
+     * @param totalTime Total time taken for a workout
+     */
+    public void setTotalTime(int totalTime) {
+        this.totalTime = totalTime;
+    }
+
     /**Get selected exercise from Add Exercise panel
      * @return Selected exercise from Add Exercise panel
      */
@@ -159,26 +180,23 @@ public class WorkoutModel {
         return this.currentPlanB;
     }
 
-    public void setMainMuscleGroup(String mainMuscleGroup) {
-        this.mainMuscleGroup = mainMuscleGroup;
-    }
-
-    public void setTotalCalBurnt(int totalCalBurnt) {
-        this.totalCalBurnt = totalCalBurnt;
-    }
-
-    public void setTotalTime(int totalTime) {
-        this.totalTime = totalTime;
-    }
-
-     public String getMainMuscleGroup(){
+    /**Get the primary muscle group for a workout
+     * @return Muscle group most represented in workout
+     */
+    public String getMainMuscleGroup(){
         return mainMuscleGroup;
-     }
+    }
 
+    /**Get the total amount of calories burnt per minute for a workout
+     * @return totalCalBurnt Total amount of calories burnt per minute for a workout
+     */
     public int getTotalCalBurnt() {
         return totalCalBurnt;
     }
 
+    /**Get the total time taken for a workout
+     * @return totalTime Total time taken for a workout
+     */
     public int getTotalTime() {
         return totalTime;
     }
